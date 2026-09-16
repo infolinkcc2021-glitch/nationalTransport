@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Portal — National Transport PLC</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="portal">
+  <div id="siteHeader"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <h1>Customer Portal</h1>
+        <p>Request a vehicle, track your shipment in real time and download delivery receipts.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-3 mb-3">
+          <div class="card stat-card"><div class="stat-icon stat-icon-blue">&#128202;</div><div><div class="stat-value" id="myOrders">0</div><div class="stat-label">My Shipments</div></div></div>
+          <div class="card stat-card"><div class="stat-icon stat-icon-amber">&#128652;</div><div><div class="stat-value" id="myActive">0</div><div class="stat-label">In Transit</div></div></div>
+          <div class="card stat-card"><div class="stat-icon stat-icon-green">&#9989;</div><div><div class="stat-value" id="myDelivered">0</div><div class="stat-label">Delivered</div></div></div>
+        </div>
+
+        <div class="grid grid-2">
+          <!-- Request form -->
+          <div class="card card-pad">
+            <h3 style="color:var(--navy)" class="mb-2">Request Transport</h3>
+            <form id="requestForm">
+              <div class="form-group">
+                <label>Your Name / Company <span class="req">*</span></label>
+                <input type="text" id="reqCustomer" class="input" required>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Email <span class="req">*</span></label>
+                  <input type="email" id="reqEmail" class="input" required>
+                </div>
+                <div class="form-group">
+                  <label>Phone <span class="req">*</span></label>
+                  <input type="tel" id="reqPhone" class="input" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Pickup Point <span class="req">*</span></label>
+                  <select id="reqPickup" class="input" required></select>
+                </div>
+                <div class="form-group">
+                  <label>Destination <span class="req">*</span></label>
+                  <select id="reqDrop" class="input" required></select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Item / Material Loaded <span class="req">*</span></label>
+                <select id="reqItem" class="input" required></select>
+                <div id="reqItemCustomWrap" style="display:none;margin-top:8px">
+                  <input type="text" id="reqItemCustom" class="input" placeholder="Type the new item / material name">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Approx. Weight (tons) <span class="req">*</span></label>
+                  <input type="number" id="reqWeight" class="input" min="0.5" max="50" step="0.5" required>
+                </div>
+                <div class="form-group">
+                  <label>Distance (km)</label>
+                  <input type="number" id="reqDistance" class="input" min="1" step="1">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Preferred Date</label>
+                  <input type="date" id="reqDate" class="input">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">Submit Request</button>
+            </form>
+          </div>
+
+          <!-- Track shipment -->
+          <div class="card card-pad">
+            <h3 style="color:var(--navy)" class="mb-2">Track a Shipment</h3>
+            <p class="small mb-2">Enter your booking reference (e.g. NTP-2026-001) to see live status.</p>
+            <div class="flex">
+              <input type="text" id="trackInput" class="input" placeholder="Booking reference" style="flex:1">
+              <button class="btn btn-primary" onclick="doTrack()">Track</button>
+            </div>
+            <div id="trackResult" class="mt-3"></div>
+          </div>
+        </div>
+
+        <!-- Orders list -->
+        <div class="card card-pad mt-3">
+          <h3 style="color:var(--navy)" class="mb-2">My Shipments</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Reference</th><th>Route</th><th>Item</th><th>Weight</th><th>Dist. (km)</th><th>Driver</th><th>Requested</th><th>Status</th><th>Receipt</th></tr>
+              </thead>
+              <tbody id="ordersBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Receipt modal -->
+  <div class="modal-backdrop" id="receiptModal">
+    <div class="modal">
+      <div class="modal-header"><h3>Delivery Receipt</h3><button class="modal-close">&times;</button></div>
+      <div class="modal-body" id="receiptBody"></div>
+      <div class="modal-body" style="padding-top:0">
+        <button class="btn btn-primary btn-block no-print" onclick="printPage()">&#128424; Print Receipt</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="siteFooter"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/api.js?v=63"></script>
+  <script>
+    (function () {
+      var currentCustomer = localStorage.getItem("ntp_customer") || "";
+      var apiUser = API.user();
+      if (apiUser) {
+        currentCustomer = apiUser.full_name || apiUser.username;
+        document.getElementById("reqCustomer").value = currentCustomer;
+        document.getElementById("reqEmail").value = apiUser.email || "";
+        document.getElementById("reqPhone").value = apiUser.phone || "";
+      } else if (currentCustomer) {
+        document.getElementById("reqCustomer").value = currentCustomer;
+        document.getElementById("reqEmail").value = localStorage.getItem("ntp_email") || "";
+        document.getElementById("reqPhone").value = localStorage.getItem("ntp_phone") || "";
+      }
+
+      function fillSelect(id, values) {
+        document.getElementById(id).innerHTML = values.map(function (v) {
+          return '<option value="' + esc(v) + '">' + esc(v) + "</option>";
+        }).join("");
+      }
+      fillSelect("reqPickup", PLACES);
+      var pickupSel = document.getElementById("reqPickup");
+      pickupSel.value = "Lemi National Factory";
+      pickupSel.disabled = true;
+      fillSelect("reqDrop", PLACES.filter(function (v) { return v !== "Lemi National Factory"; }));
+      document.getElementById("reqDrop").insertAdjacentHTML("afterbegin", '<option value="" disabled selected>Select destination…</option>');
+      var knownItems = itemOptions();
+      getCustomItems().forEach(function (n) { if (knownItems.indexOf(n) === -1) knownItems.push(n); });
+      fillSelect("reqItem", knownItems);
+      document.getElementById("reqItem").innerHTML += '<option value="custom">Other / New item…</option>';
+
+      var itemSel = document.getElementById("reqItem");
+      var customWrap = document.getElementById("reqItemCustomWrap");
+      itemSel.addEventListener("change", function () {
+        customWrap.style.display = itemSel.value === "custom" ? "block" : "none";
+        if (itemSel.value === "custom") document.getElementById("reqItemCustom").focus();
+      });
+
+      function syncLocationDisable() {
+        var p = document.getElementById("reqPickup");
+        var d = document.getElementById("reqDrop");
+        Array.prototype.forEach.call(p.options, function (o) { o.disabled = false; });
+        Array.prototype.forEach.call(d.options, function (o) { o.disabled = false; });
+        if (d.value) {
+          Array.prototype.forEach.call(p.options, function (o) { if (o.value === d.value) o.disabled = true; });
+          if (p.value === d.value) p.value = "";
+        }
+        if (p.value) {
+          Array.prototype.forEach.call(d.options, function (o) { if (o.value === p.value) o.disabled = true; });
+          if (d.value === p.value) d.value = "";
+        }
+      }
+      var distField = document.getElementById("reqDistance");
+      function autoFillDistance() {
+        var p = document.getElementById("reqPickup").value.trim();
+        var d = document.getElementById("reqDrop").value.trim();
+        if (!p || !d || p === d) return;
+        var km = lookupDistance(p, d);
+        if (km != null) {
+          distField.value = km;
+          distField.disabled = true;
+        } else {
+          distField.disabled = false;
+          if (!distField.value) distField.placeholder = "Manual entry (not in route table)";
+        }
+      }
+      document.getElementById("reqPickup").addEventListener("change", function () { syncLocationDisable(); autoFillDistance(); });
+      document.getElementById("reqDrop").addEventListener("change", function () { syncLocationDisable(); autoFillDistance(); });
+      syncLocationDisable();
+
+      function myOrders() {
+        var u = API.user();
+        if (u) {
+          var em = (u.email || "").toLowerCase();
+          var nm = (u.full_name || u.username || "").toLowerCase();
+          return getOrders().filter(function (o) {
+            return (o.customerEmail || "").toLowerCase() === em ||
+              (o.customer || "").toLowerCase() === nm;
+          });
+        }
+        return getOrders().filter(function (o) {
+          return !currentCustomer || (o.customer || "").toLowerCase().indexOf(currentCustomer.toLowerCase()) !== -1;
+        });
+      }
+
+      function renderOrders() {
+        var list = myOrders();
+        document.getElementById("myOrders").textContent = list.length;
+        document.getElementById("myActive").textContent = list.filter(function (o) { return o.status === "in_transit" || o.status === "pending"; }).length;
+        document.getElementById("myDelivered").textContent = list.filter(function (o) { return o.status === "completed"; }).length;
+
+        document.getElementById("ordersBody").innerHTML = list.map(function (o) {
+          return "<tr>" +
+            '<td class="mono">' + esc(o.id) + "</td>" +
+            "<td>" + esc(o.pickUp) + " &rarr; " + esc(o.dropOff) + "</td>" +
+            "<td>" + esc(o.item) + "</td>" +
+            "<td>" + o.weight + " t</td>" +
+            "<td>" + (o.distance ? fmtNum(o.distance) : "&mdash;") + "</td>" +
+            "<td>" + esc(o.driver || "&mdash;") + "</td>" +
+            "<td>" + esc(o.requestedDate) + "</td>" +
+            "<td>" + statusBadge(o.status) + "</td>" +
+            '<td><button class="btn btn-outline btn-sm" onclick="showReceipt(\'' + esc(o.id) + '\')">Receipt</button></td>' +
+            "</tr>";
+        }).join("") || '<tr><td colspan="9" style="text-align:center;color:var(--muted)">No shipments found. Submit a request to get started.</td></tr>';
+      }
+
+      window.doTrack = function () {
+        var ref = document.getElementById("trackInput").value.trim().toUpperCase();
+        var box = document.getElementById("trackResult");
+        if (!ref) { box.innerHTML = '<div class="alert alert-error">Please enter a booking reference.</div>'; return; }
+        var order = getOrders().find(function (o) { return o.id.toUpperCase() === ref; });
+        if (!order) { box.innerHTML = '<div class="alert alert-error">No shipment found with reference <b>' + esc(ref) + "</b>.</div>"; return; }
+
+        var steps = [
+          { label: "Request Received", when: order.requestedDate, done: true },
+          { label: "Vehicle Assigned", when: order.requestedDate, done: order.status !== "pending" },
+          { label: "Pickup — " + esc(order.pickUp), when: order.requestedDate, done: order.status === "in_transit" || order.status === "completed", current: order.status === "in_transit" },
+          { label: "In Transit to " + esc(order.dropOff), when: "ETD " + (order.eta || "—"), done: order.status === "completed", current: order.status === "in_transit" },
+          { label: "Delivered", when: order.status === "completed" ? (order.eta || "—") : "—", done: order.status === "completed", current: order.status === "completed" },
+        ];
+        var timeline = steps.map(function (s, i) {
+          var cls = s.current ? " current" : (s.done ? " done" : "");
+          return '<li class="' + cls + '"><b>' + s.label + '</b><span>' + esc(s.when) + "</span></li>";
+        }).join("");
+
+        box.innerHTML =
+          '<div class="alert alert-success">Shipment <b>' + esc(order.id) + "</b> &mdash; " + statusBadge(order.status) + "</div>" +
+          '<div class="card card-pad">' +
+          '<div class="grid grid-2 mb-2" style="gap:10px">' +
+          '<div class="vmeta"><span>From</span><b>' + esc(order.pickUp) + "</b></div>" +
+          '<div class="vmeta"><span>To</span><b>' + esc(order.dropOff) + "</b></div>" +
+          '<div class="vmeta"><span>Item</span><b>' + esc(order.item) + "</b></div>" +
+          '<div class="vmeta"><span>Weight</span><b>' + order.weight + " tons</b></div>" +
+          "</div>" +
+          '<ul class="timeline">' + timeline + "</ul>" +
+          "</div>";
+      };
+
+      window.showReceipt = function (id) {
+        var o = getOrders().find(function (x) { return x.id === id; });
+        if (!o) return;
+        var rate = 18; // $/ton per 100km
+        var dist = o.distance || Math.round((o.weight * rate) / 3);
+        var estPrice = (o.weight * rate).toLocaleString();
+        var ref = o.id;
+        document.getElementById("receiptBody").innerHTML =
+          '<div style="text-align:center;border-bottom:2px solid var(--navy);padding-bottom:14px;margin-bottom:16px">' +
+          '<div style="font-weight:800;font-size:1.15rem;color:var(--navy)">National Transport PLC</div>' +
+          '<div class="small">Transport &amp; Logistics · Delivery Receipt</div></div>' +
+          '<div class="grid grid-2" style="gap:8px;margin-bottom:14px">' +
+          '<div class="vmeta"><span>Receipt No.</span><b class="mono">' + esc(ref) + "</b></div>" +
+          '<div class="vmeta"><span>Customer</span><b>' + esc(o.customer) + "</b></div>" +
+          '<div class="vmeta"><span>Route</span><b>' + esc(o.pickUp) + " &rarr; " + esc(o.dropOff) + "</b></div>" +
+          '<div class="vmeta"><span>Item</span><b>' + esc(o.item) + "</b></div>" +
+          '<div class="vmeta"><span>Weight</span><b>' + o.weight + " tons</b></div>" +
+          '<div class="vmeta"><span>Est. Distance</span><b>' + fmtNum(dist) + " km</b></div>" +
+          '<div class="vmeta"><span>Driver</span><b>' + esc(o.driver || "&mdash;") + "</b></div>" +
+          '<div class="vmeta"><span>Vehicle</span><b class="mono">' + esc(o.vehiclePlate || "&mdash;") + "</b></div>" +
+          "</div>" +
+          '<table style="min-width:0;font-size:.9rem">' +
+          "<tr><td>Est. Transport Charge</td><td style='text-align:right;font-weight:700'>&#36;" + estPrice + "</td></tr>" +
+          "<tr><td>VAT (15%)</td><td style='text-align:right;font-weight:700'>&#36;" + Math.round(o.weight * rate * 0.15).toLocaleString() + "</td></tr>" +
+          '<tr style="border-top:2px solid var(--navy)"><td style="font-weight:800">Total</td><td style="text-align:right;font-weight:800;font-size:1.05rem">&#36;' + (Math.round(o.weight * rate * 1.15)).toLocaleString() + "</td></tr>" +
+          "</table>" +
+          '<div class="small" style="margin-top:14px">Status: ' + STATUS_META[o.status].label + "</div>" +
+          '<div class="small mt-1">Generated by National Transport PLC &middot; ' + new Date().toLocaleDateString() + "</div>";
+        openModal("receiptModal");
+      };
+
+      function validEmail(v) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+      }
+
+      function validPhone(v) {
+        var clean = v.replace(/[\s\-()]/g, "");
+        return /^(\+?251|0)?[79]\d{8}$/.test(clean);
+      }
+
+      function markInvalid(id, bad) {
+        var el = document.getElementById(id);
+        if (bad) { el.classList.add("invalid"); el.focus(); } else { el.classList.remove("invalid"); }
+      }
+
+      ["reqEmail", "reqPhone"].forEach(function (id) {
+        document.getElementById(id).addEventListener("input", function () { markInvalid(id, false); });
+      });
+
+      function mirrorLocalOrder(serverOrder) {
+        var local = addOrder({
+          id: serverOrder.id,
+          customer: serverOrder.customer,
+          contact: serverOrder.customerEmail,
+          phone: serverOrder.customerPhone,
+          pickUp: serverOrder.pickUp,
+          dropOff: serverOrder.dropOff,
+          item: serverOrder.item,
+          weight: serverOrder.weight,
+          distance: serverOrder.distanceKm,
+          eta: (serverOrder.createdAt || "").slice(0, 10),
+          status: serverOrder.status,
+          driver: serverOrder.driver,
+          vehiclePlate: serverOrder.vehiclePlate,
+        });
+        saveOrders(getOrders());
+        return local;
+      }
+
+      function finishOrder(order) {
+        localStorage.setItem("ntp_customer", order.customer);
+        localStorage.setItem("ntp_email", order.contact);
+        localStorage.setItem("ntp_phone", order.phone);
+        currentCustomer = order.customer;
+        document.getElementById("requestForm").reset();
+        distField.disabled = false;
+        distField.placeholder = "";
+        renderOrders();
+        document.getElementById("trackInput").value = order.id;
+        doTrack();
+        toast("Request submitted! Reference: " + order.id, "success");
+        setTimeout(function () {
+          toast("Assigned: " + (order.driver || "—") + " · " + (order.vehiclePlate || "—"), "success");
+        }, 1200);
+      }
+
+      document.getElementById("requestForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var email = document.getElementById("reqEmail").value.trim();
+        var phone = document.getElementById("reqPhone").value.trim();
+        var emailOk = validEmail(email);
+        var phoneOk = validPhone(phone);
+        markInvalid("reqEmail", !emailOk);
+        markInvalid("reqPhone", !phoneOk);
+        if (!emailOk) { toast("Please enter a valid email address", "error"); return; }
+        if (!phoneOk) { toast("Please enter a valid phone number (e.g. +251 911 000 000 or 0911 000 000)", "error"); return; }
+        var pick = document.getElementById("reqPickup").value.trim();
+        var drop = document.getElementById("reqDrop").value.trim();
+        if (!drop) { toast("Please choose a destination", "error"); return; }
+        if (pick === drop) { toast("Pickup and Destination cannot be the same", "error"); return; }
+        var item = document.getElementById("reqItem").value;
+        if (item === "custom") {
+          item = document.getElementById("reqItemCustom").value.trim();
+          if (!item) { toast("Please type the new item name", "error"); return; }
+          addCustomItem(item);
+        }
+        var customer = document.getElementById("reqCustomer").value.trim();
+        var orderData = {
+          customer: customer,
+          contact: email,
+          phone: phone,
+          pickUp: pick,
+          dropOff: drop,
+          item: item,
+          weight: parseFloat(document.getElementById("reqWeight").value),
+          distance: parseFloat(document.getElementById("reqDistance").value) || 0,
+          eta: document.getElementById("reqDate").value || "",
+        };
+        if (API.isOnline() && API.isAuthed()) {
+          var submitBtn = document.getElementById("requestForm").querySelector("button[type=submit]");
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Submitting…";
+          API.req("POST", "/orders", {
+            customer: customer,
+            customerPhone: phone,
+            customerEmail: email,
+            pickUp: pick,
+            dropOff: drop,
+            item: item,
+            weight: orderData.weight,
+            distanceKm: orderData.distance,
+          }, API.authHeaders()).then(function (serverOrder) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Submit Request";
+            finishOrder(mirrorLocalOrder(serverOrder));
+          }).catch(function (err) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Submit Request";
+            toast("Server rejected the request: " + err.message, "error");
+          });
+          return;
+        }
+        finishOrder(addOrder(orderData));
+      });
+
+      function loadMyOrders() {
+        if (!API.isOnline() || !API.isAuthed()) return;
+        API.req("GET", "/orders/mine", undefined, API.authHeaders()).then(function (serverOrders) {
+          if (!Array.isArray(serverOrders) || !serverOrders.length) return;
+          var list = getOrders();
+          serverOrders.forEach(function (so) {
+            var idx = list.findIndex(function (o) { return o.id === so.id; });
+            var local = {
+              id: so.id, customer: so.customer, contact: so.customerEmail, phone: so.customerPhone,
+              pickUp: so.pickUp, dropOff: so.dropOff, item: so.item, weight: so.weight,
+              distance: so.distanceKm, driver: so.driver, vehiclePlate: so.vehiclePlate,
+              status: so.status, requestedDate: (so.createdAt || "").slice(0, 10),
+            };
+            if (idx >= 0) list[idx] = Object.assign(list[idx], local);
+            else list.unshift(local);
+          });
+          saveOrders(list);
+          renderOrders();
+        }).catch(function () {});
+      }
+
+      renderOrders();
+      loadMyOrders();
+      window.afterApiSync = function () { loadMyOrders(); renderOrders(); };
+    })();
+  </script>
+</body>
+</html>

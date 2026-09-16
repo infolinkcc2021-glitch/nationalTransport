@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Performance — National Transport PLC</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="vehperf">
+  <div id="siteHeader"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <h1>Vehicle Performance Dashboard</h1>
+        <p>Truck No · Trips · Total Ton-km — ranked from the Waybill register for the selected period.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="fleet-toolbar mb-2">
+          <div class="flex" id="perfChips">
+            <button class="chip on" data-perf="daily">Daily</button>
+            <button class="chip" data-perf="weekly">Weekly</button>
+            <button class="chip" data-perf="monthly">Monthly</button>
+            <button class="chip" data-perf="annual">Annual</button>
+          </div>
+          <span class="small muted" id="perfPeriodLabel"></span>
+          <div class="flex" style="gap:6px">
+            <button class="btn btn-outline btn-sm" id="exportCsvBtn" title="Export CSV">&#128228; CSV</button>
+            <button class="btn btn-outline btn-sm" id="exportXlsxBtn" title="Export Excel">&#128220; XLSX</button>
+          </div>
+        </div>
+
+        <div id="dayPicker" class="fleet-toolbar mb-3" style="display:none">
+          <span class="small" style="color:var(--navy);font-weight:600">Select Day:</span>
+          <select id="daySelect" class="input" style="min-width:200px"></select>
+        </div>
+        <div id="weekPicker" class="fleet-toolbar mb-3" style="display:none">
+          <span class="small" style="color:var(--navy);font-weight:600">Select Week:</span>
+          <select id="weekSelect" class="input" style="min-width:200px"></select>
+        </div>
+        <div id="monthPicker" class="fleet-toolbar mb-3" style="display:none">
+          <span class="small" style="color:var(--navy);font-weight:600">Select Month:</span>
+          <select id="monthSelect" class="input" style="min-width:200px"></select>
+        </div>
+        <div id="yearPicker" class="fleet-toolbar mb-3" style="display:none">
+          <span class="small" style="color:var(--navy);font-weight:600">Select Year:</span>
+          <select id="yearSelect" class="input" style="min-width:200px"></select>
+        </div>
+
+        <div class="grid grid-4 mb-3" id="perfSummary"></div>
+
+        <h3 style="color:var(--navy);margin-bottom:14px">Ranked by Total Ton-km <span class="small muted">— top truck highlighted</span></h3>
+        <div id="perfCards" class="grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="siteFooter"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/api.js?v=63"></script>
+  <script>
+    (function () {
+      var active = "daily";
+      var M = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      var D = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      var PERIOD_KEY = { daily: "day", weekly: "week", monthly: "month", annual: "year" };
+      var sel = { day: null, week: null, month: null, year: null };
+
+      function todayStr() {
+        var d = new Date();
+        return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+      }
+      function parseDate(k) {
+        var p = String(k || "").split("-").map(Number);
+        if (p.length < 3 || isNaN(p[0]) || isNaN(p[1]) || isNaN(p[2])) return null;
+        return new Date(p[0], p[1] - 1, p[2]);
+      }
+      function monthKey(y, m) { return y + "-" + String(m).padStart(2, "0"); }
+      function keyOf(d) {
+        return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+      }
+      function dayLabel(k) {
+        var d = parseDate(k);
+        if (!d) return k;
+        return D[d.getDay()] + ", " + d.getDate() + " " + M[d.getMonth()] + " " + d.getFullYear();
+      }
+      function shortDate(k) {
+        var d = parseDate(k);
+        if (!d) return k;
+        return d.getDate() + " " + M[d.getMonth()];
+      }
+      function weekStart(k) {
+        var d = parseDate(k) || new Date();
+        d.setDate(d.getDate() - ((d.getDay() + 6) % 7));
+        return d;
+      }
+      function distinctDates() {
+        var seen = {};
+        waybillRows().forEach(function (r) { if (r.date) seen[r.date] = true; });
+        return Object.keys(seen).sort();
+      }
+      function distinctYears() {
+        var seen = {};
+        waybillRows().forEach(function (r) { if (r.date && r.date.length >= 4) seen[r.date.slice(0, 4)] = true; });
+        return Object.keys(seen).sort();
+      }
+
+      function dayOptions() {
+        var days = distinctDates();
+        var yearMonths = {};
+        days.forEach(function (k) { if (k.length >= 7) yearMonths[k.slice(0, 7)] = true; });
+        var yms = Object.keys(yearMonths).sort();
+        if (!yms.length) {
+          var now = new Date();
+          yms = [monthKey(now.getFullYear(), now.getMonth() + 1)];
+        }
+        return yms.map(function (ym) {
+          var y = Number(ym.slice(0, 4));
+          var m = Number(ym.slice(5, 7));
+          var d = new Date(y, m - 1, 1);
+          var lastDay = new Date(y, m, 0).getDate();
+          var opts = [];
+          for (var i = 1; i <= lastDay; i++) {
+            var key = ym + "-" + String(i).padStart(2, "0");
+            opts.push({ key: key, label: D[new Date(y, m - 1, i).getDay()] + ", " + i + " " + M[d.getMonth()] });
+          }
+          return { label: M[d.getMonth()] + " " + y, options: opts };
+        });
+      }
+      function defaultDay() {
+        var days = distinctDates();
+        return days.length ? days[days.length - 1] : todayStr();
+      }
+      function dailyRange() {
+        var k = sel.day || defaultDay();
+        return { cut: k, today: k };
+      }
+      function weekOptions() {
+        var map = {};
+        distinctDates().forEach(function (k) {
+          var s = weekStart(k);
+          var sk = keyOf(s);
+          if (!map[sk]) {
+            var e = new Date(s); e.setDate(e.getDate() + 6);
+            map[sk] = { key: sk, from: sk, to: keyOf(e), label: shortDate(sk) + " – " + shortDate(keyOf(e)) + " " + s.getFullYear() };
+          }
+        });
+        var list = Object.keys(map).map(function (k) { return map[k]; });
+        if (!list.length) {
+          var s = weekStart(todayStr());
+          var sk = keyOf(s);
+          var e = new Date(s); e.setDate(e.getDate() + 6);
+          list = [{ key: sk, from: sk, to: keyOf(e), label: shortDate(sk) + " – " + shortDate(keyOf(e)) + " " + s.getFullYear() }];
+        }
+        list.sort(function (a, b) { return a.key < b.key ? -1 : 1; });
+        return list;
+      }
+      function yearOptions() {
+        var years = distinctYears();
+        if (!years.length) years = [String(new Date().getFullYear())];
+        return years.map(function (y) { return { key: y, label: y, from: y + "-01-01", to: y + "-12-31" }; });
+      }
+      function monthOptions() {
+        var map = {};
+        waybillRows().forEach(function (r) {
+          if (!r.date || r.date.length < 7) return;
+          var y = r.date.slice(0, 4);
+          var m = r.date.slice(5, 7);
+          var k = y + "-" + m;
+          if (!map[k]) {
+            var d = new Date(Number(y), Number(m) - 1, 1);
+            map[k] = { key: k, label: M[d.getMonth()] + " " + y, from: k + "-01", to: k + "-" + new Date(Number(y), Number(m), 0).getDate() };
+          }
+        });
+        var now = new Date();
+        var cur = monthKey(now.getFullYear(), now.getMonth() + 1);
+        if (!map[cur]) {
+          map[cur] = {
+            key: cur,
+            label: M[now.getMonth()] + " " + now.getFullYear(),
+            from: cur + "-01",
+            to: cur + "-" + new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate(),
+          };
+        }
+        var list = Object.keys(map).map(function (k) { return map[k]; });
+        list.sort(function (a, b) { return a.key < b.key ? -1 : 1; });
+        return list;
+      }
+
+      function optionsFor(k) {
+        if (k === "day") return dayOptions();
+        if (k === "week") return weekOptions();
+        if (k === "year") return yearOptions();
+        return monthOptions();
+      }
+      function pick(current, opts) {
+        var match = opts.filter(function (o) { return o.key === current; })[0];
+        return match || opts[opts.length - 1];
+      }
+
+      function rangeFor(p) {
+        if (p === "daily") return dailyRange();
+        if (p === "weekly") { var w = pick(sel.week, weekOptions()); return { cut: w.from, today: w.to }; }
+        if (p === "annual") { var y = pick(sel.year, yearOptions()); return { cut: y.from, today: y.to }; }
+        var m = pick(sel.month, monthOptions());
+        return { cut: m.from, today: m.to };
+      }
+      function periodLabel(p) {
+        if (p === "daily") return "Daily (" + dayLabel(sel.day || defaultDay()) + ")";
+        if (p === "weekly") return "Weekly (" + pick(sel.week, weekOptions()).label + ")";
+        if (p === "annual") return "Annual (" + pick(sel.year, yearOptions()).label + ")";
+        return "Monthly (" + pick(sel.month, monthOptions()).label + ")";
+      }
+
+      function waybillRows() {
+        var store = getWaybill();
+        var removed = getWaybillRemoved();
+        var rows = [];
+        getTrips().forEach(function (t) {
+          if (removed.indexOf(t.id) !== -1) return;
+          var rec = store[t.id] || {};
+          var origin = rec.origin != null ? rec.origin : t.startPoint;
+          var destination = rec.destination != null ? rec.destination : t.destination;
+          var dist = rec.dist != null ? Number(rec.dist) : lookupDistance(origin, destination);
+          if (dist == null || isNaN(dist)) dist = Number(t.km) || 0;
+          rows.push({
+            id: t.id,
+            truck: rec.truck != null ? rec.truck : t.vehiclePlate,
+            date: t.date || "",
+            ton: rec.ton != null ? Number(rec.ton) : (Number(t.weight) || 0),
+            lKm: rec.lKm != null ? Number(rec.lKm) : dist,
+          });
+        });
+        getWaybillList().forEach(function (e) {
+          rows.push({
+            id: e.id,
+            truck: e.truck || "—",
+            date: (e.dt || "").split("T")[0],
+            ton: Number(e.ton) || 0,
+            lKm: Number(e.lKm) || 0,
+          });
+        });
+        return rows;
+      }
+
+      function aggregate(p) {
+        var range = rangeFor(p);
+        var agg = {};
+        var totTrips = 0, totTonKm = 0;
+        waybillRows().forEach(function (r) {
+          if (!r.date || r.date < range.cut || r.date > range.today) return;
+          var truck = r.truck || "—";
+          if (!agg[truck]) agg[truck] = { truck: truck, trips: 0, tonKm: 0 };
+          agg[truck].trips += 1;
+          agg[truck].tonKm += r.ton * r.lKm;
+          totTrips += 1;
+          totTonKm += r.ton * r.lKm;
+        });
+        var list = Object.keys(agg).map(function (k) { return agg[k]; });
+        list.sort(function (a, b) { return b.tonKm - a.tonKm; });
+        return { list: list, trucks: list.length, trips: totTrips, tonKm: totTonKm };
+      }
+
+      function renderPickers() {
+        var map = {
+          day: ["dayPicker", "daySelect"],
+          week: ["weekPicker", "weekSelect"],
+          month: ["monthPicker", "monthSelect"],
+          year: ["yearPicker", "yearSelect"],
+        };
+        var pk = PERIOD_KEY[active];
+        Object.keys(map).forEach(function (k) {
+          var el = document.getElementById(map[k][0]);
+          el.style.display = k === pk ? "flex" : "none";
+          if (k !== pk) return;
+          var selEl = document.getElementById(map[k][1]);
+          if (k === "day") {
+            var groups = dayOptions();
+            var curKey = sel.day || defaultDay();
+            selEl.innerHTML = groups.map(function (g) {
+              return '<optgroup label="' + esc(g.label) + '">' + g.options.map(function (o) {
+                return '<option value="' + esc(o.key) + '"' + (o.key === curKey ? " selected" : "") + ">" + esc(o.label) + "</option>";
+              }).join("") + "</optgroup>";
+            }).join("");
+          } else {
+            var opts = optionsFor(k);
+            var cur = pick(sel[k], opts);
+            selEl.innerHTML = opts.map(function (o) {
+              return '<option value="' + esc(o.key) + '"' + (o.key === cur.key ? " selected" : "") + ">" + esc(o.label) + "</option>";
+            }).join("");
+          }
+        });
+      }
+
+      ["day", "week", "month", "year"].forEach(function (k) {
+        document.getElementById(k + "Select").addEventListener("change", function () {
+          sel[k] = this.value;
+          renderPickers();
+          render();
+        });
+      });
+
+      function render() {
+        var d = aggregate(active);
+        var best = d.list[0];
+        document.getElementById("perfPeriodLabel").textContent = periodLabel(active);
+        document.getElementById("perfSummary").innerHTML =
+          '<div class="card stat-card"><div class="stat-icon stat-icon-blue">&#128666;</div><div><div class="stat-value">' + d.trucks + '</div><div class="stat-label">Trucks Active</div></div></div>' +
+          '<div class="card stat-card"><div class="stat-icon stat-icon-amber">&#128652;</div><div><div class="stat-value">' + fmtNum(d.trips) + '</div><div class="stat-label">Total Trips</div></div></div>' +
+          '<div class="card stat-card"><div class="stat-icon stat-icon-green">&#9881;</div><div><div class="stat-value">' + fmtNum(Math.round(d.tonKm)) + '</div><div class="stat-label">Total Ton-km</div></div></div>' +
+          '<div class="card stat-card"><div class="stat-icon stat-icon-red">&#127942;</div><div><div class="stat-value">' + esc(best ? best.truck : "—") + '</div><div class="stat-label">Top Rated Truck</div></div></div>';
+        document.getElementById("perfCards").innerHTML = d.list.map(function (r, i) {
+          var top = i === 0;
+          var pct = d.list[0].tonKm > 0 ? Math.round((r.tonKm / d.list[0].tonKm) * 100) : 0;
+          return '<div class="card card-pad perf-card' + (top ? " top" : "") + '">' +
+            '<div class="spread"><span class="rank ' + (i === 0 ? "rank-1" : i === 1 ? "rank-2" : i === 2 ? "rank-3" : "") + '">' + (i + 1) + '</span>' +
+            (top ? '<span class="crown" title="Highest Ton-km">&#127942;</span>' : '<span></span>') + '</div>' +
+            '<h4 class="mono" style="color:var(--navy);margin:10px 0 4px">' + esc(r.truck) + '</h4>' +
+            '<div class="dash-row"><span class="muted">Trips</span><b>' + fmtNum(r.trips) + '</b></div>' +
+            '<div class="dash-row"><span class="muted">Total Ton-km</span><b>' + fmtNum(Math.round(r.tonKm)) + '</b></div>' +
+            '<div class="progress perf-progress"><div class="progress-bar" style="width:' + pct + '%"></div></div>' +
+            '</div>';
+        }).join("") || '<p class="muted" style="text-align:center;padding:40px">No waybill trips in this period.</p>';
+      }
+
+      function exportData() {
+        var d = aggregate(active);
+        var headers = ["Rank", "Truck No", "Trips", "Total Ton-km", "Share of Top (%)"];
+        var data = d.list.map(function (r, i) {
+          var pct = d.list[0].tonKm > 0 ? ((r.tonKm / d.list[0].tonKm) * 100).toFixed(1) : "0.0";
+          return [i + 1, r.truck, r.trips, Math.round(r.tonKm), pct];
+        });
+        data.push(["", "ALL TRUCKS", d.trips, Math.round(d.tonKm), "100.0"]);
+        return { headers: headers, data: data };
+      }
+
+      document.querySelectorAll("#perfChips .chip").forEach(function (c) {
+        c.addEventListener("click", function () {
+          active = c.dataset.perf;
+          document.querySelectorAll("#perfChips .chip").forEach(function (x) { x.classList.toggle("on", x === c); });
+          sel[PERIOD_KEY[active]] = null;
+          renderPickers();
+          render();
+        });
+      });
+      document.getElementById("exportCsvBtn").addEventListener("click", function () {
+        var e = exportData();
+        if (!e.data.length) { toast("Nothing to export", "error"); return; }
+        exportCSV("vehicle-performance.csv", e.headers, e.data);
+        toast("Vehicle performance exported to CSV", "success");
+      });
+      document.getElementById("exportXlsxBtn").addEventListener("click", function () {
+        var e = exportData();
+        if (!e.data.length) { toast("Nothing to export", "error"); return; }
+        exportXLSX("vehicle-performance.xlsx", "Vehicle Performance", e.headers, e.data);
+        toast("Vehicle performance exported to Excel", "success");
+      });
+
+      renderPickers();
+      render();
+      window.afterApiSync = function () { renderPickers(); render(); };
+    })();
+  </script>
+</body>
+</html>

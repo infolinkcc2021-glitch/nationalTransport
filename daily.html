@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Trip Summary — National Transport PLC</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="daily">
+  <div id="siteHeader"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <h1>Daily Trip Summary</h1>
+        <p>Per-day breakdown from the weigh bridge (Freight Weight Bill) — tons, km, ton-km and revenue. Deleted rows drop out, new weigh-bridge rows appear automatically.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="flex mb-2" id="rangeChips">
+          <button class="chip" data-range="7d">7 days</button>
+          <button class="chip" data-range="30d">30 days</button>
+          <button class="chip on" data-range="all">All time</button>
+        </div>
+
+        <div class="report-controls">
+          <div>
+            <label class="small" style="font-weight:700;color:var(--navy)">From</label>
+            <input type="date" id="fromDate" class="input mt-0">
+          </div>
+          <div>
+            <label class="small" style="font-weight:700;color:var(--navy)">To</label>
+            <input type="date" id="toDate" class="input mt-0">
+          </div>
+          <div class="flex no-print" style="gap:6px;flex-wrap:wrap">
+            <button class="btn btn-primary btn-sm" onclick="exportCurrent('csv')">&#11015; CSV</button>
+            <button class="btn btn-primary btn-sm" onclick="exportCurrent('xlsx')">&#128220; XLSX</button>
+            <button class="btn btn-outline btn-sm" onclick="printPage()">&#128424; Print</button>
+          </div>
+        </div>
+
+        <div class="report-summary" id="reportSummary"></div>
+
+        <div class="card card-pad">
+          <div class="spread mb-2">
+            <h3 style="color:var(--navy)">Daily Breakdown</h3>
+          </div>
+          <div class="table-wrap">
+            <table id="dailyTable">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Trips</th>
+                  <th>Pending</th>
+                  <th>In Transit</th>
+                  <th>Completed</th>
+                  <th>Tons (t)</th>
+                  <th>Loaded km</th>
+                  <th>Empty km</th>
+                  <th>Total km</th>
+                  <th>Ton-km</th>
+                  <th>Revenue (ETB)</th>
+                  <th>Avg Load (t)</th>
+                </tr>
+              </thead>
+              <tbody id="dailyBody"></tbody>
+            </table>
+          </div>
+          <div class="empty hidden" id="noData">
+            <div class="eico">&#128203;</div>
+            <p>No trips found for the selected period.</p>
+          </div>
+        </div>
+
+        <div id="dayDetail" class="hidden">
+          <div class="card card-pad mt-3">
+            <div class="spread mb-2">
+              <h3 style="color:var(--navy)">Trips for <span id="dayTitle"></span></h3>
+              <button class="btn btn-outline btn-sm" onclick="document.getElementById('dayDetail').classList.add('hidden')">Close</button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Plate</th>
+                    <th>Driver</th>
+                    <th>Start</th>
+                    <th>Destination</th>
+                    <th>Item</th>
+                    <th>Weight (t)</th>
+                    <th>Loaded km</th>
+                    <th>Empty km</th>
+                    <th>Total km</th>
+                    <th>Status</th>
+                    <th>Revenue (ETB)</th>
+                  </tr>
+                </thead>
+                <tbody id="dayBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="siteFooter"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/api.js"></script>
+  <script>
+    (function () {
+      var currentDays = [];
+      var range = "all";
+
+      function dayRange() {
+        if (range === "7d") return { from: daysAgo(6), to: todayStr() };
+        if (range === "30d") return { from: daysAgo(29), to: todayStr() };
+        var fi = document.getElementById("fromDate").value;
+        var ti = document.getElementById("toDate").value;
+        if (fi || ti) return { from: fi || null, to: ti || null };
+        return { from: null, to: null };
+      }
+
+      function dayKey(t) {
+        return (t.date || "").slice(0, 10);
+      }
+
+      function filterTrips() {
+        var r = dayRange();
+        return getWaybillEffective().filter(function (t) {
+          var d = dayKey(t);
+          if (!d) return false;
+          if (r.from && d < r.from) return false;
+          if (r.to && d > r.to) return false;
+          return true;
+        });
+      }
+
+      function buildDays(trips) {
+        var map = {};
+        trips.forEach(function (t) {
+          var k = dayKey(t);
+          if (!k) return;
+          if (!map[k]) map[k] = { day: k, total: 0, pending: 0, in_transit: 0, completed: 0, tons: 0, loadKm: 0, emptyKm: 0, tonKm: 0, rev: 0 };
+          var g = map[k];
+          g.total++;
+          if (t.status === "pending") g.pending++;
+          else if (t.status === "in_transit") g.in_transit++;
+          else if (t.status === "completed") g.completed++;
+
+          var km = Number(t.lKm) || 0;
+          var ek = Number(t.eKm) || 0;
+          var wt = Number(t.ton) || 0;
+          if (t.status === "completed") {
+            g.tons += wt;
+            g.loadKm += km;
+            g.emptyKm += ek;
+            g.tonKm += wt * (km + ek);
+          }
+          g.rev += Math.round(wt * (km + ek) * 11);
+        });
+        var arr = Object.keys(map).map(function (k) { return map[k]; });
+        arr.sort(function (a, b) { return a.day > b.day ? -1 : 1; });
+        return arr;
+      }
+
+      function render() {
+        var trips = filterTrips();
+        var days = buildDays(trips);
+        currentDays = days;
+
+        var totalTrips = 0, totalComp = 0, totalPending = 0, totalTransit = 0;
+        var totalTons = 0, totalLoad = 0, totalEmpty = 0, totalTonKm = 0, totalRev = 0;
+        days.forEach(function (d) {
+          totalTrips += d.total;
+          totalComp += d.completed;
+          totalPending += d.pending;
+          totalTransit += d.in_transit;
+          totalTons += d.tons;
+          totalLoad += d.loadKm;
+          totalEmpty += d.emptyKm;
+          totalTonKm += d.tonKm;
+          totalRev += d.rev;
+        });
+        var totalKm = totalLoad + totalEmpty;
+
+        document.getElementById("reportSummary").innerHTML =
+          '<div class="rep-card"><span>Days</span><b>' + days.length + "</b></div>" +
+          '<div class="rep-card"><span>Trips</span><b>' + fmtNum(totalTrips) + "</b></div>" +
+          '<div class="rep-card"><span>Completed</span><b>' + fmtNum(totalComp) + "</b></div>" +
+          '<div class="rep-card"><span>Pending</span><b>' + fmtNum(totalPending) + "</b></div>" +
+          '<div class="rep-card"><span>In Transit</span><b>' + fmtNum(totalTransit) + "</b></div>" +
+          '<div class="rep-card"><span>Tons Moved</span><b>' + fmtNum(totalTons) + " t</b></div>" +
+          '<div class="rep-card"><span>Loaded km</span><b>' + fmtNum(totalLoad) + " km</b></div>" +
+          '<div class="rep-card"><span>Empty km</span><b>' + fmtNum(totalEmpty) + " km</b></div>" +
+          '<div class="rep-card"><span>Ton-km</span><b>' + fmtNum(totalTonKm) + "</b></div>" +
+          '<div class="rep-card"><span>Revenue (ETB)</span><b>' + fmtNum(totalRev) + "</b></div>" +
+          '<div class="rep-card"><span>Avg Load/Trip</span><b>' + (totalComp ? (totalTons / totalComp).toFixed(1) : "0") + " t</b></div>" +
+          '<div class="rep-card"><span>Load Factor</span><b>' + (totalKm ? ((totalLoad / totalKm) * 100).toFixed(1) : "0") + "%</b></div>";
+
+        document.getElementById("dailyBody").innerHTML = days.map(function (d) {
+          var totKm = d.loadKm + d.emptyKm;
+          var avgLoad = d.completed ? (d.tons / d.completed).toFixed(1) : "—";
+          var lf = totKm ? ((d.loadKm / totKm) * 100).toFixed(0) : "0";
+          return '<tr style="cursor:pointer" onclick="showDay(\'' + d.day + '\')">' +
+            "<td>" + esc(d.day) + "</td>" +
+            "<td>" + d.total + "</td>" +
+            "<td>" + d.pending + "</td>" +
+            "<td>" + d.in_transit + "</td>" +
+            "<td>" + d.completed + "</td>" +
+            "<td>" + fmtNum(d.tons) + "</td>" +
+            "<td>" + fmtNum(d.loadKm) + "</td>" +
+            "<td>" + fmtNum(d.emptyKm) + "</td>" +
+            "<td>" + fmtNum(totKm) + "</td>" +
+            "<td>" + fmtNum(d.tonKm) + "</td>" +
+            "<td>" + fmtNum(d.rev) + "</td>" +
+            "<td>" + avgLoad + ' <small class="muted">' + lf + "%</small></td>" +
+            "</tr>";
+        }).join("") || '<tr><td colspan="12" style="text-align:center;color:var(--muted)">No trips found.</td></tr>';
+
+        document.getElementById("noData").classList.toggle("hidden", days.length > 0);
+        document.getElementById("dayDetail").classList.add("hidden");
+      }
+
+      window.showDay = function (day) {
+        var trips = getWaybillEffective().filter(function (t) { return dayKey(t) === day; });
+        document.getElementById("dayTitle").textContent = day;
+        document.getElementById("dayBody").innerHTML = trips.map(function (t) {
+          var wt = Number(t.ton) || 0;
+          var lKm = Number(t.lKm) || 0;
+          var eKm = Number(t.eKm) || 0;
+          var rev = Math.round(wt * (lKm + eKm) * 11);
+          return "<tr>" +
+            '<td class="mono">' + esc(t.truck || "—") + "</td>" +
+            "<td>" + esc(t.driver || "—") + "</td>" +
+            "<td>" + esc(t.origin || "—") + "</td>" +
+            "<td>" + esc(t.destination || "—") + "</td>" +
+            "<td>" + esc(t.item || "—") + "</td>" +
+            "<td>" + fmtNum(wt) + "</td>" +
+            "<td>" + fmtNum(lKm) + "</td>" +
+            "<td>" + fmtNum(eKm) + "</td>" +
+            "<td>" + fmtNum(t.tKm) + "</td>" +
+            "<td>" + (t.isTrip ? statusBadge(t.status) : '<span class="badge badge-completed">Weigh bridge</span>') + "</td>" +
+            "<td>" + fmtNum(rev) + "</td>" +
+            "</tr>";
+        }).join("");
+        document.getElementById("dayDetail").classList.remove("hidden");
+        document.getElementById("dayDetail").scrollIntoView({ behavior: "smooth", block: "start" });
+      };
+
+      window.exportCurrent = function (format) {
+        if (!currentDays.length) { toast("Nothing to export", "error"); return; }
+        var headers = ["Date", "Trips", "Pending", "In Transit", "Completed", "Tons (t)", "Loaded km", "Empty km", "Total km", "Ton-km", "Revenue (ETB)", "Avg Load (t)", "Load Factor (%)"];
+        var data = currentDays.map(function (d) {
+          var totKm = d.loadKm + d.emptyKm;
+          return [d.day, d.total, d.pending, d.in_transit, d.completed, d.tons, d.loadKm, d.emptyKm, totKm, d.tonKm, d.rev, d.completed ? (d.tons / d.completed).toFixed(1) : "", totKm ? ((d.loadKm / totKm) * 100).toFixed(1) : "0"];
+        });
+        if (format === "xlsx") {
+          exportXLSX("daily-trip-summary.xlsx", "Daily Summary", headers, data);
+          toast("Exported to Excel", "success");
+        } else {
+          exportCSV("daily-trip-summary.csv", headers, data);
+          toast("Exported to CSV", "success");
+        }
+      };
+
+      var chips = document.querySelectorAll("#rangeChips .chip");
+      for (var i = 0; i < chips.length; i++) {
+        chips[i].addEventListener("click", function () {
+          for (var j = 0; j < chips.length; j++) chips[j].classList.remove("on");
+          this.classList.add("on");
+          range = this.dataset.range;
+          if (range !== "all") {
+            var r = dayRange();
+            document.getElementById("fromDate").value = r.from || "";
+            document.getElementById("toDate").value = r.to || "";
+          } else {
+            document.getElementById("fromDate").value = "";
+            document.getElementById("toDate").value = "";
+          }
+          render();
+        });
+      }
+
+      document.getElementById("fromDate").addEventListener("change", function () {
+        range = "custom";
+        for (var j = 0; j < chips.length; j++) chips[j].classList.remove("on");
+        render();
+      });
+      document.getElementById("toDate").addEventListener("change", function () {
+        range = "custom";
+        for (var j = 0; j < chips.length; j++) chips[j].classList.remove("on");
+        render();
+      });
+
+      render();
+      window.afterApiSync = function () { render(); };
+    })();
+  </script>
+</body>
+</html>

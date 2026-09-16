@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live GPS Tracking ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â National Transport PLC</title>
+  <meta name="description" content="Live GPS tracking of the National Transport PLC fleet. Follow every vehicle on the map with real-time position, speed and status.">
+    <link rel="stylesheet" href="css/style.css?v=60">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body data-page="tracking">
+  <div id="siteHeader"></div>
+
+  <main>
+    <section class="page-hero" style="padding:14px 0">
+      <div class="container spread">
+        <div>
+          <h1 style="font-size:1.25rem">Live GPS Tracking</h1>
+          <p style="font-size:.85rem">Real-time position of the entire fleet from your GPS fleet control system.</p>
+        </div>
+        <div class="flex">
+          <button class="btn btn-light btn-sm" onclick="exportTrackingXlsx()">&#128196; Export XLSX</button>
+          <button class="btn btn-light btn-sm" onclick="showRawFeed()" title="Inspect the exact data the GPS API returns">&#128269; Debug Feed</button>
+          <a class="btn btn-light btn-sm" href="reports.html">&#128203; Reports</a>
+          <a class="btn btn-ghost-light btn-sm" href="admin.html">&#9881; GPS Settings</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding:24px 0">
+      <div class="container">
+        <div class="track-layout">
+          <!-- Vehicle list -->
+          <aside class="track-list">
+            <div class="track-toolbar">
+              <div class="track-search">
+                <span class="track-search-icon">&#128269;</span>
+                <input type="text" id="trackSearch" class="input" placeholder="Search plate, model, fleet, location, driver... (e.g. Lemi, Adama; comma-separated)" autocomplete="off">
+                <button class="btn btn-outline btn-sm" id="exportSearchBtn" type="button" title="Export searched vehicles to XLSX">&#128228; Export</button>
+              </div>
+              <div class="track-filters">
+                <div class="dd" id="fleetDd">
+                  <button class="btn btn-outline btn-sm" id="fleetBtn" type="button">Fleet: All &#9662;</button>
+                  <div class="dd-menu" id="fleetMenu">
+                    <button type="button" class="on" data-fleet="">All</button>
+                    <button type="button" data-fleet="Lemi">Lemi</button>
+                    <button type="button" data-fleet="NT">NT</button>
+                  </div>
+                </div>
+                <div class="dd" id="destDd">
+                  <button class="btn btn-outline btn-sm" id="destBtn" type="button">Heading: All &#9662;</button>
+                  <div class="dd-menu" id="destMenu" style="max-height:320px;overflow:auto">
+                    <button type="button" class="on" data-dest="">All</button>
+                  </div>
+                </div>
+                <div class="dd" id="locDd">
+                  <button class="btn btn-outline btn-sm" id="locBtn" type="button">Location: All &#9662;</button>
+                  <div class="dd-menu" id="locMenu" style="max-height:320px;overflow:auto">
+                    <button type="button" class="on" data-loc="">All</button>
+                  </div>
+                </div>
+                <div class="dd" id="speedDd">
+                  <button class="btn btn-outline btn-sm" id="speedBtn" type="button">Speed: All &#9662;</button>
+                  <div class="dd-menu" id="speedMenu">
+                    <label class="dd-check"><input type="checkbox" data-speed="Lemi"> Lemi &gt; 80 km/h</label>
+                    <label class="dd-check"><input type="checkbox" data-speed="NT"> NT &gt; 80 km/h</label>
+                  </div>
+                </div>
+                <div class="dd" id="statusDd">
+                  <button class="btn btn-outline btn-sm" id="statusBtn" type="button">Status: All &#9662;</button>
+                  <div class="dd-menu" id="statusMenu">
+                    <button type="button" class="on" data-gps-status="">All</button>
+                    <button type="button" data-gps-status="idle">Idle</button>
+                    <button type="button" data-gps-status="moving">Moving</button>
+                    <button type="button" data-gps-status="stationary">Stationary</button>
+                  </div>
+                </div>
+                <div class="dd" id="ageDd" style="display:none">
+                  <button class="btn btn-outline btn-sm" id="ageBtn" type="button">Stopped: All &#9662;</button>
+                  <div class="dd-menu" id="ageMenu">
+                    <button type="button" class="on" data-age="">All</button>
+                    <button type="button" data-age="1">1+ day</button>
+                    <button type="button" data-age="2">2+ days</button>
+                    <button type="button" data-age="3">3+ days</button>
+                    <button type="button" data-age="4">4+ days</button>
+                    <button type="button" data-age="5">5+ days</button>
+                    <button type="button" data-age="7">1 week</button>
+                    <button type="button" data-age="30">1 month</button>
+                  </div>
+                </div>
+                <button class="btn btn-outline btn-sm speed-alert-btn" id="speedAlertBtn" type="button" title="Alerts">
+                  &#9888; Alerts <span class="badge-dot" id="speedAlertBadge">0</span>
+                </button>
+              </div>
+            </div>
+            <div class="track-scroll">
+              <div class="status-counts" id="statusCounts"></div>
+              <div id="trackItems"></div>
+            </div>
+          </aside>
+
+          <!-- Map -->
+          <div class="track-map">
+            <div id="map"></div>
+            <div class="map-legend">
+              <div><span class="sw" style="background:#1c9a62"></span> Idle</div>
+              <div><span class="sw" style="background:#d98c1f"></span> In Transit</div>
+              <div><span class="sw" style="background:#6a4fc2"></span> Loading</div>
+              <div><span class="sw" style="background:#8a98a8"></span> Stopped</div>
+              <div><span class="sw" style="background:#cf3f3f"></span> Maintenance</div>
+            </div>
+            <div class="track-detail" id="trackDetail"></div>
+            <div class="track-statusbar">
+              <span class="live-dot" id="modeDot"></span>
+              <span id="modeText">Loading feed...</span>
+              <span>&middot;</span>
+              <span>Last update: <b id="lastUpdate">ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â</b></span>
+              <span>&middot;</span>
+              <span id="feedCount"></span>
+              <span id="feedViolationCounts" style="margin-left:auto;display:flex;gap:6px;align-items:center"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="siteFooter"></div>
+
+  <!-- Speed Violation Alert modal -->
+  <div class="modal-backdrop" id="speedAlertModal">
+    <div class="modal" style="max-width:720px">
+      <div class="modal-header">
+        <h3>&#9888; Alerts</h3>
+        <button class="modal-close" onclick="closeSpeedAlert()">&times;</button>
+      </div>
+      <div class="modal-body" id="speedAlertBody" style="max-height:75vh; overflow:auto; font-size:.82rem; line-height:1.6"></div>
+    </div>
+  </div>
+
+  <!-- Raw feed debug modal -->
+  <div class="modal-backdrop" id="rawModal">
+    <div class="modal" style="max-width:720px">
+      <div class="modal-header">
+        <h3>&#128269; GPS Feed Debug ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â raw API data</h3>
+        <button class="modal-close" onclick="closeRawFeed()">&times;</button>
+      </div>
+      <div class="modal-body" id="rawModalBody" style="max-height:70vh; overflow:auto; font-size:.78rem; line-height:1.5"></div>
+    </div>
+  </div>
+
+  <script src="js/data.js?v=63"></script>
+  <script src="js/layout.js?v=63"></script>
+  <script src="js/app.js?v=63"></script>
+  <script src="js/api.js?v=63"></script>
+  <script src="js/tracking.js?v=63"></script>
+</body>
+</html>

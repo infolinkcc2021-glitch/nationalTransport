@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fleet Dashboard — National Transport PLC</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="fleet">
+  <div id="siteHeader"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <h1>Fleet Dashboard</h1>
+        <p>Live status of every vehicle — idle, loading, in transit, stopped or in maintenance.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <!-- Summary cards -->
+        <div class="grid grid-4 mb-3" id="fleetStats"></div>
+
+        <!-- Toolbar -->
+        <div class="fleet-toolbar">
+          <div style="position:relative">
+            <input type="text" id="fleetSearch" class="input" placeholder="Search plate or model..." style="min-width:240px">
+          </div>
+          <div id="statusFilters" class="flex"></div>
+        </div>
+
+        <!-- Vehicle cards -->
+        <div class="grid grid-4" id="vehicleGrid"></div>
+        <div class="empty hidden" id="noVehicles">
+          <div class="eico">&#128665;</div>
+          <p>No vehicles match your search.</p>
+        </div>
+
+        <!-- Fleet status donut -->
+        <div class="grid grid-2 mt-3">
+          <div class="chart-box">
+            <h3>Fleet Status Distribution</h3>
+            <div class="pie" id="statusDonut"></div>
+          </div>
+          <div class="chart-box">
+            <h3>Trips by Vehicle (last 20)</h3>
+            <div class="bars" id="tripsByVehicle"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="siteFooter"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/api.js?v=63"></script>
+  <script>
+    (function () {
+      var STATUS_COLORS = { idle: "#1c9a62", transit: "#d98c1f", loaded: "#6a4fc2", stop: "#8a98a8", maintenance: "#cf3f3f" };
+      var activeFilter = null;
+      var search = "";
+
+      function renderStats() {
+        var ft = fleetTotals();
+        var v = getVehicles();
+        var counts = {};
+        v.forEach(function (x) { counts[x.status] = (counts[x.status] || 0) + 1; });
+        var card = function (icon, cls, value, label) {
+          return '<div class="card stat-card"><div class="stat-icon ' + cls + '">' + icon + "</div>" +
+            '<div><div class="stat-value">' + value + '</div><div class="stat-label">' + label + "</div></div></div>";
+        };
+        var ICONS = { idle: ["idle","var(--green)","&#9932;"], transit: ["transit","var(--amber)","&#128652;"], loaded: ["loaded","var(--purple)","&#128231;"], stop: ["stop","var(--muted)","&#9208;"], maintenance: ["maintenance","var(--red)","&#9888;"] };
+        var active = (counts.transit || 0) + (counts.loaded || 0);
+        document.getElementById("fleetStats").innerHTML =
+          card("&#128666;", "stat-icon-blue", ft.vehicles, "Total Vehicles") +
+          card("&#9989;", "stat-icon-green", active, "Active on Road") +
+          card("&#128203;", "stat-icon-purple", ft.completedTrips, "Completed Trips") +
+          card("&#128205;", "stat-icon-amber", ft.totalKm.toLocaleString(), "Total Km Covered");
+      }
+
+      function renderFilters() {
+        var chips = ['<span class="chip ' + (activeFilter === null ? "on" : "") + '" data-f="all">All</span>'];
+        ["idle", "loaded", "transit", "stop", "maintenance"].forEach(function (s) {
+          chips.push('<span class="chip ' + (activeFilter === s ? "on" : "") + '" data-f="' + s + '">' + STATUS_META[s].label + "</span>");
+        });
+        document.getElementById("statusFilters").innerHTML = chips.join("");
+        document.querySelectorAll("#statusFilters .chip").forEach(function (c) {
+          c.addEventListener("click", function () {
+            activeFilter = c.dataset.f === "all" ? null : c.dataset.f;
+            renderFilters();
+            renderVehicles();
+          });
+        });
+      }
+
+      function renderVehicles() {
+        var list = getVehicles().filter(function (v) {
+          var matchSearch = !search || v.plate.toLowerCase().includes(search) || v.model.toLowerCase().includes(search);
+          var matchFilter = !activeFilter || v.status === activeFilter;
+          return matchSearch && matchFilter;
+        });
+        var grid = document.getElementById("vehicleGrid");
+        document.getElementById("noVehicles").classList.toggle("hidden", list.length > 0);
+        grid.innerHTML = list.map(function (v) {
+          var s = vehicleStats(v.plate);
+          var activeTrip = getTrips().find(function (t) { return t.vehiclePlate === v.plate && (t.status === "in_transit" || t.status === "pending"); });
+          var route = activeTrip ? esc(activeTrip.startPoint) + " &rarr; " + esc(activeTrip.destination) : "Available for dispatch";
+          return (
+            '<div class="card card-hover vehicle-card">' +
+            '<div class="vehicle-top"><span class="vehicle-plate">' + esc(v.plate) + "</span>" + statusBadge(v.status) + "</div>" +
+            '<div class="vehicle-model">' + esc(v.model) + (v.trailerNo ? ' &middot; <span class="mono">Trailer ' + esc(v.trailerNo) + "</span>" : "") + "</div>" +
+            '<div class="small mt-1"><strong style="color:var(--navy)">' + route + "</strong></div>" +
+            '<div class="progress mt-1"><div class="progress-bar" style="width:' + Math.min(100, (v.currentKm % 20000) / 20000 * 100) + '%"></div></div>' +
+            '<div class="small">Odometer: ' + fmtNum(v.currentKm) + " km</div>" +
+            '<div class="vehicle-meta">' +
+            '<div class="vmeta"><span>Type</span><b>' + esc(v.type) + "</b></div>" +
+            '<div class="vmeta"><span>Capacity</span><b>' + v.capacity + " t</b></div>" +
+            '<div class="vmeta"><span>Trips</span><b>' + fmtNum(s.trips) + "</b></div>" +
+            '<div class="vmeta"><span>Load Moved</span><b>' + fmtNum(s.totalWeight) + " t</b></div>" +
+            '<div class="vmeta"><span>Km Covered</span><b>' + fmtNum(s.totalKm) + "</b></div>" +
+            '<div class="vmeta"><span>Fuel Used</span><b>' + fmtNum(s.totalFuel) + " L</b></div>" +
+            "</div></div>"
+          );
+        }).join("");
+      }
+
+      function renderDonut() {
+        var counts = {};
+        getVehicles().forEach(function (v) { counts[v.status] = (counts[v.status] || 0) + 1; });
+        var data = Object.keys(STATUS_COLORS).map(function (s) {
+          return { label: STATUS_META[s].label, value: counts[s] || 0, color: STATUS_COLORS[s] };
+        }).filter(function (d) { return d.value > 0; });
+        renderDonut(document.getElementById("statusDonut"), data);
+      }
+
+      function renderBars() {
+        var trips = getTrips().slice(0, 20);
+        var counts = {};
+        trips.forEach(function (t) { counts[t.vehiclePlate] = (counts[t.vehiclePlate] || 0) + 1; });
+        var data = Object.keys(counts).map(function (p) { return { label: p, value: counts[p] }; })
+          .sort(function (a, b) { return b.value - a.value; }).slice(0, 8);
+        renderBars(document.getElementById("tripsByVehicle"), data);
+      }
+
+      document.getElementById("fleetSearch").addEventListener("input", function () {
+        search = this.value.trim().toLowerCase();
+        renderVehicles();
+      });
+
+      renderStats();
+      renderFilters();
+      renderVehicles();
+      renderDonut();
+      renderBars();
+      window.afterApiSync = function () { renderStats(); renderFilters(); renderVehicles(); renderDonut(); renderBars(); };
+    })();
+  </script>
+</body>
+</html>

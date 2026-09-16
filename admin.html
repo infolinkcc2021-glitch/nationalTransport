@@ -1,0 +1,2193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel — National Transport PLC</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="admin">
+  <div id="siteHeader"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="container spread">
+        <div>
+          <h1>Admin Panel</h1>
+          <p>Manage vehicles, drivers, trips and customer requests. Changes are stored locally in your browser.</p>
+        </div>
+        <div class="flex" style="gap:10px;flex-wrap:wrap;justify-content:flex-end">
+          <button class="btn btn-light no-print admin-only" onclick="openWaybill()">&#128203; Waybill / Weight Bill</button>
+          <a class="btn btn-light no-print admin-only" href="vehperf.html">&#128666; Vehicle Performance</a>
+          <a class="btn btn-light no-print admin-only" href="performance.html">&#128200; Performance &amp; Ranking</a>
+          <a class="btn btn-light no-print admin-only" href="kpi.html">&#128202; KPI Dashboard</a>
+          <button class="btn btn-light no-print admin-only" onclick="openWaybillPerf()">&#128202; Waybill Perf</button>
+          <button class="btn btn-primary no-print admin-only" onclick="openDispatch()">&#128737; Dispatch</button>
+          <button class="btn btn-light no-print admin-only" onclick="resetDemoData()">&#8635; Reset Demo Data</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <!-- Tabs -->
+        <div class="fleet-toolbar no-print">
+          <button class="chip on" data-tab="vehicles">Vehicles</button>
+          <button class="chip" data-tab="drivers">Drivers</button>
+          <button class="chip" data-tab="trips">Trips</button>
+          <button class="chip" data-tab="orders">Orders</button>
+          <button class="chip" data-tab="eat">Estimated Arrival Time (EAT)</button>
+          <span style="flex:1"></span>
+          <button class="btn btn-outline btn-sm" onclick="openGpsSettings()">&#128506; GPS Settings</button>
+          <button class="btn btn-outline btn-sm" onclick="openFleetImport()">&#128229; Import Fleet</button>
+          <button class="btn btn-outline btn-sm" id="syncBtn">&#128260; Sync to Server</button>
+          <button class="btn btn-primary btn-sm" id="addBtn">+ Add New</button>
+        </div>
+
+        <!-- Vehicles -->
+        <div class="card card-pad tab-panel" id="tab-vehicles">
+          <h3 style="color:var(--navy)" class="mb-2">Fleet Vehicles</h3>
+          <div class="fleet-toolbar mb-2">
+            <span class="small muted" style="flex:1">Fleet group:</span>
+            <button type="button" class="btn btn-outline btn-sm fleet-filter on" data-fleet="Lemi">Lemi</button>
+            <button type="button" class="btn btn-outline btn-sm fleet-filter" data-fleet="NT">NT</button>
+          </div>
+          <div class="table-wrap">
+            <table id="vehiclesTable">
+              <thead><tr><th>Plate</th><th>Trailer No.</th><th>Assigned Driver</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody></tbody>
+              <tfoot id="vehiclesFoot"></tfoot>
+            </table>
+          </div>
+        </div>
+
+        <!-- Drivers -->
+        <div class="card card-pad tab-panel hidden" id="tab-drivers">
+          <h3 style="color:var(--navy)" class="mb-2">Drivers</h3>
+          <div class="fleet-toolbar mb-2 no-print">
+            <input type="text" id="driverSearch" class="input" placeholder="Search drivers by name or phone…" style="min-width:260px">
+            <button class="btn btn-outline btn-sm" id="driverSearchClear">Clear</button>
+          </div>
+          <div class="table-wrap">
+            <table id="driversTable">
+              <thead><tr><th>Name</th><th>Phone</th><th>License No.</th><th>Fayda No.</th><th>Experience (yrs)</th><th>Actions</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Trips -->
+        <div class="card card-pad tab-panel hidden" id="tab-trips">
+          <h3 style="color:var(--navy)" class="mb-2">Trip Log</h3>
+          <div class="table-wrap">
+            <table id="tripsTable">
+              <thead><tr><th>Date</th><th>Vehicle</th><th>Driver</th><th>Route</th><th>Item</th><th>Weight</th><th>Km</th><th>Fuel</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Orders -->
+        <div class="card card-pad tab-panel hidden" id="tab-orders">
+          <h3 style="color:var(--navy)" class="mb-2">Customer Orders</h3>
+          <div class="table-wrap">
+            <table id="ordersTable">
+              <thead><tr><th>Ref</th><th>Customer</th><th>Route</th><th>Item</th><th>Weight</th><th>Requested</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Estimated Arrival Time -->
+        <div class="card card-pad tab-panel hidden" id="tab-eat">
+          <div class="fleet-toolbar mb-2">
+            <h3 style="color:var(--navy);margin:0">Estimated Arrival Time (EAT)</h3>
+            <span class="small muted" style="flex:1">Computed from loading date + route distance &divide; average speed (<span id="eatAvgSpeed">60 km/h</span>)</span>
+            <label class="small muted">Avg speed (km/h): <input type="number" id="eatSpeedInput" value="60" min="10" max="120" style="width:70px"></label>
+            <button class="btn btn-outline btn-sm" onclick="exportEatXlsx()">&#128228; Export XLSX</button>
+          </div>
+
+          <div class="card card-pad mb-2 no-print" style="background:var(--silver)">
+            <h4 style="color:var(--navy);margin:0 0 10px">Manual EAT Calculator</h4>
+            <div class="fleet-toolbar" style="gap:10px;flex-wrap:wrap">
+              <label class="small muted">Origin
+                <select id="eatCalcOrigin" class="input" style="min-width:200px"></select>
+              </label>
+              <label class="small muted">Destination
+                <select id="eatCalcDest" class="input" style="min-width:200px"></select>
+              </label>
+              <label class="small muted">Loading date &amp; time
+                <input type="datetime-local" id="eatCalcTime" class="input" style="min-width:200px">
+              </label>
+              <label class="small muted">Distance (km)
+                <input type="number" id="eatCalcKm" class="input" style="width:110px" min="0">
+              </label>
+              <label class="small muted">Actual days
+                <input type="number" id="eatCalcActual" class="input" style="width:80px" min="0" step="0.1">
+              </label>
+              <button class="btn btn-primary btn-sm" onclick="calcEat()">&#128270; Calculate</button>
+              <button class="btn btn-outline btn-sm" onclick="resetEatCalc()">&#8635; Clear</button>
+            </div>
+            <div class="small muted mt-2">Using: <b>9 h</b> / working day &middot; <b>30 km/h</b> loaded &middot; loaded-distance only. EAT (days) = distance &divide; 30 &divide; 9. Flagged <b>delayed</b> when EAT &gt; Actual.</div>
+            <div class="mt-2" id="eatCalcResult"></div>
+          </div>
+
+          <div class="fleet-toolbar mb-2 no-print" style="gap:8px;flex-wrap:wrap">
+            <label class="small muted">Date <select id="eatDateFilter" class="input" style="min-width:150px"></select></label>
+            <label class="small muted">Plate ID <select id="eatPlateFilter" class="input" style="min-width:150px"></select></label>
+            <label class="small muted">Origin <select id="eatOriginFilter" class="input" style="min-width:180px"></select></label>
+            <label class="small muted">Destination <select id="eatDestFilter" class="input" style="min-width:180px"></select></label>
+            <button class="btn btn-outline btn-sm" onclick="resetEatFilters()">&#8635; Reset</button>
+          </div>
+          <div class="table-wrap" style="max-height:60vh;overflow:auto">
+            <table id="eatTable">
+              <thead><tr><th>Plate ID</th><th>Date of Loading</th><th>Origin</th><th>Destination</th><th>Distance (km)</th><th>EAT</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Add / edit modal -->
+  <div class="modal-backdrop" id="formModal">
+    <div class="modal">
+      <div class="modal-header"><h3 id="modalTitle">Add</h3><button class="modal-close">&times;</button></div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- Request details modal -->
+  <div class="modal-backdrop" id="reqDetailModal">
+    <div class="modal" style="max-width:560px">
+      <div class="modal-header"><h3>&#128203; Request Details</h3><button class="modal-close" onclick="closeModal('reqDetailModal')">&times;</button></div>
+      <div class="modal-body" id="reqDetailBody"></div>
+    </div>
+  </div>
+
+  <!-- Waybill modal -->
+  <div class="modal-backdrop" id="waybillModal">
+    <div class="modal" style="max-width:1250px">
+      <div class="modal-header"><h3>&#128203; Freight Weight Bill (Waybill)</h3>
+        <div class="modal-controls no-print">
+          <button class="modal-tool" id="wbMinBtn" onclick="wbMinimize()" title="Minimize">&#128469;</button>
+          <button class="modal-tool" id="wbMaxBtn" onclick="wbMaximize()" title="Maximize">&#128470;</button>
+          <button class="modal-close" onclick="closeModal('waybillModal')">&times;</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p class="small mb-2">Pick <b>Origin</b>, <b>Destination</b> and <b>Item</b> from the dropdowns. Edit <b>FO</b>, <b>Customer</b>, <b>Q</b>, <b>Ton</b>, <b>E-KM</b> and <b>L-KM</b> per row; T-KM and Ton-Km are calculated automatically.</p>
+        <div class="fleet-toolbar mb-2 no-print">
+          <span class="small muted" id="waybillTotals" style="flex:1"></span>
+          <input type="text" id="wbFilterTruck" class="input" placeholder="Truck no…" style="min-width:130px">
+          <input type="number" id="wbAddCount" class="input wb-num" min="1" max="50" value="1" title="Number of rows to add" style="min-width:64px;max-width:80px">
+          <button class="btn btn-primary btn-sm" onclick="addWaybillRows()">&#10133; Add Rows</button>
+          <button class="btn btn-light btn-sm" onclick="saveWaybillChanges()">&#128190; Save</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteWaybillSelected()">&#128465; Delete Selected (<span id="wbSelCount">0</span>)</button>
+          <button class="btn btn-outline btn-sm" onclick="exportWaybill('csv')">&#128196; CSV</button>
+          <button class="btn btn-outline btn-sm" onclick="exportWaybill('xlsx')">&#128196; XLSX</button>
+          <button class="btn btn-outline btn-sm" onclick="exportWaybill('pdf')">&#128196; PDF</button>
+        </div>
+        <div class="table-wrap" style="max-height:60vh;overflow:auto">
+          <table id="waybillTable">
+            <thead><tr>
+              <th style="width:34px"><input type="checkbox" id="wbSelAll" title="Select all rows"></th><th>SN</th><th>Date / Time</th><th>FO</th><th>Truck No</th><th>Trailer No</th><th>Driver Name</th><th>Customer Name</th><th>Origin</th><th>Destination</th><th>Item</th><th>In Q</th><th>Ton</th><th>E-KM</th><th>L-KM</th><th>T-KM</th><th>Ton-Km</th><th>Actions</th>
+            </tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Waybill unsaved-changes confirm -->
+  <div class="modal-backdrop" id="wbSaveModal">
+    <div class="modal" style="max-width:440px">
+      <div class="modal-header"><h3>&#9888;&#65039; Unsaved Changes</h3><button class="modal-close" onclick="wbCloseSave(false)">&times;</button></div>
+      <div class="modal-body">
+        <p class="mb-2">You made changes to the <b>Freight Weight Bill</b>. What do you want to do?</p>
+        <div class="flex flex-wrap gap-2">
+          <button class="btn btn-primary" onclick="wbSaveClose()">&#128190; Save &amp; Close</button>
+          <button class="btn btn-outline" onclick="wbDiscardClose()">Close without saving</button>
+          <button class="btn btn-light" onclick="wbCloseSave(false)">Stay here</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dispatch tracker modal -->
+  <div class="modal-backdrop" id="dispatchModal">
+    <div class="modal" style="max-width:1500px">
+      <div class="modal-header"><h3>&#128737; Dispatch Tracker</h3><button class="modal-close" onclick="closeModal('dispatchModal')">&times;</button></div>
+      <div class="modal-body">
+        <h4 class="mb-2" style="color:var(--navy)">Daily Truck Dispatch Operational Tracker — Fleet Operations &amp; Load Verification Dashboard</h4>
+        <div class="grid grid-5 mb-3" id="dispatchStats" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))"></div>
+
+        <div class="fleet-toolbar mb-2 no-print" style="justify-content:flex-start">
+          <button class="chip on" data-dispatch-view="loads">Dispatch Loads</button>
+          <button class="chip" data-dispatch-view="fleet">Fleet &amp; Driver Availability Directory</button>
+        </div>
+
+        <div class="card card-pad" id="dispatchLoadsWrap">
+          <div class="spread mb-2">
+            <h5 style="color:var(--navy)">Dispatch Loads <span class="small muted" id="dispatchRangeLabel"></span></h5>
+            <div class="flex" style="gap:6px">
+              <button class="btn btn-outline btn-sm" onclick="exportDispatch('csv')">&#128196; CSV</button>
+              <button class="btn btn-outline btn-sm" onclick="exportDispatch('xlsx')">&#128196; XLSX</button>
+              <button class="btn btn-outline btn-sm" onclick="exportDispatch('pdf')">&#128196; PDF</button>
+            </div>
+          </div>
+          <div class="table-wrap" style="max-height:440px;overflow:auto">
+            <table id="dispatchTable">
+              <thead><tr>
+                <th>Load #</th><th>Dispatch Date</th><th>Driver Name</th><th>Truck / Unit #</th><th>Trailer #</th><th>Origin / Shipper</th><th>Destination / Receiver</th><th>Pickup Date/Time</th><th>Delivery Date/Time</th><th>Status</th><th>Rate Con Signed</th><th>BOL &amp; POD Cleared</th><th>Gross Rate (ETB)</th><th>Fuel Surcharge</th><th>Notes / Delays</th>
+              </tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card card-pad" id="dispatchFleetWrap" style="display:none">
+          <h5 class="mb-2" style="color:var(--navy)">Fleet &amp; Driver Availability Directory</h5>
+          <div class="table-wrap" style="max-height:440px;overflow:auto">
+            <table id="dispatchFleetTable">
+              <thead><tr>
+                <th>Driver Name</th><th>Phone Number</th><th>Assigned Truck</th><th>Trailer Unit</th><th>Trailer Type</th><th>HOS Available Hrs</th><th>Current Location</th><th>Duty Status</th><th>Notes</th>
+              </tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Waybill performance modal -->
+  <div class="modal-backdrop" id="perfModal">
+    <div class="modal" style="max-width:1100px">
+      <div class="modal-header"><h3>&#128200; Vehicle Performance (from Waybill)</h3><button class="modal-close" onclick="closeModal('perfModal')">&times;</button></div>
+      <div class="modal-body">
+        <div class="fleet-toolbar mb-2 no-print">
+          <input type="text" id="perfTruck" class="input" placeholder="Truck no…" style="min-width:150px">
+          <button class="chip" data-perf="daily">Daily</button>
+          <button class="chip" data-perf="weekly">Weekly</button>
+          <button class="chip" data-perf="monthly">Monthly</button>
+          <button class="chip" data-perf="annual">Annual</button>
+          <span style="flex:1"></span>
+          <button class="chip on" data-group="truck">By Truck</button>
+          <button class="chip" data-group="item">By Item</button>
+          <button class="btn btn-outline btn-sm" onclick="exportWaybillPerf('csv')">&#128196; CSV</button>
+          <button class="btn btn-outline btn-sm" onclick="exportWaybillPerf('xlsx')">&#128196; XLSX</button>
+          <button class="btn btn-outline btn-sm" onclick="exportWaybillPerf('pdf')">&#128196; PDF</button>
+        </div>
+        <div class="table-wrap" style="max-height:60vh;overflow:auto">
+          <table id="perfTable">
+            <thead><tr>
+              <th>Period</th><th>Truck No</th><th>Trailer No</th><th>Driver Name</th><th>Trips</th><th>In Q</th><th>Ton</th><th>E-KM</th><th>L-KM</th><th>T-KM</th><th>Ton-Km</th>
+            </tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trip status modal -->
+  <div class="modal-backdrop" id="statusModal">
+    <div class="modal">
+      <div class="modal-header"><h3>Update Trip Status</h3><button class="modal-close">&times;</button></div>
+      <div class="modal-body" id="statusBody"></div>
+    </div>
+  </div>
+
+  <!-- GPS settings modal -->
+  <div class="modal-backdrop" id="gpsModal">
+    <div class="modal">
+      <div class="modal-header"><h3>GPS Fleet Control Settings</h3><button class="modal-close">&times;</button></div>
+      <div class="modal-body">
+        <div class="alert alert-success mb-2" id="gpsState"></div>
+        <p class="small mb-2">The Live Tracking page connects directly to your <b>ZTS GPS</b> system (nt.ztrackinsight.com). Your login details are stored <b>only in this browser</b> (localStorage) — they are never written to the code or uploaded anywhere else.</p>
+        <div class="form-group">
+          <label>Enable Live GPS Feed</label>
+          <select id="gpsEnabled" class="input">
+            <option value="0">Off — use demo simulation</option>
+            <option value="1">On — fetch live positions from ZTS GPS</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Lemi ZTS Username <span class="req">*</span></label>
+            <input type="text" id="gpsUser" class="input" placeholder="Your ZTS GPS username" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label>Lemi ZTS Password <span class="req">*</span></label>
+            <input type="password" id="gpsPass" class="input" placeholder="Your ZTS GPS password" autocomplete="off">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>ZTS API Base URL</label>
+          <input type="text" id="gpsApi" class="input" value="https://apigps1.ztrackinsight.com/api">
+          <div class="form-hint">Usually https://apigps1.ztrackinsight.com/api — change only if ZTS tells you otherwise.</div>
+        </div>
+        <div class="form-row" style="border-top:1px dashed var(--border, #dde3ea);padding-top:12px;margin-top:12px">
+          <div class="form-group" style="flex:0 0 150px">
+            <label>NT account (2nd login)</label>
+            <select id="gps2Enabled" class="input">
+              <option value="0">Disabled</option>
+              <option value="1">Enabled</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>NT ZTS Username</label>
+            <input type="text" id="gps2User" class="input" placeholder="NT fleet ZTS username" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label>NT ZTS Password</label>
+            <input type="password" id="gps2Pass" class="input" placeholder="NT fleet ZTS password" autocomplete="off">
+          </div>
+        </div>
+        <div class="form-hint">Lemi (180) and NT (164) fleets use separate ZTS logins. The app logs into <b>both</b> accounts and merges the live feed — no need to choose. Leave the NT account disabled until you enter its credentials.</div>
+        <div class="flex">
+          <button class="btn btn-primary" onclick="saveGpsSettings()">Save Settings</button>
+          <button class="btn btn-outline" onclick="testGpsConnection()">&#128225; Test Connection</button>
+        </div>
+        <div id="gpsTestResult" class="mt-2"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="siteFooter"></div>
+
+  <script src="js/data.js?v=63"></script>
+  <script src="js/layout.js?v=63"></script>
+  <script src="js/app.js?v=63"></script>
+  <script src="js/api.js?v=63"></script>
+  <script>
+    (function () {
+      var activeTab = "vehicles";
+
+      function switchTab(tab) {
+        activeTab = tab;
+        document.querySelectorAll(".chip[data-tab]").forEach(function (c) {
+          c.classList.toggle("on", c.dataset.tab === tab);
+        });
+        document.querySelectorAll(".tab-panel").forEach(function (p) {
+          p.classList.toggle("hidden", p.id !== "tab-" + tab);
+        });
+        render();
+      }
+
+      document.querySelectorAll(".chip[data-tab]").forEach(function (c) {
+        c.addEventListener("click", function () { switchTab(c.dataset.tab); });
+      });
+
+      document.getElementById("addBtn").addEventListener("click", function () {
+        if (activeTab === "vehicles") openVehicleForm();
+        else if (activeTab === "drivers") openDriverForm();
+        else if (activeTab === "trips") openTripForm();
+        else if (activeTab === "orders") toast("Orders are created from the Customer Portal", "error");
+      });
+
+      function render() {
+        if (activeTab === "vehicles") renderVehicles();
+        else if (activeTab === "drivers") renderDrivers();
+        else if (activeTab === "trips") renderTrips();
+        else if (activeTab === "orders") renderOrders();
+        else if (activeTab === "eat") renderEAT();
+      }
+
+      /* ---------- Vehicles ---------- */
+      var fleetFilter = "Lemi";
+      function renderVehicles() {
+        var tbody = document.querySelector("#vehiclesTable tbody");
+        var all = getVehicles();
+        var foot = document.getElementById("vehiclesFoot");
+        var list = all.filter(function (v) { return (v.fleet || "Lemi") === fleetFilter; });
+        var withDriver = list.filter(function (v) { return v.assignedDriverId; }).length;
+        var cnt = { Lemi: 0, NT: 0 };
+        all.forEach(function (v) { cnt[v.fleet || "Lemi"] = (cnt[v.fleet || "Lemi"] || 0) + 1; });
+        var sorted = list.slice().sort(function (a, b) {
+          var na = a.assignedDriverId ? driverName(a.assignedDriverId).toLowerCase() : "\uffff";
+          var nb = b.assignedDriverId ? driverName(b.assignedDriverId).toLowerCase() : "\uffff";
+          if (na < nb) return -1;
+          if (na > nb) return 1;
+          return (a.plate || "") < (b.plate || "") ? -1 : 1;
+        });
+        tbody.innerHTML = sorted.map(function (v) {
+          return "<tr>" +
+            '<td class="mono">' + esc(v.plate) + "</td>" +
+            '<td class="mono">' + esc(v.trailerNo || "—") + "</td>" +
+            "<td>" + esc(driverName(v.assignedDriverId)) + "</td>" +
+            "<td>" + statusBadge(v.status) + "</td>" +
+            '<td><div class="table-actions">' +
+            '<button class="btn btn-outline btn-sm" onclick="editVehicle(\'' + esc(v.id) + '\')">Edit</button>' +
+            "</div></td></tr>";
+        }).join("") || '<tr><td colspan="5" style="text-align:center;color:var(--muted)">No vehicles in this fleet group yet.</td></tr>';
+        foot.innerHTML = "<tr>" +
+          '<td colspan="2" style="text-align:right;font-weight:600">Total Trucks (' + esc(fleetFilter) + ")</td>" +
+          "<td>" + list.length + "</td>" +
+          "<td>" + withDriver + " with driver</td>" +
+          "<td>Lemi " + (cnt.Lemi || 0) + " &middot; NT " + (cnt.NT || 0) + "</td>" +
+          "</tr>";
+      }
+
+      document.querySelectorAll(".fleet-filter").forEach(function (b) {
+        b.addEventListener("click", function () {
+          fleetFilter = b.dataset.fleet;
+          document.querySelectorAll(".fleet-filter").forEach(function (x) { x.classList.toggle("on", x.dataset.fleet === fleetFilter); });
+          renderVehicles();
+        });
+      });
+
+      window.removeVehicle = function (id) {
+        if (!confirm("Delete this vehicle?")) return;
+        deleteVehicle(id);
+        render();
+        toast("Vehicle deleted", "success");
+      };
+
+      window.editVehicle = function (id) { openVehicleForm(id); };
+
+      function openVehicleForm(id) {
+        var v = getVehicles().find(function (x) { return x.id === id; }) || {};
+        document.getElementById("modalTitle").textContent = v.id ? "Edit Vehicle — " + v.plate : "Add Vehicle";
+        document.getElementById("modalBody").innerHTML =
+          '<div class="form-row">' +
+          '<div class="form-group"><label>Truck No / Plate <span class="req">*</span></label><input id="vPlate" class="input" value="' + esc(v.plate || "") + '" required></div>' +
+          '<div class="form-group"><label>Trailer No.</label><input id="vTrailer" class="input" value="' + esc(v.trailerNo || "") + '"></div>' +
+          "</div>" +
+          '<div class="form-row">' +
+          '<div class="form-group"><label>Model</label><input id="vModel" class="input" value="' + esc(v.model || "") + '"></div>' +
+          '<div class="form-group"><label>Type</label><input id="vType" class="input" value="' + esc(v.type || "") + '"></div>' +
+          "</div>" +
+          '<div class="form-row">' +
+          '<div class="form-group"><label>Capacity (tons) <span class="req">*</span></label><input id="vCap" type="number" class="input" min="1" value="' + (v.capacity || "") + '" required></div>' +
+          '<div class="form-group"><label>Odometer (km)</label><input id="vKm" type="number" class="input" min="0" value="' + (v.currentKm || 0) + '"></div>' +
+          "</div>" +
+          '<div class="form-group"><label>Status</label><select id="vStatus" class="input">' +
+          ['idle', 'loaded', 'transit', 'stop', 'maintenance'].map(function (s) {
+            return '<option value="' + s + '" ' + (v.status === s ? "selected" : "") + ">" + STATUS_META[s].label + "</option>";
+          }).join("") +
+          "</select></div>" +
+          '<div class="form-group"><label>Fleet Group</label><select id="vFleet" class="input">' +
+          '<option value="Lemi" ' + ((v.fleet || "Lemi") === "Lemi" ? "selected" : "") + ">Lemi</option>" +
+          '<option value="NT" ' + (v.fleet === "NT" ? "selected" : "") + ">NT</option>" +
+          "</select></div>" +
+          '<div class="form-group"><label>Assigned Driver</label><select id="vDriver" class="input">' +
+          '<option value="">— None —</option>' +
+          getDrivers().map(function (d) {
+            return '<option value="' + esc(d.id) + '"' + (v.assignedDriverId === d.id ? " selected" : "") + ">" + esc(d.name) + "</option>";
+          }).join("") +
+          "</select></div>" +
+          '<button class="btn btn-primary btn-block" id="saveVehicleBtn">Save Vehicle</button>';
+        document.getElementById("saveVehicleBtn").addEventListener("click", function () {
+          var plate = document.getElementById("vPlate").value.trim().toUpperCase();
+          if (!plate || !document.getElementById("vCap").value) { toast("Plate and capacity are required", "error"); return; }
+          var data = {
+            plate: plate,
+            trailerNo: document.getElementById("vTrailer").value.trim().toUpperCase(),
+            model: document.getElementById("vModel").value.trim() || "Generic Truck",
+            type: document.getElementById("vType").value.trim() || "Freight",
+            capacity: parseFloat(document.getElementById("vCap").value),
+            currentKm: parseFloat(document.getElementById("vKm").value) || 0,
+            status: document.getElementById("vStatus").value,
+            fleet: document.getElementById("vFleet").value || "Lemi",
+            assignedDriverId: document.getElementById("vDriver").value || null,
+          };
+          if (v.id) {
+            var list = getVehicles();
+            var target = list.find(function (x) { return x.id === v.id; });
+            Object.assign(target, data);
+            saveVehicles(list);
+          } else {
+            addVehicle(data);
+          }
+          closeModal("formModal");
+          render();
+          toast("Vehicle saved", "success");
+        });
+        openModal("formModal");
+      }
+
+      /* ---------- Fleet import (paste list: Truck No, Trailer No, Driver Name) ---------- */
+      function normalizeName(n) {
+        return String(n || "").toLowerCase().replace(/\s+/g, " ").trim();
+      }
+
+      function parseFleetText(text) {
+        var rows = [], warnings = [], seen = {}, dup = 0;
+        var lines = String(text || "").split(/\r?\n/);
+        for (var i = 0; i < lines.length; i++) {
+          var line = lines[i].trim();
+          if (!line) continue;
+          var cells = line.split(/[,\t;]+/).map(function (c) { return c.trim(); }).filter(Boolean);
+          if (!cells.length) continue;
+          if (/^(truck|truck\s*no\.?|no\.?|plate|vehicle|unit)/i.test(cells[0]) && /^(trailer|trailer\s*no\.?)/i.test(cells[1] || "")) {
+            continue;
+          }
+          var truck = cells[0].toUpperCase().replace(/\s+/g, " ").trim();
+          if (!truck) {
+            warnings.push("Line " + (i + 1) + ": missing truck no — skipped");
+            continue;
+          }
+          var trailer = ((cells[1] || "").replace(/["';]/g, "").trim()).toUpperCase();
+          var driver = (cells[2] || "").replace(/^[\-–—. ]+|[\-–—. ]+$/g, "").trim();
+          if (seen[truck]) {
+            dup++;
+            warnings.push("Duplicate truck " + truck + " — keeping the last line");
+          }
+          seen[truck] = true;
+          rows.push({ truck: truck, trailer: trailer, driver: driver, line: i + 1 });
+        }
+        return { rows: rows, warnings: warnings, dup: dup };
+      }
+
+      function countFleetDrivers(rows) {
+        var map = {}, seenName = {}, match = 0, nw = 0;
+        getDrivers().forEach(function (d) { map[normalizeName(d.name)] = true; });
+        rows.forEach(function (r) {
+          if (!r.driver) return;
+          var k = normalizeName(r.driver);
+          if (seenName[k]) return;
+          seenName[k] = true;
+          if (map[k]) match++; else nw++;
+        });
+        return { match: match, nw: nw };
+      }
+
+      window.openFleetImport = function () {
+        document.getElementById("modalTitle").textContent = "Import Fleet — Paste List";
+        document.getElementById("modalBody").innerHTML =
+          '<p class="small mb-2">Paste one truck per line. Columns: <b>Truck No</b>, <b>Trailer No</b>, <b>Driver Name</b> — separated by comma, tab or semicolon. A header line is skipped automatically.</p>' +
+          '<div class="form-row">' +
+          '<div class="form-group"><label>Fleet Group</label><select id="importFleet" class="input">' +
+          '<option value="Lemi">Lemi</option><option value="NT">NT</option>' +
+          "</select></div>" +
+          '<div class="form-group"><label>Mode</label><select id="importMode" class="input">' +
+          '<option value="add">Add to fleet</option><option value="replace">Replace whole fleet</option>' +
+          "</select></div>" +
+          "</div>" +
+          '<div class="form-group">' +
+          '<textarea id="fleetImportText" class="input" rows="10" placeholder="Truck No, Trailer No, Driver Name' + "\n" + '3-A38626, 3-41341, Abdisa Tadese' + "\n" + '3-A38617, 3-41380, Abduselam Mulat"></textarea>' +
+          "</div>" +
+          '<div class="alert alert-warning mb-2">Add to fleet keeps your existing vehicles and appends the new ones (matched plates are updated). Replace wipes the vehicle list and uses only the pasted trucks.</div>' +
+          '<div class="flex mb-2" style="gap:10px">' +
+          '<button class="btn btn-outline" onclick="previewFleetImport()">&#128269; Preview</button>' +
+          '<button class="btn btn-primary" id="applyFleetBtn" style="display:none" onclick="applyFleetImport()">&#128190; Apply Import &amp; Save</button>' +
+          "</div>" +
+          '<div id="fleetImportPreview"></div>';
+        openModal("formModal");
+      };
+
+      window.previewFleetImport = function () {
+        var res = parseFleetText(document.getElementById("fleetImportText").value);
+        var el = document.getElementById("fleetImportPreview");
+        var applyBtn = document.getElementById("applyFleetBtn");
+        var mode = document.getElementById("importMode").value;
+        var fleet = document.getElementById("importFleet").value;
+        if (!res.rows.length) {
+          el.innerHTML = '<div class="alert alert-danger">No valid rows found. Check your list and try again.</div>';
+          applyBtn.style.display = "none";
+          return;
+        }
+        var dc = countFleetDrivers(res.rows);
+        var msg = mode === "add"
+          ? "Parsed <b>" + res.rows.length + "</b> truck(s) for fleet <b>" + esc(fleet) + "</b>. They will be <b>added</b> to your current " + getVehicles().length + " vehicles (matched plates are updated)."
+          : "Parsed <b>" + res.rows.length + "</b> truck(s) for fleet <b>" + esc(fleet) + "</b>. This will <b>replace</b> the current " + getVehicles().length + " vehicles.";
+        var html = '<div class="alert alert-success mb-2">' + msg + " Drivers: <b>" + dc.match + "</b> matched, <b>" + dc.nw + "</b> new.</div>";
+        if (res.dup) html += '<div class="alert alert-warning mb-2">' + res.dup + " duplicate truck(s) detected — the last entry wins.</div>";
+        res.warnings.forEach(function (w) {
+          html += '<div class="alert alert-warning mb-1" style="padding:6px 10px">' + esc(w) + "</div>";
+        });
+        html += '<table class="table table-sm"><thead><tr><th>#</th><th>Truck No</th><th>Trailer No</th><th>Driver Name</th></tr></thead><tbody>' +
+          res.rows.slice(0, 10).map(function (r, i) {
+            return "<tr><td>" + (i + 1) + '</td><td class="mono">' + esc(r.truck) + '</td><td class="mono">' + esc(r.trailer || "—") + "</td><td>" + esc(r.driver || "—") + "</td></tr>";
+          }).join("") +
+          (res.rows.length > 10 ? '<tr><td colspan="4" class="muted">… and ' + (res.rows.length - 10) + " more</td></tr>" : "") +
+          "</tbody></table>";
+        el.innerHTML = html;
+        applyBtn.style.display = "";
+      };
+
+      window.applyFleetImport = function () {
+        var res = parseFleetText(document.getElementById("fleetImportText").value);
+        var mode = document.getElementById("importMode").value;
+        var fleet = document.getElementById("importFleet").value || "Lemi";
+        if (!res.rows.length) { toast("No valid rows to import", "error"); return; }
+        var existing = getVehicles();
+        var verb = mode === "add" ? "add" : "replace all " + existing.length + " vehicles with";
+        if (!confirm((mode === "add" ? "Add " + res.rows.length + " trucks to your fleet as " : "Replace all " + existing.length + " vehicles with " + res.rows.length + " trucks as ") + fleet + "?")) return;
+        var dMap = {};
+        getDrivers().forEach(function (d) { dMap[normalizeName(d.name)] = d; });
+        var curById = {};
+        existing.forEach(function (v) { curById[(v.plate || "").toUpperCase()] = v; });
+        var palette = ["blue", "green", "amber", "red", "purple"];
+        var matched = 0, added = 0;
+        var vehicles = res.rows.map(function (r, i) {
+          var prev = curById[r.truck] || null;
+          var v = prev ? Object.assign({}, prev) : {
+            model: "Freight Truck", type: "Trailer Truck", capacity: 30, fuelRate: 32, status: "idle", currentKm: 0,
+          };
+          v.plate = r.truck;
+          v.trailerNo = r.trailer;
+          v.fleet = fleet;
+          if (!v.id) v.id = uid("v");
+          if (!v.color) v.color = palette[i % palette.length];
+          var driverId = null;
+          if (r.driver) {
+            var k = normalizeName(r.driver);
+            if (dMap[k]) { driverId = dMap[k].id; matched++; }
+            else {
+              var nd = addDriver({ name: r.driver });
+              dMap[k] = nd;
+              driverId = nd.id;
+              added++;
+            }
+          }
+          v.assignedDriverId = driverId;
+          return v;
+        });
+        if (mode === "add") {
+          var byPlate = {};
+          vehicles.forEach(function (v) { byPlate[(v.plate || "").toUpperCase()] = v; });
+          var merged = existing.filter(function (v) { return !byPlate[(v.plate || "").toUpperCase()]; }).concat(vehicles);
+          vehicles = merged;
+        }
+        saveVehicles(vehicles);
+        closeModal("formModal");
+        render();
+        toast("Fleet " + verb + ": " + res.rows.length + " trucks as " + fleet + ", " + matched + " drivers matched, " + added + " drivers added", "success");
+      };
+
+      /* ---------- Drivers ---------- */
+      function filteredDrivers() {
+        var q = (document.getElementById("driverSearch").value || "").trim().toLowerCase();
+        if (!q) return getDrivers();
+        return getDrivers().filter(function (d) {
+          return (d.name || "").toLowerCase().indexOf(q) !== -1 ||
+            (d.phone || "").toLowerCase().indexOf(q) !== -1;
+        });
+      }
+
+      function renderDrivers() {
+        var tbody = document.querySelector("#driversTable tbody");
+        tbody.innerHTML = filteredDrivers().map(function (d) {
+          return "<tr>" +
+            "<td>" + esc(d.name) + "</td>" +
+            "<td>" + esc(d.phone) + "</td>" +
+            "<td>" + esc(d.license) + "</td>" +
+            '<td class="mono">' + esc(d.faydaNo || "—") + "</td>" +
+            "<td>" + d.experience + "</td>" +
+            '<td><div class="table-actions">' +
+            '<button class="btn btn-outline btn-sm" onclick="editDriver(\'' + esc(d.id) + '\')">Edit</button>' +
+            '<button class="btn btn-danger btn-sm" onclick="removeDriver(\'' + esc(d.id) + '\')">Delete</button>' +
+            "</div></td></tr>";
+        }).join("") || '<tr><td colspan="6" style="text-align:center;color:var(--muted)">No drivers match your search.</td></tr>';
+      }
+
+      document.getElementById("driverSearch").addEventListener("input", renderDrivers);
+      document.getElementById("driverSearchClear").addEventListener("click", function () {
+        document.getElementById("driverSearch").value = "";
+        renderDrivers();
+      });
+
+      window.removeDriver = function (id) {
+        if (!confirm("Delete this driver?")) return;
+        deleteDriver(id);
+        render();
+        toast("Driver deleted", "success");
+      };
+
+      window.editDriver = function (id) { openDriverForm(id); };
+
+      function openDriverForm(id) {
+        var d = getDrivers().find(function (x) { return x.id === id; }) || {};
+        document.getElementById("modalTitle").textContent = d.id ? "Edit Driver — " + d.name : "Add Driver";
+        document.getElementById("modalBody").innerHTML =
+          '<div class="form-group"><label>Full Name <span class="req">*</span></label><input id="dName" class="input" value="' + esc(d.name || "") + '" required></div>' +
+          '<div class="form-row">' +
+          '<div class="form-group"><label>Phone</label><input id="dPhone" class="input" value="' + esc(d.phone || "") + '"></div>' +
+          '<div class="form-group"><label>License No.</label><input id="dLic" class="input" value="' + esc(d.license || "") + '"></div>' +
+          "</div>" +
+          '<div class="form-row">' +
+          '<div class="form-group"><label>Fayda No. (ID)</label><input id="dFayda" class="input" value="' + esc(d.faydaNo || "") + '"></div>' +
+          '<div class="form-group"><label>Experience (years)</label><input id="dExp" type="number" class="input" min="0" value="' + (d.experience || 0) + '"></div>' +
+          "</div>" +
+          '<button class="btn btn-primary btn-block" id="saveDriverBtn">Save Driver</button>';
+        document.getElementById("saveDriverBtn").addEventListener("click", function () {
+          var name = document.getElementById("dName").value.trim();
+          if (!name) { toast("Driver name is required", "error"); return; }
+          var data = {
+            name: name,
+            phone: document.getElementById("dPhone").value.trim(),
+            license: document.getElementById("dLic").value.trim().toUpperCase(),
+            faydaNo: document.getElementById("dFayda").value.trim().toUpperCase(),
+            experience: parseInt(document.getElementById("dExp").value) || 0,
+          };
+          if (d.id) {
+            var list = getDrivers();
+            var target = list.find(function (x) { return x.id === d.id; });
+            Object.assign(target, data);
+            saveDrivers(list);
+          } else {
+            addDriver(data);
+          }
+          closeModal("formModal");
+          render();
+          toast(d.id ? "Driver updated" : "Driver added", "success");
+        });
+        openModal("formModal");
+      }
+
+      /* ---------- Trips ---------- */
+      function renderTrips() {
+        var tbody = document.querySelector("#tripsTable tbody");
+        tbody.innerHTML = getTrips().map(function (t) {
+          return "<tr>" +
+            "<td>" + esc(t.date) + "</td>" +
+            '<td class="mono">' + esc(t.vehiclePlate) + "</td>" +
+            "<td>" + esc(driverName(t.driverId)) + "</td>" +
+            "<td>" + esc(t.startPoint) + " &rarr; " + esc(t.destination) + "</td>" +
+            "<td>" + esc(t.itemLoaded) + "</td>" +
+            "<td>" + t.weight + " t</td>" +
+            "<td>" + fmtNum(t.km) + "</td>" +
+            "<td>" + fmtNum(t.fuelUsed) + " L</td>" +
+            "<td>" + statusBadge(t.status) + "</td>" +
+            '<td><div class="table-actions">' +
+            '<button class="btn btn-outline btn-sm" onclick="openTripStatus(\'' + esc(t.id) + '\')">Status</button>' +
+            '<button class="btn btn-danger btn-sm" onclick="removeTrip(\'' + esc(t.id) + '\')">Delete</button>' +
+            "</div></td></tr>";
+        }).join("") || '<tr><td colspan="10" style="text-align:center;color:var(--muted)">No trips.</td></tr>';
+      }
+
+      window.removeTrip = function (id) {
+        if (!confirm("Delete this trip?")) return;
+        deleteTrip(id);
+        render();
+        toast("Trip deleted", "success");
+      };
+
+      window.openTripStatus = function (id) {
+        var t = getTrips().find(function (x) { return x.id === id; });
+        if (!t) return;
+        document.getElementById("statusBody").innerHTML =
+          '<p class="mb-2"><b>' + esc(t.vehiclePlate) + "</b> &mdash; " + esc(t.startPoint) + " &rarr; " + esc(t.destination) + "</p>" +
+          ["pending", "in_transit", "completed", "cancelled"].map(function (s) {
+            return '<button class="btn btn-block ' + (t.status === s ? "btn-primary" : "btn-outline") + " mb-1\" onclick=\"applyTripStatus('" + id + "','" + s + "')\">" + STATUS_META[s].label + "</button>";
+          }).join("");
+        openModal("statusModal");
+      };
+
+      window.applyTripStatus = function (id, s) {
+        setTripStatus(id, s);
+        closeModal("statusModal");
+        render();
+        toast("Trip status updated to " + STATUS_META[s].label, "success");
+      };
+
+      function openTripForm() {
+        document.getElementById("modalTitle").textContent = "Add Trip";
+        var vOpts = getVehicles().map(function (v) { return '<option value="' + esc(v.plate) + '">' + esc(v.plate) + "</option>"; }).join("");
+        var dOpts = getDrivers().map(function (d) { return '<option value="' + esc(d.id) + '">' + esc(d.name) + "</option>"; }).join("");
+        var tItemOpts = itemOptions().map(function (n) { return '<option value="' + esc(n) + '">' + esc(n) + "</option>"; }).join("");
+        getCustomItems().forEach(function (n) {
+          if (tItemOpts.indexOf('value="' + esc(n) + '"') === -1) tItemOpts += '<option value="' + esc(n) + '">' + esc(n) + "</option>";
+        });
+        tItemOpts += '<option value="custom">Other / New item…</option>';
+        document.getElementById("modalBody").innerHTML =
+          '<div class="form-row">' +
+          '<div class="form-group"><label>Vehicle <span class="req">*</span></label><select id="tVeh" class="input">' + vOpts + "</select></div>" +
+          '<div class="form-group"><label>Driver</label><select id="tDriver" class="input">' + dOpts + "</select></div>" +
+          "</div>" +
+          '<div class="form-row">' +
+          '<div class="form-group"><label>Start Point <span class="req">*</span></label><input id="tStart" class="input" required></div>' +
+          '<div class="form-group"><label>Destination <span class="req">*</span></label><input id="tDest" class="input" required></div>' +
+          "</div>" +
+          '<div class="form-group"><label>Item Loaded <span class="req">*</span></label><select id="tItem" class="input">' + tItemOpts + "</select>" +
+          '<div id="tItemCustomWrap" style="display:none;margin-top:8px"><input type="text" id="tItemCustom" class="input" placeholder="Type the new item / material name"></div></div>' +
+          '<div class="form-row">' +
+          '<div class="form-group"><label>Weight (tons)</label><input id="tWeight" type="number" class="input" min="0" step="0.5" value="10"></div>' +
+          '<div class="form-group"><label>Distance (km)</label><input id="tKm" type="number" class="input" min="0" value="100"></div>' +
+          "</div>" +
+          '<div class="form-row">' +
+          '<div class="form-group"><label>Empty Return (km)</label><input id="tEmpty" type="number" class="input" min="0" value="0" title="Kilometres driven with no load (return leg)"></div>' +
+          '<div class="form-group"><label>Fuel Used (L)</label><input id="tFuel" type="number" class="input" min="0" value="30"></div>' +
+          "</div>" +
+          '<div class="form-row">' +
+          '<div class="form-group"><label>Date &amp; Time</label><input id="tDate" type="datetime-local" class="input" value="' + todayStr() + 'T08:00"></div>' +
+          "</div>" +
+          '<button class="btn btn-primary btn-block" id="saveTripBtn">Save Trip</button>';
+        var tStart = document.getElementById("tStart");
+        var tDest = document.getElementById("tDest");
+        var tKm = document.getElementById("tKm");
+        function tripAutoDist() {
+          if (!tStart.value.trim() || !tDest.value.trim()) return;
+          var km = lookupDistance(tStart.value, tDest.value);
+          if (km != null) { tKm.value = km; tKm.disabled = true; }
+          else tKm.disabled = false;
+        }
+        tStart.addEventListener("input", tripAutoDist);
+        tDest.addEventListener("input", tripAutoDist);
+        document.getElementById("tItem").addEventListener("change", function () {
+          document.getElementById("tItemCustomWrap").style.display = this.value === "custom" ? "block" : "none";
+          if (this.value === "custom") document.getElementById("tItemCustom").focus();
+        });
+        document.getElementById("saveTripBtn").addEventListener("click", function () {
+          var start = document.getElementById("tStart").value.trim();
+          var dest = document.getElementById("tDest").value.trim();
+          var item = document.getElementById("tItem").value;
+          if (item === "custom") {
+            item = document.getElementById("tItemCustom").value.trim();
+            if (!item) { toast("Please type the new item name", "error"); return; }
+            addCustomItem(item);
+          }
+          if (!start || !dest || !item) { toast("Route and item are required", "error"); return; }
+          addTrip({
+            vehiclePlate: document.getElementById("tVeh").value,
+            driverId: document.getElementById("tDriver").value,
+            startPoint: start,
+            destination: dest,
+            itemLoaded: item,
+            weight: parseFloat(document.getElementById("tWeight").value) || 0,
+            km: parseFloat(document.getElementById("tKm").value) || 0,
+            emptyKm: parseFloat(document.getElementById("tEmpty").value) || 0,
+            fuelUsed: parseFloat(document.getElementById("tFuel").value) || 0,
+            date: (document.getElementById("tDate").value || todayStr() + "T08:00").slice(0, 10),
+            datetime: document.getElementById("tDate").value || todayStr() + "T08:00",
+          });
+          closeModal("formModal");
+          render();
+          toast("Trip added", "success");
+        });
+        openModal("formModal");
+      }
+
+      /* ---------- Waybill / Freight Weight Bill ---------- */
+      var WAYBILL_HEADERS = ["SN", "Date / Time", "FO", "Truck No", "Trailer No", "Driver Name", "Customer Name", "Origin", "Destination", "Item", "In Q", "Ton", "E-KM", "L-KM", "T-KM", "Ton-Km"];
+
+      function fmtBill(n) {
+        return Number(n || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+
+      function wbSelectOpts(base, current, disableVal) {
+        var opts = base.slice();
+        if (opts.indexOf(current) === -1) opts.push(current);
+        return opts.map(function (v) {
+          var off = (disableVal != null && v === disableVal && v !== current) ? " disabled" : "";
+          return '<option value="' + esc(v) + '"' + (v === current ? " selected" : "") + off + ">" + esc(v) + "</option>";
+        }).join("");
+      }
+
+      function wbItemList() {
+        var list = itemOptions();
+        getCustomItems().forEach(function (n) { if (list.indexOf(n) === -1) list.push(n); });
+        return list;
+      }
+
+      function wbTruckList() { return getVehicles().map(function (v) { return v.plate; }); }
+
+      function wbTrailerList() {
+        var seen = [];
+        getVehicles().forEach(function (v) {
+          if (v.trailerNo && seen.indexOf(v.trailerNo) === -1) seen.push(v.trailerNo);
+        });
+        return seen;
+      }
+
+      function wbDriverList() { return getDrivers().map(function (d) { return d.name; }); }
+
+      function driverForPlate(plate) {
+        var trips = getTrips();
+        for (var i = 0; i < trips.length; i++) {
+          if (trips[i].vehiclePlate === plate) {
+            var n = driverName(trips[i].driverId);
+            if (n !== "—") return n;
+          }
+        }
+        return "";
+      }
+
+      function vehicleForDriver(name) {
+        if (!name) return null;
+        var trips = getTrips();
+        for (var i = 0; i < trips.length; i++) {
+          if (driverName(trips[i].driverId) === name) {
+            var v = getVehicles().find(function (x) { return x.plate === trips[i].vehiclePlate; });
+            if (v) return v;
+          }
+        }
+        return null;
+      }
+
+      function vehicleForTrailer(trailer) {
+        if (!trailer) return null;
+        return getVehicles().find(function (v) { return v.trailerNo === trailer; }) || null;
+      }
+
+      function isValidFO(v) {
+        return /^\d{6}$/.test(String(v || ""));
+      }
+
+      function cleanCustomer(v) {
+        return String(v || "").replace(/[^A-Za-z\u00C0-\u024F\u0370-\u03FF\s\-'.]/g, "").replace(/\s{2,}/g, " ").trim();
+      }
+
+      function isValidCustomer(v) {
+        return /^[A-Za-z\u00C0-\u024F\u0370-\u03FF\s\-'.]+$/.test(String(v || "").trim());
+      }
+
+      function foForId(id) {
+        var h = 0;
+        for (var i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) % 1000000;
+        return String(h).padStart(6, "0");
+      }
+
+      function buildWaybillRow(d) {
+        var rec = d.rec;
+        var truck = rec.truck != null ? rec.truck : d.defTruck;
+        var veh = getVehicles().find(function (v) { return v.plate === truck; }) || {};
+        var trailer = rec.trailer != null ? rec.trailer : (veh.trailerNo || "—");
+        var driver = rec.driver != null ? rec.driver : d.defDriver;
+        var origin = rec.origin != null ? rec.origin : d.defOrigin;
+        var destination = rec.destination != null ? rec.destination : d.defDestination;
+        var item = rec.item != null ? rec.item : d.defItem;
+        var dist = rec.dist != null ? Number(rec.dist) : lookupDistance(origin, destination);
+        if (dist == null || isNaN(dist)) dist = Number(d.defKm) || 0;
+        var lKm = rec.lKm != null ? Number(rec.lKm) : dist;
+        var eKm = rec.eKm != null ? Number(rec.eKm) : d.defEkm;
+        var ton = rec.ton != null ? Number(rec.ton) : d.defTon;
+        var q = rec.q != null ? Number(rec.q) : Math.round(ton * 10);
+        return {
+          id: d.id,
+          isTrip: !!d.isTrip,
+          rec: rec,
+          confirmed: rec.confirmed ? true : false,
+          fo: rec.fo || foForId(d.id),
+          dt: rec.dt != null ? rec.dt : d.defDt,
+          truck: truck,
+          trailer: trailer,
+          driver: driver,
+          customer: rec.customer || "",
+          origin: origin,
+          destination: destination,
+          item: item,
+          dist: dist,
+          q: q,
+          ton: ton,
+          eKm: eKm,
+          lKm: lKm,
+          tKm: eKm + lKm,
+        };
+      }
+
+      function waybillRows() {
+        var store = getWaybill();
+        var removed = getWaybillRemoved();
+        var rows = [];
+        getTrips().forEach(function (t) {
+          if (removed.indexOf(t.id) !== -1) return;
+          rows.push(buildWaybillRow({
+            id: t.id,
+            isTrip: true,
+            rec: store[t.id] || {},
+            defTruck: t.vehiclePlate,
+            defDriver: driverName(t.driverId),
+            defOrigin: t.startPoint,
+            defDestination: t.destination,
+            defItem: t.itemLoaded,
+            defTon: Number(t.weight) || 0,
+            defEkm: Number(t.emptyKm) || 0,
+            defKm: Number(t.km) || 0,
+            defDt: t.datetime || (t.date ? t.date + "T08:00" : ""),
+          }));
+        });
+        getWaybillList().forEach(function (e) {
+          rows.push(buildWaybillRow({
+            id: e.id,
+            isTrip: false,
+            rec: e,
+            defTruck: "",
+            defDriver: "",
+            defOrigin: "",
+            defDestination: "",
+            defItem: "",
+            defTon: 0,
+            defEkm: 0,
+            defKm: 0,
+            defDt: "",
+          }));
+        });
+        return rows;
+      }
+
+      function wbFilteredRows() {
+        var t = (document.getElementById("wbFilterTruck").value || "").trim().toLowerCase();
+        return waybillRows().filter(function (r) {
+          if (t && (r.truck || "").toLowerCase().indexOf(t) === -1) return false;
+          return true;
+        });
+      }
+
+      function waybillTotals() {
+        return wbFilteredRows().reduce(function (a, r) {
+          a.q += r.q; a.ton += r.ton; a.tKm += r.tKm; a.tonKm += r.ton * r.lKm;
+          return a;
+        }, { q: 0, ton: 0, tKm: 0, tonKm: 0 });
+      }
+
+      function updateWaybillTotals() {
+        var t = waybillTotals();
+        document.getElementById("waybillTotals").innerHTML =
+          "Totals: Q " + fmtNum(t.q) + " &middot; Ton " + fmtNum(t.ton) +
+          " &middot; T-KM " + fmtNum(t.tKm) + " &middot; Ton-Km " + fmtBill(t.tonKm);
+      }
+
+      function renderWaybillTable() {
+        var rows = wbFilteredRows();
+        document.querySelector("#waybillTable tbody").innerHTML = rows.map(function (r, i) {
+          return "<tr data-id=\"" + esc(r.id) + "\"" + (r.confirmed ? " class=\"wb-confirmed\"" : "") + ">" +
+            '<td><input type="checkbox" class="wb-sel" data-id="' + esc(r.id) + '"></td>' +
+            "<td>" + (i + 1) + "</td>" +
+            '<td><input class="input wb-input" type="datetime-local" data-k="dt" value="' + esc(r.dt) + '"></td>' +
+            '<td><input class="input wb-input" data-k="fo" type="text" inputmode="numeric" maxlength="6" title="FO must be a 6-digit number (0-9)" value="' + esc(r.fo) + '"' + (isValidFO(r.fo) ? "" : " style=\"border-color:var(--red)\"") + '></td>' +
+            '<td><select class="input wb-input wb-wide" data-k="truck">' + wbSelectOpts(wbTruckList(), r.truck) + "</select></td>" +
+            '<td><select class="input wb-input wb-wide" data-k="trailer">' + wbSelectOpts(wbTrailerList(), r.trailer) + "</select></td>" +
+            '<td><select class="input wb-input wb-wide" data-k="driver">' + wbSelectOpts(wbDriverList(), r.driver) + "</select></td>" +
+            '<td><input class="input wb-input" data-k="customer" title="Customer name — letters only" value="' + esc(r.customer) + '" placeholder="—"' + (r.customer && isValidCustomer(r.customer) ? "" : " style=\"border-color:var(--red)\"") + '></td>' +
+            '<td><select class="input wb-input" data-k="origin">' + wbSelectOpts(PLACES, r.origin, r.destination) + "</select></td>" +
+            '<td><select class="input wb-input" data-k="destination">' + wbSelectOpts(PLACES, r.destination, r.origin) + "</select></td>" +
+            '<td><select class="input wb-input" data-k="item">' + wbSelectOpts(wbItemList(), r.item) + "</select></td>" +
+            '<td><input class="input wb-input wb-num" type="number" min="0" step="0.5" data-k="q" value="' + r.q + '"></td>' +
+            '<td><input class="input wb-input wb-num" type="number" min="0" step="0.5" data-k="ton" value="' + r.ton + '"></td>' +
+            '<td><input class="input wb-input wb-num" type="number" min="0" step="1" data-k="eKm" value="' + r.eKm + '" title="Empty km (return leg)"></td>' +
+            '<td><input class="input wb-input wb-num" type="number" min="0" step="1" data-k="lKm" value="' + r.lKm + '" title="Loaded km"></td>' +
+            '<td class="wb-tkm-sum">' + fmtNum(r.tKm) + "</td>" +
+            '<td class="wb-tkm">' + fmtBill(r.ton * r.lKm) + "</td>" +
+            '<td>' +
+              '<button class="btn btn-sm ' + (r.confirmed ? "btn-success" : "btn-outline") + '" title="' + (r.confirmed ? "Confirmed — click to unconfirm" : "Confirm row") + '" onclick="toggleWaybillConfirm(\'' + esc(r.id) + '\')">&#9989;</button> ' +
+              '<button class="btn btn-danger btn-sm" title="Delete row" onclick="deleteWaybillRow(\'' + esc(r.id) + '\')">&#128465;</button>' +
+            "</td>" +
+            "</tr>";
+        }).join("") || '<tr><td colspan="18" style="text-align:center;color:var(--muted)">No waybill rows yet. Click "Add Rows" or add trips first.</td></tr>';
+
+        document.querySelectorAll("#waybillTable tbody input[data-k], #waybillTable tbody select[data-k]").forEach(function (inp) {
+          inp.addEventListener("input", function () { onWaybillInput(inp); });
+          if (inp.tagName === "SELECT") inp.addEventListener("change", function () { onWaybillInput(inp); });
+        });
+        document.querySelectorAll("#waybillTable tbody .wb-sel").forEach(function (cb) {
+          cb.addEventListener("change", updateWbSelCount);
+        });
+        document.getElementById("wbSelAll").checked = false;
+        updateWbSelCount();
+        updateWaybillTotals();
+      }
+
+      function onWaybillInput(inp) {
+        wbDirty = true;
+        var id = inp.closest("tr").dataset.id;
+        if (!id) return;
+        var isTrip = getTrips().some(function (t) { return t.id === id; });
+        var store, list, rec;
+        if (isTrip) {
+          store = getWaybill();
+          rec = store[id] || (store[id] = {});
+        } else {
+          list = getWaybillList();
+          rec = list.find(function (e) { return e.id === id; });
+          if (!rec) return;
+        }
+        var k = inp.dataset.k;
+        if (k === "fo") {
+          var cleaned = String(inp.value).replace(/\D/g, "").slice(0, 6);
+          if (inp.value !== cleaned) inp.value = cleaned;
+          rec.fo = cleaned;
+          inp.style.borderColor = isValidFO(cleaned) ? "" : "var(--red)";
+        } else if (k === "customer") {
+          var cleanedName = cleanCustomer(inp.value);
+          if (inp.value !== cleanedName) inp.value = cleanedName;
+          rec.customer = cleanedName;
+          inp.style.borderColor = cleanedName && isValidCustomer(cleanedName) ? "" : "var(--red)";
+        } else if (k === "q" || k === "ton" || k === "eKm" || k === "lKm" || k === "dist") rec[k] = parseFloat(inp.value) || 0;
+        else rec[k] = inp.value;
+        if (k === "ton") {
+          rec.q = Math.round(rec.ton * 10);
+          inp.closest("tr").querySelector('input[data-k="q"]').value = rec.q;
+        } else if (k === "q") {
+          rec.ton = Math.round(rec.q / 10 * 100) / 100;
+          inp.closest("tr").querySelector('input[data-k="ton"]').value = rec.ton;
+        }
+        if (k === "truck") {
+          var tv = getVehicles().find(function (v) { return v.plate === rec.truck; });
+          rec.trailer = tv && tv.trailerNo ? tv.trailerNo : "";
+          var dnv = driverForPlate(rec.truck);
+          if (dnv) rec.driver = dnv;
+        }
+        if (k === "trailer") {
+          var tv2 = vehicleForTrailer(rec.trailer);
+          if (tv2) {
+            rec.truck = tv2.plate;
+            var dnv2 = driverForPlate(tv2.plate);
+            if (dnv2) rec.driver = dnv2;
+          }
+        }
+        if (k === "driver") {
+          var tv3 = vehicleForDriver(rec.driver);
+          if (tv3) {
+            rec.truck = tv3.plate;
+            rec.trailer = tv3.trailerNo || "";
+          }
+        }
+        if (k === "origin" || k === "destination") {
+          var o = rec.origin != null ? rec.origin : "";
+          var dst = rec.destination != null ? rec.destination : "";
+          if (o && o === dst) {
+            rec[k] = k === "origin" ? "" : "";
+            inp.value = rec[k];
+            o = rec.origin != null ? rec.origin : "";
+            dst = rec.destination != null ? rec.destination : "";
+            toast("Origin and Destination cannot be the same", "error");
+          }
+          var d = lookupDistance(o, dst);
+          if (d == null) d = 0;
+          rec.dist = d;
+          rec.lKm = d;
+        }
+        if (isTrip) saveWaybill(store); else saveWaybillList(list);
+        var row = waybillRows().find(function (r) { return r.id === id; });
+        if (row) {
+          var tr = inp.closest("tr");
+          tr.querySelector(".wb-tkm").innerHTML = fmtBill(row.ton * row.lKm);
+          tr.querySelector(".wb-tkm-sum").innerHTML = fmtNum(row.tKm);
+          tr.querySelector('input[data-k="lKm"]').value = row.lKm;
+          tr.querySelector('input[data-k="eKm"]').value = row.eKm;
+          tr.querySelector('select[data-k="truck"]').value = row.truck;
+          tr.querySelector('select[data-k="trailer"]').value = row.trailer === "—" ? "" : row.trailer;
+          tr.querySelector('select[data-k="driver"]').value = row.driver;
+          updateWaybillTotals();
+        }
+      }
+
+      window.addWaybillRows = function () {
+        var n = parseInt(document.getElementById("wbAddCount").value, 10) || 1;
+        if (n < 1) n = 1;
+        if (n > 50) n = 50;
+        var d = new Date();
+        var p2 = function (x) { return String(x).padStart(2, "0"); };
+        var ts = d.getFullYear() + "-" + p2(d.getMonth() + 1) + "-" + p2(d.getDate()) + "T" + p2(d.getHours()) + ":" + p2(d.getMinutes());
+        var list = getWaybillList();
+        for (var i = 0; i < n; i++) {
+          list.unshift({ id: uid("wb"), q: 0, ton: 0, eKm: 0, lKm: 0, dt: ts, fo: "" });
+        }
+        saveWaybillList(list);
+        wbDirty = true;
+        renderWaybillTable();
+        toast(n + " row" + (n > 1 ? "s" : "") + " added", "success");
+      };
+
+      function waybillSelectedIds() {
+        var ids = [];
+        document.querySelectorAll("#waybillTable tbody .wb-sel:checked").forEach(function (cb) { ids.push(cb.dataset.id); });
+        return ids;
+      }
+
+      function updateWbSelCount() {
+        var c = document.querySelectorAll("#waybillTable tbody .wb-sel:checked").length;
+        var el = document.getElementById("wbSelCount");
+        if (el) el.textContent = c;
+      }
+
+      window.deleteWaybillSelected = function () {
+        var ids = waybillSelectedIds();
+        if (!ids.length) { toast("Select at least one row first", "error"); return; }
+        if (!confirm("Delete " + ids.length + " selected row(s)?")) return;
+        var removed = getWaybillRemoved();
+        var list = getWaybillList();
+        ids.forEach(function (id) {
+          var isTrip = getTrips().some(function (t) { return t.id === id; });
+          if (isTrip) {
+            if (removed.indexOf(id) === -1) removed.push(id);
+          } else {
+            list = list.filter(function (e) { return e.id !== id; });
+          }
+        });
+        saveWaybillRemoved(removed);
+        saveWaybillList(list);
+        wbDirty = true;
+        renderWaybillTable();
+        toast(ids.length + " row(s) deleted", "success");
+      };
+
+      window.toggleWaybillConfirm = function (id) {
+        var isTrip = getTrips().some(function (t) { return t.id === id; });
+        var now;
+        if (isTrip) {
+          var store = getWaybill();
+          var rec = store[id] || (store[id] = {});
+          now = rec.confirmed = !rec.confirmed;
+          saveWaybill(store);
+        } else {
+          var list = getWaybillList();
+          var e = list.find(function (x) { return x.id === id; });
+          if (!e) return;
+          now = e.confirmed = !e.confirmed;
+          saveWaybillList(list);
+        }
+        wbDirty = true;
+        renderWaybillTable();
+        toast(now ? "Row confirmed" : "Confirmation removed", now ? "success" : "info");
+      };
+
+      window.deleteWaybillRow = function (id) {
+        if (!confirm("Delete this waybill row?")) return;
+        var isTrip = getTrips().some(function (t) { return t.id === id; });
+        if (isTrip) {
+          var removed = getWaybillRemoved();
+          if (removed.indexOf(id) === -1) removed.push(id);
+          saveWaybillRemoved(removed);
+        } else {
+          saveWaybillList(getWaybillList().filter(function (e) { return e.id !== id; }));
+        }
+        wbDirty = true;
+        renderWaybillTable();
+        toast("Row deleted", "success");
+      };
+
+      function waybillExportRows() {
+        return wbFilteredRows().map(function (r, i) {
+          return [
+            i + 1, (r.dt || "").replace("T", " "), r.fo, r.truck, r.trailer, r.driver, r.customer || "",
+            r.origin, r.destination, r.item, r.q, r.ton,
+            r.eKm ? r.eKm : "", r.lKm, r.tKm, +(r.ton * r.lKm).toFixed(2),
+          ];
+        });
+      }
+
+      window.openWaybill = function () {
+        wbTakeSnapshot();
+        wbDirty = false;
+        renderWaybillTable();
+        openModal("waybillModal");
+      };
+
+      window.wbMinimize = function () {
+        var b = document.getElementById("waybillModal");
+        b.classList.remove("maximized");
+        b.classList.add("minimized");
+        var mb = document.getElementById("wbMaxBtn");
+        if (mb) mb.innerHTML = "&#128470;";
+      };
+      window.wbMaximize = function () {
+        var b = document.getElementById("waybillModal");
+        b.classList.remove("minimized");
+        b.classList.toggle("maximized");
+        var mb = document.getElementById("wbMaxBtn");
+        if (mb) mb.innerHTML = b.classList.contains("maximized") ? "&#128471;" : "&#128470;";
+      };
+      window.wbRestore = function () {
+        var b = document.getElementById("waybillModal");
+        b.classList.remove("minimized", "maximized");
+        var mb = document.getElementById("wbMaxBtn");
+        if (mb) mb.innerHTML = "&#128470;";
+      };
+
+      var wbDirty = false;
+      var wbSnap = { w: {}, l: [], r: [] };
+      function wbTakeSnapshot() {
+        wbSnap = {
+          w: JSON.parse(JSON.stringify(getWaybill())),
+          l: JSON.parse(JSON.stringify(getWaybillList())),
+          r: JSON.parse(JSON.stringify(getWaybillRemoved())),
+        };
+      }
+      function wbRestoreSnapshot() {
+        saveWaybill(wbSnap.w);
+        saveWaybillList(wbSnap.l);
+        saveWaybillRemoved(wbSnap.r);
+      }
+      window.saveWaybillChanges = function () {
+        var bad = waybillRows().filter(function (r) { return !isValidFO(r.fo); });
+        if (bad.length) {
+          toast("Cannot save — " + bad.length + " row(s) have an invalid FO. FO must be exactly 6 digits (0-9).", "error");
+          return;
+        }
+        wbTakeSnapshot();
+        wbDirty = false;
+        toast("Waybill saved", "success");
+      };
+      window.wbSaveClose = function () {
+        saveWaybillChanges();
+        wbCloseSave(false);
+        closeModal("waybillModal");
+      };
+      window.wbDiscardClose = function () {
+        wbRestoreSnapshot();
+        wbDirty = false;
+        wbCloseSave(false);
+        renderWaybillTable();
+        toast("Changes discarded — Waybill reverted to last saved state", "info");
+        closeModal("waybillModal");
+      };
+      window.wbCloseSave = function (saved) {
+        if (saved) saveWaybillChanges();
+        closeModal("wbSaveModal");
+      };
+      window.onBeforeCloseModal = function (id) {
+        if (id === "waybillModal" && wbDirty) {
+          openModal("wbSaveModal");
+          return false;
+        }
+        return true;
+      };
+
+      window.exportWaybill = function (fmt) {
+        var rows = waybillExportRows();
+        var stamp = todayStr();
+        if (fmt === "csv") exportCSV("waybill-" + stamp + ".csv", WAYBILL_HEADERS, rows);
+        else if (fmt === "xlsx") exportXLSX("waybill-" + stamp + ".xlsx", "Waybill", WAYBILL_HEADERS, rows);
+        else exportPDF("waybill-" + stamp + ".pdf", "Freight Weight Bill", "National Transport PLC · " + stamp, WAYBILL_HEADERS, rows);
+      };
+
+      /* ---------- Waybill Performance (daily / weekly / monthly / annual) ---------- */
+      var PERF_HEADERS = ["Period", "Truck No", "Trailer No", "Driver Name", "Trips", "In Q", "Ton", "E-KM", "L-KM", "T-KM", "Ton-Km"];
+      var ITEM_PERF_HEADERS = ["Period", "Item", "Trips", "In Q", "Ton", "E-KM", "L-KM", "T-KM", "Ton-Km"];
+      var activePerf = "monthly";
+      var activeGroup = "truck";
+
+      function perfHeaders() {
+        return activeGroup === "item" ? ITEM_PERF_HEADERS : PERF_HEADERS;
+      }
+
+      function wbPerfCutoff(period) {
+        var days = { daily: 0, weekly: 6, monthly: 27, annual: 364 }[period] || 0;
+        var c = new Date();
+        c.setHours(0, 0, 0, 0);
+        c.setDate(c.getDate() - days);
+        return c;
+      }
+
+      function wbPerfLabel(period) {
+        if (period === "daily") {
+          var d = new Date();
+          return d.toISOString().slice(0, 10);
+        }
+        if (period === "weekly") return "Last 7 days";
+        if (period === "monthly") return "Last 4 weeks";
+        return "Last 12 months";
+      }
+
+      function wbPerfRows(period) {
+        var cutoff = wbPerfCutoff(period);
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        var label = wbPerfLabel(period);
+        var byItem = activeGroup === "item";
+        var buckets = {};
+        waybillRows().forEach(function (r) {
+          var trip = getTrips().find(function (t) { return t.id === r.id; });
+          var dateStr = trip ? trip.date : (r.dt || "").split("T")[0];
+          if (!dateStr) return;
+          var dp = String(dateStr).split("-").map(Number);
+          var d = (dp.length === 3 && !isNaN(dp[0]) && !isNaN(dp[1]) && !isNaN(dp[2]))
+            ? new Date(dp[0], dp[1] - 1, dp[2])
+            : new Date(dateStr + "T00:00:00");
+          if (isNaN(d) || d < cutoff || d > today) return;
+          var key = byItem ? label + "|" + (r.item || "—") : label + "|" + r.truck;
+          if (!buckets[key]) {
+            buckets[key] = byItem
+              ? { period: label, item: r.item || "—", trips: 0, q: 0, ton: 0, eKm: 0, lKm: 0, tKm: 0, tonKm: 0 }
+              : { period: label, truck: r.truck, trailer: r.trailer, driver: r.driver, trips: 0, q: 0, ton: 0, eKm: 0, lKm: 0, tKm: 0, tonKm: 0 };
+          }
+          var b = buckets[key];
+          b.trips++; b.q += r.q; b.ton += r.ton; b.eKm += r.eKm; b.lKm += r.lKm; b.tKm += r.tKm; b.tonKm += r.ton * r.lKm;
+        });
+        var list = Object.keys(buckets).map(function (k) { return buckets[k]; });
+        list.sort(function (a, b) {
+          var av = byItem ? a.item : a.truck;
+          var bv = byItem ? b.item : b.truck;
+          return av < bv ? -1 : av > bv ? 1 : 0;
+        });
+        return list;
+      }
+
+      function wbPerfFilteredRows() {
+        var t = (document.getElementById("perfTruck").value || "").trim().toLowerCase();
+        return wbPerfRows(activePerf).filter(function (b) {
+          if (t && (b.truck || "").toLowerCase().indexOf(t) === -1) return false;
+          return true;
+        });
+      }
+
+      function renderWaybillPerf() {
+        var rows = wbPerfFilteredRows();
+        var byItem = activeGroup === "item";
+        document.querySelector("#perfTable thead tr").innerHTML = perfHeaders().map(function (h) { return "<th>" + esc(h) + "</th>"; }).join("");
+        var bodyHtml = rows.map(function (b) {
+          var cells = "<td>" + esc(b.period) + "</td>";
+          if (byItem) cells += "<td>" + esc(b.item) + "</td>";
+          else cells += '<td class="mono">' + esc(b.truck) + "</td>" + '<td class="mono">' + esc(b.trailer) + "</td>" + "<td>" + esc(b.driver) + "</td>";
+          cells += "<td>" + b.trips + "</td>" +
+            "<td>" + fmtNum(Math.round(b.q)) + "</td>" +
+            "<td>" + fmtNum(Math.round(b.ton)) + "</td>" +
+            "<td>" + fmtNum(Math.round(b.eKm)) + "</td>" +
+            "<td>" + fmtNum(Math.round(b.lKm)) + "</td>" +
+            "<td>" + fmtNum(Math.round(b.tKm)) + "</td>" +
+            "<td>" + fmtBill(b.tonKm) + "</td>";
+          return "<tr>" + cells + "</tr>";
+        }).join("") || '<tr><td colspan="' + (byItem ? 9 : 11) + '" style="text-align:center;color:var(--muted)">No waybill data.</td></tr>';
+
+        var totals = rows.reduce(function (a, b) {
+          a.trips += b.trips; a.q += b.q; a.ton += b.ton; a.eKm += b.eKm; a.lKm += b.lKm; a.tKm += b.tKm; a.tonKm += b.tonKm;
+          return a;
+        }, { trips: 0, q: 0, ton: 0, eKm: 0, lKm: 0, tKm: 0, tonKm: 0 });
+
+        bodyHtml +=
+          '<tr style="background:var(--navy);color:#fff;font-weight:700">' +
+          "<td>Total (all items)</td><td colspan=\"" + (byItem ? 1 : 3) + "\"></td>" +
+          "<td>" + totals.trips + "</td>" +
+          "<td>" + fmtNum(Math.round(totals.q)) + "</td>" +
+          "<td>" + fmtNum(Math.round(totals.ton)) + "</td>" +
+          "<td>" + fmtNum(Math.round(totals.eKm)) + "</td>" +
+          "<td>" + fmtNum(Math.round(totals.lKm)) + "</td>" +
+          "<td>" + fmtNum(Math.round(totals.tKm)) + "</td>" +
+          "<td>" + fmtBill(totals.tonKm) + "</td></tr>";
+
+        document.querySelector("#perfTable tbody").innerHTML = bodyHtml;
+      }
+
+      function wbPerfExportRows() {
+        return wbPerfFilteredRows().map(function (b) {
+          if (activeGroup === "item") {
+            return [b.period, b.item, b.trips, Math.round(b.q), Math.round(b.ton), Math.round(b.eKm), Math.round(b.lKm), Math.round(b.tKm), +(b.tonKm).toFixed(2)];
+          }
+          return [b.period, b.truck, b.trailer, b.driver, b.trips, Math.round(b.q), Math.round(b.ton), Math.round(b.eKm), Math.round(b.lKm), Math.round(b.tKm), +(b.tonKm).toFixed(2)];
+        });
+      }
+
+      window.openWaybillPerf = function () {
+        renderWaybillPerf();
+        openModal("perfModal");
+      };
+
+      window.exportWaybillPerf = function (fmt) {
+        var rows = wbPerfExportRows();
+        var stamp = todayStr();
+        var name = activePerf === "annual" ? "yearly" : activePerf;
+        var headers = perfHeaders();
+        if (fmt === "csv") exportCSV("perf-" + name + "-" + stamp + ".csv", headers, rows);
+        else if (fmt === "xlsx") exportXLSX("perf-" + name + "-" + stamp + ".xlsx", "Perf " + name, headers, rows);
+        else exportPDF("perf-" + name + "-" + stamp + ".pdf", "Performance (" + name + (activeGroup === "item" ? " · By Item" : " · By Truck") + ")", "National Transport PLC · " + stamp, headers, rows);
+      };
+
+      document.querySelectorAll(".chip[data-perf]").forEach(function (c) {
+        c.addEventListener("click", function () {
+          activePerf = c.dataset.perf;
+          document.querySelectorAll(".chip[data-perf]").forEach(function (x) { x.classList.toggle("on", x === c); });
+          renderWaybillPerf();
+        });
+      });
+
+      document.querySelectorAll(".chip[data-group]").forEach(function (c) {
+        c.addEventListener("click", function () {
+          activeGroup = c.dataset.group;
+          document.querySelectorAll(".chip[data-group]").forEach(function (x) { x.classList.toggle("on", x === c); });
+          renderWaybillPerf();
+        });
+      });
+
+      ["perfTruck"].forEach(function (id) {
+        document.getElementById(id).addEventListener("input", renderWaybillPerf);
+      });
+
+      ["wbFilterTruck"].forEach(function (id) {
+        document.getElementById(id).addEventListener("input", renderWaybillTable);
+      });
+
+      document.getElementById("wbSelAll").addEventListener("change", function () {
+        var on = document.getElementById("wbSelAll").checked;
+        document.querySelectorAll("#waybillTable tbody .wb-sel").forEach(function (cb) { cb.checked = on; });
+        updateWbSelCount();
+      });
+
+      /* ---------- Dispatch Tracker ---------- */
+      function dh(s) {
+        var h = 0;
+        for (var i = 0; i < s.length; i++) h = (h * 131 + s.charCodeAt(i)) >>> 0;
+        return (h % 1000) / 1000;
+      }
+
+      function fmtBirr(n) { return fmtNum(Math.round(n)); }
+
+      var DISPATCH_STATUSES = ["At Pickup", "In Transit", "At Delivery", "Delivered", "Delayed"];
+
+      function dispatchStatus(trip) {
+        if (trip.status === "pending") return "At Pickup";
+        if (trip.status === "in_transit") return "In Transit";
+        var r = dh(trip.id + "|s");
+        if (r < 0.08) return "At Pickup";
+        if (r < 0.2) return "Delayed";
+        if (r < 0.32) return "At Delivery";
+        return "Delivered";
+      }
+
+      function dispatchRate(trip) {
+        var ton = Number(trip.weight) || 20;
+        var km = Number(trip.km) || 100;
+        var gross = Math.round(ton * (km + (Number(trip.emptyKm) || 0)) * 11);
+        return { gross: gross, surcharge: Math.round(gross * 0.15) };
+      }
+
+      function deliveryTime(trip) {
+        var km = Number(trip.km) || 100;
+        var base = new Date((trip.datetime || trip.date + "T08:00").replace(" ", "T"));
+        var hours = Math.max(2, Math.round(km / 50) + (Math.round((dh(trip.id) * 24))));
+        base.setHours(base.getHours() + hours);
+        var p2 = function (x) { return String(x).padStart(2, "0"); };
+        return base.getFullYear() + "-" + p2(base.getMonth() + 1) + "-" + p2(base.getDate()) + " " + p2(base.getHours()) + ":" + p2(base.getMinutes());
+      }
+
+      var DISPATCH_NOTES = {
+        "Delivered": ["On schedule. Check-in done.", "POD signed without claims.", "Unloaded and clear.", "Docs uploaded to TMS."],
+        "At Pickup": ["Loading at dock.", "Waiting for loading documents.", "Weighbridge confirmed."],
+        "At Delivery": ["Arrived at receiver.", "Unloading started.", "Awaiting POD signature."],
+        "In Transit": ["Progressing on schedule.", "En route to receiver.", "Fuel top-up at midway."],
+        "Delayed": ["Tire pressure warning - maintenance stop.", "Heavy traffic on route.", "Border documentation delay.", "Rerouted - road closed."],
+      };
+      function dispatchNote(status, id) {
+        var pool = DISPATCH_NOTES[status] || ["—"];
+        return pool[Math.floor(dh(id) * pool.length) % pool.length];
+      }
+
+      var DISPATCH_YN = ["YES", "NO", "PENDING"];
+
+      function dispatchLoads() {
+        var overrides = getDispatchStatus();
+        var flags = getDispatchFlags();
+        return getTrips().slice().sort(function (a, b) {
+          return (b.datetime || b.date) < (a.datetime || a.date) ? 1 : -1;
+        }).map(function (t, i) {
+          var veh = getVehicles().find(function (v) { return v.plate === t.vehiclePlate; }) || {};
+          var rate = dispatchRate(t);
+          var st = overrides[t.id] || dispatchStatus(t);
+          var f = flags[t.id] || {};
+          var bol = f.bol || (st === "Delivered" ? (dh(t.id + "|b") > 0.72 ? "YES" : "PENDING") : "PENDING");
+          return {
+            id: t.id,
+            no: "LD-" + (1000 + i),
+            dispatchDate: t.date,
+            driver: driverName(t.driverId),
+            truck: t.vehiclePlate,
+            trailer: veh.trailerNo || "—",
+            origin: t.startPoint,
+            destination: t.destination,
+            pickup: (t.datetime || t.date + "T08:00").replace("T", " "),
+            delivery: deliveryTime(t),
+            status: st,
+            rateSigned: f.rate || "YES",
+            bol: bol,
+            gross: rate.gross,
+            surcharge: rate.surcharge,
+            note: dispatchNote(st, t.id),
+          };
+        });
+      }
+
+      function dispatchFleet() {
+        var map = {};
+        getTrips().forEach(function (t) {
+          if (!map[t.driverId] || (t.datetime || t.date) > (map[t.driverId].datetime || map[t.driverId].date)) {
+            map[t.driverId] = t;
+          }
+        });
+        var rows = [];
+        Object.keys(map).forEach(function (did) {
+          var d = getDrivers().find(function (x) { return x.id === did; });
+          if (!d) return;
+          var trip = map[did];
+          var veh = getVehicles().find(function (v) { return v.plate === trip.vehiclePlate; }) || {};
+          var r = dh(did + "|h");
+          var hos = 4 + Math.round(r * 7);
+          var duty;
+          if (trip.status === "in_transit") duty = "On Duty - Driving";
+          else if (trip.status === "pending") duty = "On Duty - Loading";
+          else {
+            var rr = dh(did + "|d");
+            duty = rr < 0.4 ? "Off Duty" : rr < 0.7 ? "Off Duty - Resting" : "Sleeper Berth";
+          }
+          var notePool = ["Available for dispatch", "Clean inspection history", "Hazmat certified", "Reefer unit calibrated", "Restart completed", "Awaiting shop repair", "Docs up to date"];
+          rows.push({
+            name: d.name,
+            phone: d.phone || "—",
+            truck: trip.vehiclePlate,
+            trailer: veh.trailerNo || "—",
+            type: veh.type || veh.model || "Trailer Truck",
+            hos: hos,
+            location: trip.destination || "—",
+            duty: duty,
+            note: notePool[Math.floor(dh(did + "|n") * notePool.length) % notePool.length],
+          });
+        });
+        getDrivers().forEach(function (d) {
+          if (map[d.id]) return;
+          var veh = getVehicles().find(function (v) { return v.assignedDriverId === d.id; });
+          if (!veh) return;
+          var r = dh(d.id + "|h");
+          rows.push({
+            name: d.name,
+            phone: d.phone || "—",
+            truck: veh.plate,
+            trailer: veh.trailerNo || "—",
+            type: veh.type || veh.model || "Trailer Truck",
+            hos: 4 + Math.round(r * 7),
+            location: "—",
+            duty: "Assigned to fleet",
+            note: "Awaiting trip assignment",
+          });
+        });
+        rows.sort(function (a, b) { return a.name < b.name ? -1 : 1; });
+        return rows;
+      }
+
+      function renderDispatch() {
+        var loads = dispatchLoads();
+        var fleet = dispatchFleet();
+
+        var inTransit = loads.filter(function (l) { return ["At Pickup", "In Transit", "At Delivery"].indexOf(l.status) !== -1; }).length;
+        var pendingDocs = loads.filter(function (l) { return l.status === "Delivered" && l.bol === "PENDING"; }).length;
+        var delayed = loads.filter(function (l) { return l.status === "Delayed"; }).length;
+        var revenue = loads.reduce(function (a, l) { return a + l.gross; }, 0);
+
+        document.getElementById("dispatchStats").innerHTML =
+          '<div class="card stat-card"><div class="stat-icon stat-icon-blue">&#128666;</div><div><div class="stat-value">' + loads.length + '</div><div class="stat-label">Total Active Loads</div></div></div>' +
+          '<div class="card stat-card"><div class="stat-icon stat-icon-green">&#128652;</div><div><div class="stat-value">' + inTransit + '</div><div class="stat-label">In Transit / En Route</div></div></div>' +
+          '<div class="card stat-card"><div class="stat-icon stat-icon-amber">&#128196;</div><div><div class="stat-value">' + pendingDocs + '</div><div class="stat-label">Delivered / Pending Docs</div></div></div>' +
+          '<div class="card stat-card"><div class="stat-icon stat-icon-red">&#9888;</div><div><div class="stat-value">' + delayed + '</div><div class="stat-label">Delayed / Alert</div></div></div>' +
+          '<div class="card stat-card"><div class="stat-icon stat-icon-green">&#128176;</div><div><div class="stat-value">ETB ' + fmtNum(revenue) + '</div><div class="stat-label">Total Projected Revenue</div></div></div>';
+
+        document.querySelector("#dispatchFleetTable tbody").innerHTML = fleet.map(function (f) {
+          return "<tr>" +
+            "<td>" + esc(f.name) + "</td>" +
+            "<td>" + esc(f.phone) + "</td>" +
+            '<td class="mono">' + esc(f.truck) + "</td>" +
+            '<td class="mono">' + esc(f.trailer) + "</td>" +
+            "<td>" + esc(f.type) + "</td>" +
+            "<td>" + f.hos + " h</td>" +
+            "<td>" + esc(f.location) + "</td>" +
+            "<td>" + esc(f.duty) + "</td>" +
+            "<td class=\"small muted\">" + esc(f.note) + "</td>" +
+            "</tr>";
+        }).join("");
+
+        var totGross = 0, totSur = 0;
+        var rowsHtml = loads.map(function (l) {
+          totGross += l.gross; totSur += l.surcharge;
+          return "<tr>" +
+            '<td class="mono"><b>' + esc(l.no) + "</b></td>" +
+            "<td>" + esc(l.dispatchDate) + "</td>" +
+            "<td>" + esc(l.driver) + "</td>" +
+            '<td class="mono">' + esc(l.truck) + "</td>" +
+            '<td class="mono">' + esc(l.trailer) + "</td>" +
+            "<td>" + esc(l.origin) + "</td>" +
+            "<td>" + esc(l.destination) + "</td>" +
+            "<td>" + esc(l.pickup) + "</td>" +
+            "<td>" + esc(l.delivery) + "</td>" +
+            '<td><select class="input wb-input" onchange="setDispatchStatus(\'' + esc(l.id) + '\', this.value)">' +
+              DISPATCH_STATUSES.map(function (s) { return '<option value="' + s + '"' + (s === l.status ? " selected" : "") + ">" + s + "</option>"; }).join("") +
+            '</select></td>' +
+            '<td><select class="input wb-input" onchange="setDispatchFlag(\'' + esc(l.id) + "','rate', this.value)\">" +
+              DISPATCH_YN.map(function (s) { return '<option value="' + s + '"' + (s === l.rateSigned ? " selected" : "") + ">" + s + "</option>"; }).join("") +
+            "</select></td>" +
+            '<td><select class="input wb-input" onchange="setDispatchFlag(\'' + esc(l.id) + "','bol', this.value)\">" +
+              DISPATCH_YN.map(function (s) { return '<option value="' + s + '"' + (s === l.bol ? " selected" : "") + ">" + s + "</option>"; }).join("") +
+            "</select></td>" +
+            '<td style="text-align:right">' + fmtNum(l.gross) + "</td>" +
+            '<td style="text-align:right">' + fmtNum(l.surcharge) + "</td>" +
+            '<td class="small muted">' + esc(l.note) + "</td>" +
+            "</tr>";
+        }).join("");
+
+        rowsHtml += '<tr style="background:var(--navy);color:#fff;font-weight:700">' +
+          '<td colspan="12" style="text-align:right">TOTAL</td>' +
+          '<td style="text-align:right">' + fmtNum(totGross) + "</td>" +
+          '<td style="text-align:right">' + fmtNum(totSur) + "</td><td></td></tr>";
+
+        document.querySelector("#dispatchTable tbody").innerHTML = rowsHtml ||
+          '<tr><td colspan="15" style="text-align:center;color:var(--muted)">No loads to dispatch.</td></tr>';
+        document.getElementById("dispatchRangeLabel").textContent = "— " + loads.length + " loads · " + fleet.length + " drivers";
+      }
+
+      var DISPATCH_HEADERS = ["Load #", "Dispatch Date", "Driver Name", "Truck / Unit #", "Trailer #", "Origin / Shipper", "Destination / Receiver", "Pickup Date/Time", "Delivery Date/Time", "Status", "Rate Con Signed", "BOL & POD Cleared", "Gross Rate (ETB)", "Fuel Surcharge", "Notes / Delays"];
+
+      function dispatchExportRows() {
+        return dispatchLoads().map(function (l) {
+          return [l.no, l.dispatchDate, l.driver, l.truck, l.trailer, l.origin, l.destination, l.pickup, l.delivery, l.status, l.rateSigned, l.bol, l.gross, l.surcharge, l.note];
+        });
+      }
+
+      window.setDispatchStatus = function (id, val) {
+        var overrides = getDispatchStatus();
+        overrides[id] = val;
+        saveDispatchStatus(overrides);
+        renderDispatch();
+        toast("Load marked " + val, "success");
+      };
+
+      window.setDispatchFlag = function (id, field, val) {
+        var flags = getDispatchFlags();
+        flags[id] = flags[id] || {};
+        flags[id][field] = val;
+        saveDispatchFlags(flags);
+        renderDispatch();
+        toast(field === "rate" ? "Rate Con signed set to " + val : "BOL & POD cleared set to " + val, "success");
+      };
+
+      window.openDispatch = function () {
+        renderDispatch();
+        openModal("dispatchModal");
+      };
+
+      var activeDispatchView = "loads";
+      function applyDispatchView() {
+        var fleetWrap = document.getElementById("dispatchFleetWrap");
+        var loadsWrap = document.getElementById("dispatchLoadsWrap");
+        if (fleetWrap) fleetWrap.style.display = activeDispatchView === "fleet" ? "" : "none";
+        if (loadsWrap) loadsWrap.style.display = activeDispatchView === "loads" ? "" : "none";
+        document.querySelectorAll(".chip[data-dispatch-view]").forEach(function (c) {
+          c.classList.toggle("on", c.dataset.dispatchView === activeDispatchView);
+        });
+      }
+      document.querySelectorAll(".chip[data-dispatch-view]").forEach(function (c) {
+        c.addEventListener("click", function () {
+          activeDispatchView = c.dataset.dispatchView;
+          applyDispatchView();
+        });
+      });
+
+      window.exportDispatch = function (fmt) {
+        var rows = dispatchExportRows();
+        var stamp = todayStr();
+        if (fmt === "csv") exportCSV("dispatch-" + stamp + ".csv", DISPATCH_HEADERS, rows);
+        else if (fmt === "xlsx") exportXLSX("dispatch-" + stamp + ".xlsx", "Dispatch", DISPATCH_HEADERS, rows);
+        else exportPDF("dispatch-" + stamp + ".pdf", "Daily Truck Dispatch Operational Tracker", "National Transport PLC · " + stamp, DISPATCH_HEADERS, rows);
+      };
+
+      /* ---------- Orders ---------- */
+      function renderOrders() {
+        var tbody = document.querySelector("#ordersTable tbody");
+        tbody.innerHTML = getOrders().map(function (o) {
+          return "<tr>" +
+            '<td class="mono">' + esc(o.id) + "</td>" +
+            "<td>" + esc(o.customer) + "<br><span class='small muted'>" + esc(o.phone || o.customerPhone || "") + "</span></td>" +
+            "<td>" + esc(o.pickUp) + " &rarr; " + esc(o.dropOff) + "</td>" +
+            "<td>" + esc(o.item) + "</td>" +
+            "<td>" + o.weight + " t</td>" +
+            "<td>" + esc(fmtReqWhen(o)) + "</td>" +
+            "<td>" + statusBadge(o.status) + "</td>" +
+            "<td>" + orderActionCells(o) + "</td></tr>";
+        }).join("") || '<tr><td colspan="8" style="text-align:center;color:var(--muted)">No orders.</td></tr>';
+      }
+
+      window.setOrder = function (id, s) {
+        updateOrderStatus(id, s);
+        render();
+        toast("Order " + id + " marked " + STATUS_META[s].label, "success");
+      };
+
+      /* One forward action at a time; terminal states have no further actions. */
+      function orderActions(status) {
+        if (status === "pending") return [{ s: "in_transit", label: STATUS_META.in_transit.label }, { s: "cancelled", label: STATUS_META.cancelled.label }];
+        if (status === "in_transit") return [{ s: "completed", label: STATUS_META.completed.label }];
+        return [];
+      }
+
+      function orderActionCells(o) {
+        var acts = orderActions(o.status);
+        var html = '<div class="table-actions">' +
+          '<button class="btn btn-outline btn-sm" onclick="openRequestDetails(\'' + esc(o.id) + '\')">&#128203; Details</button>';
+        acts.forEach(function (a) {
+          html += '<button class="btn btn-outline btn-sm" onclick="setOrder(\'' + esc(o.id) + "','" + a.s + '\')">' + a.label + "</button>";
+        });
+        if (!acts.length) html += '<span class="small muted">— finished</span>';
+        return html + "</div>";
+      }
+
+      function fmtReqWhen(o) {
+        var raw = o.createdAt || o.datetime || o.requestedDate || "";
+        if (raw) {
+          var dt = new Date(raw);
+          if (!isNaN(dt.getTime())) {
+            var p = function (n) { return String(n).padStart(2, "0"); };
+            return dt.getFullYear() + "-" + p(dt.getMonth() + 1) + "-" + p(dt.getDate()) +
+              " " + p(dt.getHours()) + ":" + p(dt.getMinutes());
+          }
+        }
+        return o.requestedDate || (o.createdAt || "").slice(0, 10) || "—";
+      }
+
+      window.openRequestDetails = function (id) {
+        var o = getOrders().find(function (x) { return x.id === id; });
+        if (!o) return;
+        function kv(label, value) {
+          return '<div class="form-group" style="margin:0"><label>' + label + "</label><div class=\"detail-value\">" + (value || '<span class="muted">—</span>') + "</div></div>";
+        }
+        document.getElementById("reqDetailBody").innerHTML =
+          '<div class="flex mb-2" style="align-items:center;gap:10px;flex-wrap:wrap">' +
+          '<span class="mono" style="font-weight:800;font-size:1.05rem">' + esc(o.id) + "</span>" +
+          statusBadge(o.status) + "</div>" +
+          '<h4 style="color:var(--navy);margin:0 0 10px">Customer</h4>' +
+          '<div class="form-row">' +
+          kv("Full name", esc(o.customer)) +
+          kv("Phone", esc(o.phone || o.customerPhone || "")) +
+          "</div>" +
+          '<div class="form-row">' +
+          kv("Email", esc(o.contact || o.customerEmail || "")) +
+          kv("Requested on", esc(fmtReqWhen(o))) +
+          "</div>" +
+          '<h4 style="color:var(--navy);margin:14px 0 10px">Service Requested</h4>' +
+          '<div class="form-row">' +
+          kv("Pickup", esc(o.pickUp)) +
+          kv("Destination", esc(o.dropOff)) +
+          "</div>" +
+          '<div class="form-row">' +
+          kv("Item", esc(o.item)) +
+          kv("Weight", o.weight + " t") +
+          "</div>" +
+          '<div class="form-row">' +
+          kv("Distance", (o.distance || 0) + " km") +
+          kv("Requested ETA", esc(o.eta || "")) +
+          "</div>" +
+          '<h4 style="color:var(--navy);margin:14px 0 10px">Assigned Fleet</h4>' +
+          '<div class="form-row">' +
+          kv("Vehicle", o.vehiclePlate ? esc(o.vehiclePlate) : '<span class="muted">not assigned</span>') +
+          kv("Driver", o.driver ? esc(o.driver) : '<span class="muted">not assigned</span>') +
+          "</div>";
+        openModal("reqDetailModal");
+      };
+
+      /* ---------- Estimated Arrival Time (EAT) ---------- */
+      function eatBaseDate(t) {
+        /* Prefer a datetime/loading timestamp; fall back to the trip date at 00:00. */
+        var raw = t.datetime || t.loadingDate || t.date || "";
+        var dt = new Date(raw);
+        if (!isNaN(dt.getTime())) return dt;
+        return new Date();
+      }
+      function pad2n(n) { return String(n).padStart(2, "0"); }
+      function eatDateKey(t) {
+        var base = eatBaseDate(t);
+        return base.getFullYear() + "-" + pad2n(base.getMonth() + 1) + "-" + pad2n(base.getDate());
+      }
+      function eatForTrip(t) {
+        var speed = Number((document.getElementById("eatSpeedInput") || {}).value) || 60;
+        var dist = Number(t.km) || Number(t.distance) || 0;
+        var hours = speed > 0 ? dist / speed : 0;
+        var base = eatBaseDate(t);
+        var eat = new Date(base.getTime() + hours * 3600000);
+        var p = function (n) { return String(n).padStart(2, "0"); };
+        return {
+          plate: t.vehiclePlate || "—",
+          loadDate: eatDateKey(t),
+          origin: t.startPoint || t.origin || "—",
+          destination: t.destination || t.dropOff || "—",
+          dist: Math.round(dist),
+          eatLabel: eat.getFullYear() + "-" + p(eat.getMonth() + 1) + "-" + p(eat.getDate()) + " " + p(eat.getHours()) + ":" + p(eat.getMinutes()),
+          eatTs: eat.getTime(),
+        };
+      }
+      function eatFilters() {
+        return {
+          date: document.getElementById("eatDateFilter").value,
+          plate: document.getElementById("eatPlateFilter").value,
+          origin: document.getElementById("eatOriginFilter").value,
+          dest: document.getElementById("eatDestFilter").value,
+        };
+      }
+      function activeEatTrips() {
+        return getTrips().filter(function (t) { return t.status === "in_transit" || t.status === "pending"; });
+      }
+      function applyEatFilters(trips) {
+        var f = eatFilters();
+        return trips.filter(function (t) {
+          if (f.date && eatDateKey(t) !== f.date) return false;
+          if (f.plate && (t.vehiclePlate || "") !== f.plate) return false;
+          if (f.origin && (t.startPoint || t.origin || "") !== f.origin) return false;
+          if (f.dest && (t.destination || t.dropOff || "") !== f.dest) return false;
+          return true;
+        });
+      }
+      function populateEatFilters() {
+        var trips = activeEatTrips();
+        var dates = {}, plates = {}, origins = {}, dests = {};
+        trips.forEach(function (t) {
+          dates[eatDateKey(t)] = 1;
+          plates[t.vehiclePlate || ""] = 1;
+          origins[t.startPoint || t.origin || ""] = 1;
+          dests[t.destination || t.dropOff || ""] = 1;
+        });
+        fillSelect("eatDateFilter", Object.keys(dates).sort(), "All dates");
+        fillSelect("eatPlateFilter", Object.keys(plates).filter(Boolean).sort(), "All plates");
+        fillSelect("eatOriginFilter", Object.keys(origins).filter(Boolean).sort(), "All origins");
+        fillSelect("eatDestFilter", Object.keys(dests).filter(Boolean).sort(), "All destinations");
+      }
+      function fillSelect(id, values, allLabel) {
+        var sel = document.getElementById(id);
+        if (!sel) return;
+        var cur = sel.value;
+        sel.innerHTML = '<option value="">' + allLabel + "</option>" +
+          values.map(function (v) { return '<option value="' + esc(v) + '">' + esc(v) + "</option>"; }).join("");
+        if (cur) sel.value = cur;
+      }
+      window.resetEatFilters = function () {
+        ["eatDateFilter", "eatPlateFilter", "eatOriginFilter", "eatDestFilter"].forEach(function (id) {
+          var el = document.getElementById(id); if (el) el.value = "";
+        });
+        renderEAT();
+      };
+      function renderEAT() {
+        var tbody = document.querySelector("#eatTable tbody");
+        var speed = Number(document.getElementById("eatSpeedInput").value) || 60;
+        document.getElementById("eatAvgSpeed").textContent = speed + " km/h";
+        populateEatFilters();
+        var rows = applyEatFilters(activeEatTrips())
+          .map(eatForTrip)
+          .sort(function (a, b) { return a.eatTs - b.eatTs; });
+        tbody.innerHTML = rows.map(function (r) {
+          return "<tr>" +
+            '<td class="mono">' + esc(r.plate) + "</td>" +
+            "<td>" + esc(r.loadDate) + "</td>" +
+            "<td>" + esc(r.origin) + "</td>" +
+            "<td>" + esc(r.destination) + "</td>" +
+            "<td>" + r.dist + "</td>" +
+            '<td style="font-weight:700;color:var(--navy)">' + esc(r.eatLabel) + "</td>" +
+            "</tr>";
+        }).join("") || '<tr><td colspan="6" style="text-align:center;color:var(--muted)">No active (in-transit / pending) trips match the selected filters.</td></tr>';
+      }
+      var eatSpeedInput = document.getElementById("eatSpeedInput");
+      if (eatSpeedInput) eatSpeedInput.addEventListener("input", function () { renderEAT(); });
+      ["eatDateFilter", "eatPlateFilter", "eatOriginFilter", "eatDestFilter"].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.addEventListener("change", renderEAT);
+      });
+      populateEatFilters();
+
+      /* ---------- Manual EAT Calculator ---------- */
+      var EAT_DAILY_HOURS = 9;
+      var EAT_LOADED_KMH = 30;
+      function eatCalcPlaces() {
+        var seen = {}, out = [];
+        (typeof PLACES !== "undefined" ? PLACES : []).forEach(function (p) { seen[p] = 1; });
+        activeEatTrips().forEach(function (t) {
+          [t.startPoint, t.origin, t.destination, t.dropOff].forEach(function (p) {
+            if (p) seen[p] = 1;
+          });
+        });
+        Object.keys(seen).sort().forEach(function (p) { out.push(p); });
+        return out;
+      }
+      function populateEatCalcSelects() {
+        var places = eatCalcPlaces();
+        var o = document.getElementById("eatCalcOrigin");
+        var d = document.getElementById("eatCalcDest");
+        if (!o || !d) return;
+        o.innerHTML = '<option value="">Select origin</option>' + places.map(function (p) { return '<option value="' + esc(p) + '">' + esc(p) + "</option>"; }).join("");
+        d.innerHTML = '<option value="">Select destination</option>' + places.map(function (p) { return '<option value="' + esc(p) + '">' + esc(p) + "</option>"; }).join("");
+      }
+      function autoFillEatKm() {
+        var km = lookupDistance(
+          document.getElementById("eatCalcOrigin").value,
+          document.getElementById("eatCalcDest").value
+        );
+        var kmEl = document.getElementById("eatCalcKm");
+        if (km && kmEl && !kmEl.dataset.manual) kmEl.value = km;
+      }
+      document.getElementById("eatCalcOrigin").addEventListener("change", autoFillEatKm);
+      document.getElementById("eatCalcDest").addEventListener("change", autoFillEatKm);
+      document.getElementById("eatCalcKm").addEventListener("input", function () {
+        this.dataset.manual = "1";
+      });
+      populateEatCalcSelects();
+
+      window.resetEatCalc = function () {
+        ["eatCalcOrigin", "eatCalcDest", "eatCalcTime", "eatCalcKm", "eatCalcActual"].forEach(function (id) {
+          var el = document.getElementById(id); if (el) el.value = "";
+        });
+        var kmEl = document.getElementById("eatCalcKm");
+        if (kmEl) delete kmEl.dataset.manual;
+        document.getElementById("eatCalcResult").innerHTML = "";
+      };
+
+      window.calcEat = function () {
+        var box = document.getElementById("eatCalcResult");
+        var origin = document.getElementById("eatCalcOrigin").value;
+        var dest = document.getElementById("eatCalcDest").value;
+        var timeRaw = document.getElementById("eatCalcTime").value;
+        var kmVal = Number(document.getElementById("eatCalcKm").value) || 0;
+        var actualDays = Number(document.getElementById("eatCalcActual").value) || 0;
+        function msg(t) { box.innerHTML = '<span style="color:var(--red)">' + esc(t) + "</span>"; }
+        if (!origin) return msg("Please choose an Origin.");
+        if (!dest) return msg("Please choose a Destination.");
+        if (origin === dest) return msg("Origin and Destination must differ.");
+        if (!timeRaw) return msg("Please pick the loading date & time.");
+        if (!kmVal || kmVal <= 0) return msg("Distance unknown for this route. Enter the distance (km) manually.");
+        if (!actualDays || actualDays <= 0) return msg("Enter the Actual days.");
+
+        var loading = new Date(timeRaw);
+        var calcHours = kmVal / EAT_LOADED_KMH;
+        var eatDays = calcHours / EAT_DAILY_HOURS;
+        var eatMs = loading.getTime() + calcHours * 3600000;
+        var eatDate = new Date(eatMs);
+        var delayed = eatDays > actualDays;
+        var pad2 = function (n) { return String(n).padStart(2, "0"); };
+        var fmt = function (d) {
+          return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate()) + " " + pad2(d.getHours()) + ":" + pad2(d.getMinutes());
+        };
+        box.innerHTML =
+          "<div class='table-wrap'><table>" +
+          "<tr><td>Route</td><td><b>" + esc(origin) + " &rarr; " + esc(dest) + "</b></td></tr>" +
+          "<tr><td>Distance</td><td>" + kmVal + " km (loaded)</td></tr>" +
+          "<tr><td>Loading</td><td>" + fmt(loading) + "</td></tr>" +
+          "<tr><td>Travel time</td><td>" + calcHours.toFixed(1) + " h (= " + eatDays.toFixed(2) + " days at " + EAT_DAILY_HOURS + " h/day, " + EAT_LOADED_KMH + " km/h)</td></tr>" +
+          "<tr><td><b>EAT arrival</b></td><td><b>" + fmt(eatDate) + "</b></td></tr>" +
+          "<tr><td><b>EAT days</b></td><td><b>" + eatDays.toFixed(2) + "</b></td></tr>" +
+          "<tr><td>Actual days</td><td>" + actualDays + "</td></tr>" +
+          "<tr><td>Status</td><td>" + (delayed
+            ? '<span class="badge badge-pending" style="background:var(--red)">&#9888;&#65039; Delayed (EAT ' + eatDays.toFixed(2) + ' &gt; Actual ' + actualDays + ')</span>'
+            : '<span class="badge badge-completed" style="background:var(--green)">&#9989; On time (EAT ' + eatDays.toFixed(2) + ' &le; Actual ' + actualDays + ')</span>') + "</td></tr>" +
+          "</table></div>" +
+          (delayed
+            ? '<div class="mt-2"><label class="small muted">Reason for delay:</label> <input id="eatDelayReason" class="input" style="min-width:320px" placeholder="e.g. breakdown, weather, border delay, offloading queued…"></div>'
+            : '<div class="small muted mt-2">No delay reason required.</div>');
+      };
+
+      window.exportEatXlsx = function () {
+        var speed = Number(document.getElementById("eatSpeedInput").value) || 60;
+        var rows = applyEatFilters(activeEatTrips())
+          .map(eatForTrip)
+          .sort(function (a, b) { return a.eatTs - b.eatTs; });
+        if (!rows.length) { toast("No EAT data to export", "error"); return; }
+        var header = ["Plate ID", "Date of Loading", "Origin", "Destination", "Distance (km)", "EAT"];
+        var data = rows.map(function (r) { return [r.plate, r.loadDate, r.origin, r.destination, r.dist, r.eatLabel]; });
+        var now = new Date(), pad2 = function (n) { return (n < 10 ? "0" : "") + n; };
+        var stamp = now.toISOString().slice(0, 10) + "-" + pad2(now.getHours()) + pad2(now.getMinutes());
+        exportXLSX("eat-" + stamp + ".xlsx", "Estimated Arrival Time", header, data, [
+          ["Estimated Arrival Time — National Transport PLC", "Generated: " + now.toLocaleString(), "Avg speed: " + speed + " km/h", "Trips: " + rows.length],
+          "",
+        ]);
+        toast("EAT exported to XLSX (" + rows.length + " trips)", "success");
+      };
+
+      /* ---------- GPS Settings ---------- */
+      window.openGpsSettings = function () {
+        var cfg = getGpsConfig();
+        document.getElementById("gpsEnabled").value = cfg.enabled ? "1" : "0";
+        document.getElementById("gpsUser").value = cfg.username || "";
+        document.getElementById("gpsPass").value = cfg.password || "";
+        document.getElementById("gps2Enabled").value = cfg.ntEnabled ? "1" : "0";
+        document.getElementById("gps2User").value = cfg.ntUsername || "";
+        document.getElementById("gps2Pass").value = cfg.ntPassword || "";
+        document.getElementById("gpsApi").value = cfg.apiBase || "https://apigps1.ztrackinsight.com/api";
+        document.getElementById("gpsTestResult").innerHTML = "";
+        refreshGpsState();
+        openModal("gpsModal");
+      };
+
+      window.saveGpsSettings = function () {
+        saveGpsConfig({
+          enabled: document.getElementById("gpsEnabled").value === "1",
+          username: document.getElementById("gpsUser").value.trim(),
+          password: document.getElementById("gpsPass").value,
+          apiBase: document.getElementById("gpsApi").value.trim() || "https://apigps1.ztrackinsight.com/api",
+          provider: "ZTS GPS",
+          interval: 30,
+          ntEnabled: document.getElementById("gps2Enabled").value === "1",
+          ntUsername: document.getElementById("gps2User").value.trim(),
+          ntPassword: document.getElementById("gps2Pass").value,
+        });
+        refreshGpsState();
+        toast("GPS settings saved", "success");
+      };
+
+      window.testGpsConnection = function () {
+        var box = document.getElementById("gpsTestResult");
+        var base = document.getElementById("gpsApi").value.trim() || "https://apigps1.ztrackinsight.com/api";
+        var accounts = [];
+        var lu = document.getElementById("gpsUser").value.trim(), lp = document.getElementById("gpsPass").value;
+        var nu = document.getElementById("gps2User").value.trim(), np = document.getElementById("gps2Pass").value;
+        if (lu && lp) accounts.push({ label: "Lemi", username: lu, password: lp, apiBase: base });
+        if (document.getElementById("gps2Enabled").value === "1" && nu && np) accounts.push({ label: "NT", username: nu, password: np, apiBase: base });
+        if (!accounts.length) {
+          box.className = "alert alert-error mt-2";
+          box.innerHTML = "Enter ZTS username and password for at least one account first.";
+          return;
+        }
+        box.className = "alert alert-success mt-2";
+        box.innerHTML = "Connecting to ZTS GPS (" + accounts.length + " account(s))...";
+        Promise.all(accounts.map(function (a) { return ztsTestConnection(a).then(function (r) { return { label: a.label, r: r }; }); }))
+          .then(function (results) {
+            var html = "";
+            results.forEach(function (x) {
+              var r = x.r;
+              html += '<div class="' + (r.ok ? "alert alert-success" : "alert alert-error") + ' mb-1" style="padding:8px 10px"><b>' + esc(x.label) + ":</b> " +
+                (r.ok
+                  ? "Connected! <b>" + r.count + "</b> live vehicles in " + r.ms + " ms" +
+                    (r.sample ? " &middot; sample <b>" + esc(r.sample.plate) + "</b> (" + Math.round(r.sample.speed) + " km/h)" : "")
+                  : "<b>Failed:</b> " + esc(r.error)) +
+                "</div>";
+            });
+            html += '<div class="small mt-1">Lemi + NT feeds are merged automatically on the Live Tracking page.</div>';
+            box.innerHTML = html;
+          });
+      };
+
+      function refreshGpsState() {
+        var cfg = getGpsConfig();
+        var accounts = gpsAccounts();
+        var el = document.getElementById("gpsState");
+        el.className = "alert mb-2 " + (cfg.enabled && accounts.length ? "alert-success" : "alert-error");
+        if (cfg.enabled && accounts.length) {
+          var parts = accounts.map(function (a) { return "<b>" + esc(a.label) + "</b> as <b>" + esc(a.username) + "</b>"; });
+          el.innerHTML = "<b>Live feed is ON.</b> Tracking page logs into " + parts.join(" and ") + " and merges both feeds every 30 s.";
+        } else {
+          el.innerHTML = "<b>Live feed is OFF.</b> The Live Tracking page currently uses the demo simulation. Enter at least the Lemi ZTS login above.";
+        }
+      }
+
+      window.resetDemoData = function () {
+        if (!confirm("Reset all data back to the demo dataset?")) return;
+        resetData();
+        render();
+        toast("Demo data restored", "success");
+        if (API.isOnline() && API.isAdmin()) { API.onChange(); toast("Demo data also synced to the server", "success"); }
+      };
+
+      /* ---------- Backend integration ---------- */
+      var gated = false;
+
+      document.getElementById("syncBtn").addEventListener("click", function () {
+        if (!API.isOnline()) { toast("Server offline — data stays in this browser", "error"); return; }
+        if (!API.isAdmin()) { toast("Sign in as admin to sync to the server", "error"); return; }
+        API.onChange();
+        toast("All data pushed to the server", "success");
+      });
+
+      window.afterApiSync = function () { if (!gated) render(); };
+
+      API.ready.then(function () {
+        if (API.isOnline() && !API.isAdmin()) {
+          gated = true;
+          document.querySelectorAll(".admin-only").forEach(function (b) { b.style.display = "none"; });
+          var sec = document.querySelector("main section.section");
+          sec.innerHTML = '<div class="card card-pad" style="max-width:520px;margin:40px auto;text-align:center">' +
+            '<h3 style="color:var(--navy)">Admin sign-in required</h3>' +
+            '<p class="mt-1">This system is connected to the backend server. Sign in as an administrator to manage vehicles, drivers, trips and orders.</p>' +
+            '<button class="btn btn-primary mt-2" onclick="API.openAuthModal()">Sign in</button>' +
+            '<p class="small muted mt-2">Demo admin: <b>admin / admin123</b></p>' +
+            "</div>";
+        }
+      });
+
+      render();
+    })();
+  </script>
+</body>
+</html>

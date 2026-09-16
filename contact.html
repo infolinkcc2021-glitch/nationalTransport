@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact &amp; Support — National Transport PLC</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="contact">
+  <div id="siteHeader"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <h1>Contact &amp; Support</h1>
+        <p>Questions about a shipment, need a quote, or want to partner with us? We're ready to help 24/7.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="contact-grid">
+          <div>
+            <span class="eyebrow">Get in touch</span>
+            <h2 class="section-title">Talk to Our Operations Team</h2>
+            <p class="section-sub">Our team responds to quote requests and shipment inquiries within 2 business hours.</p>
+
+            <div class="grid" style="gap:14px">
+              <div class="card card-hover contact-info-card">
+                <span class="ico">&#9742;</span>
+                <div><b>Phone</b><p>+251 111 234 567 (Office)<br>+251 911 234 567 (24/7 Dispatch)</p></div>
+              </div>
+              <div class="card card-hover contact-info-card">
+                <span class="ico">&#128231;</span>
+                <div><b>Email</b><p>ops@nationaltransport.et<br>quotes@nationaltransport.et</p></div>
+              </div>
+              <div class="card card-hover contact-info-card">
+                <span class="ico">&#128205;</span>
+                <div><b>Head Office</b><p>Bole Road, near Friendship Building<br>P.O. Box 1234, Addis Ababa, Ethiopia</p></div>
+              </div>
+              <div class="card card-hover contact-info-card">
+                <span class="ico">&#9200;</span>
+                <div><b>Working Hours</b><p>Dispatch: 24/7 &middot; Office: Mon&ndash;Sat, 8:00 &ndash; 18:00</p></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact form -->
+          <div class="card card-pad">
+            <h3 style="color:var(--navy)" class="mb-2">Send Us a Message</h3>
+            <form id="contactForm">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Your Name <span class="req">*</span></label>
+                  <input type="text" id="cName" class="input" required>
+                </div>
+                <div class="form-group">
+                  <label>Phone / Email <span class="req">*</span></label>
+                  <input type="text" id="cContact" class="input" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Topic</label>
+                <select id="cTopic" class="input">
+                  <option>Request a Quote</option>
+                  <option>Track a Shipment</option>
+                  <option>Report an Issue</option>
+                  <option>Partnership / Fleet Leasing</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Message <span class="req">*</span></label>
+                <textarea id="cMsg" class="input" required placeholder="Describe your transport needs, load, pickup and destination..."></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+            </form>
+            <div id="contactOk" class="hidden mt-2"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" style="background:var(--silver)">
+      <div class="container">
+        <span class="eyebrow">FAQ</span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <div class="grid grid-2 mt-3">
+          <div class="card card-pad"><h4 style="color:var(--navy)">How do I book a vehicle?</h4><p class="small mt-1">Use the <a href="portal.html">Customer Portal</a>, call our dispatch line, or send us a message. We confirm the vehicle, price and schedule within hours.</p></div>
+          <div class="card card-pad"><h4 style="color:var(--navy)">What materials can you carry?</h4><p class="small mt-1">Construction materials, containers, machinery, agricultural produce, refrigerated goods and general cargo up to 45 tons per trip.</p></div>
+          <div class="card card-pad"><h4 style="color:var(--navy)">How is the price calculated?</h4><p class="small mt-1">Based on distance, weight and load type. Every completed trip is recorded in our system with exact km, weight and fuel for full transparency.</p></div>
+          <div class="card card-pad"><h4 style="color:var(--navy)">Can I track my shipment?</h4><p class="small mt-1">Yes. Enter your booking reference on the <a href="portal.html">Customer Portal</a> to see live status: loading, in transit or delivered.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="siteFooter"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/api.js?v=63"></script>
+  <script>
+    document.getElementById("contactForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var ok = document.getElementById("contactOk");
+      ok.className = "alert alert-success mt-2";
+      ok.innerHTML = "<b>Thank you, " + esc(document.getElementById("cName").value.trim()) + "!</b> Your message about &ldquo;" +
+        esc(document.getElementById("cTopic").value) + "&rdquo; has been received. Our team will contact you shortly.";
+      this.reset();
+      toast("Message sent successfully", "success");
+    });
+  </script>
+</body>
+</html>

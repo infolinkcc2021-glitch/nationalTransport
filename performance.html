@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Performance &amp; Ranking — National Transport PLC</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="performance">
+  <div id="siteHeader"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <h1>Performance &amp; Ranking</h1>
+        <p>Loaded factor per vehicle and driver — Ton-km hauled, loaded vs empty kilometres, turnaround time and ranking.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-4 mb-3" id="perfStats"></div>
+
+        <!-- Date range -->
+        <div class="fleet-toolbar mb-2">
+          <div class="flex" id="rangeChips">
+            <button class="chip on" data-range="all">All time</button>
+            <button class="chip" data-range="today">Today</button>
+            <button class="chip" data-range="yesterday">Yesterday</button>
+            <button class="chip" data-range="7d">Last 7 days</button>
+            <button class="chip" data-range="30d">Last 30 days</button>
+            <button class="chip" data-range="daily">Daily</button>
+            <button class="chip" data-range="weekly">Weekly</button>
+            <button class="chip" data-range="monthly">Monthly</button>
+            <button class="chip" data-range="annual">Annual</button>
+            <button class="chip" data-range="custom">Custom</button>
+          </div>
+          <div class="flex" id="customRange" style="display:none">
+            <input type="date" id="perfFrom" class="input">
+            <span style="padding:0 4px;color:var(--muted)">to</span>
+            <input type="date" id="perfTo" class="input">
+            <button class="btn btn-primary btn-sm" id="applyRange">Apply</button>
+          </div>
+        </div>
+
+        <div class="fleet-toolbar mb-2" id="perfFilters">
+          <div class="flex" style="gap:8px;flex-wrap:wrap">
+            <input type="text" id="perfSearch" class="input" placeholder="Search plate, trailer, model or driver…" style="min-width:240px">
+            <select id="perfStatus" class="input" style="display:none"><option value="">All statuses</option></select>
+            <select id="perfType" class="input" style="display:none"><option value="">All types</option></select>
+            <button class="btn btn-outline btn-sm" id="perfReset">Reset</button>
+          </div>
+        </div>
+
+        <div class="card card-pad">
+          <div class="spread mb-2">
+            <h3 style="color:var(--navy)">Ranking <span class="small" id="rangeLabel" style="color:var(--muted)"></span></h3>
+            <div class="flex" style="gap:10px;flex-wrap:wrap">
+              <label class="small" style="display:flex;align-items:center;gap:6px;color:var(--muted)">
+                Rank by
+                <select id="rankBy" class="input" style="min-width:170px">
+                  <option value="tonKm" selected>Ton-km Loaded</option>
+                  <option value="trips">Trips</option>
+                  <option value="loadKm">Loaded (km)</option>
+                  <option value="emptyKm">Empty (km)</option>
+                  <option value="totalKm">Total (km)</option>
+                  <option value="factor">Load Factor</option>
+                  <option value="tons">Total Tons</option>
+                  <option value="name">Vehicle / Driver</option>
+                </select>
+              </label>
+              <button class="chip" id="viewVehicles">Vehicles</button>
+              <button class="chip" id="viewDrivers">Drivers</button>
+              <div class="flex" style="gap:6px">
+                <button class="btn btn-outline btn-sm" id="exportCSVBtn" title="Export CSV">&#128228; CSV</button>
+                <button class="btn btn-outline btn-sm" id="exportXlsxBtn" title="Export Excel">&#128220; XLSX</button>
+                <button class="btn btn-outline btn-sm" id="exportPdfBtn" title="Export PDF">&#128196; PDF</button>
+              </div>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table id="perfTable">
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Vehicle / Driver</th>
+                  <th>Trip Location</th>
+                  <th>Trips</th>
+                  <th>Loaded (km)</th>
+                  <th>Empty (km)</th>
+                  <th>Total (km)</th>
+                  <th>Load Factor</th>
+                  <th>Ton-km Loaded</th>
+                  <th>Total Tons</th>
+                  <th>Avg Turnaround</th>
+                </tr>
+              </thead>
+              <tbody id="perfBody"></tbody>
+              <tfoot id="perfFoot"></tfoot>
+            </table>
+          </div>
+          <div class="empty hidden" id="noPerf">
+            <div class="eico">&#128200;</div>
+            <p>No completed trips yet. Add trips in Admin, or they appear here once marked completed.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-2 mt-3 no-print">
+          <div class="chart-box">
+            <h3>Top Vehicles by Ton-km</h3>
+            <div class="bars" id="vehChart"></div>
+          </div>
+          <div class="chart-box">
+            <h3>Top Drivers by Ton-km</h3>
+            <div class="bars" id="drvChart"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="siteFooter"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/api.js?v=63"></script>
+  <script>
+    (function () {
+      var view = "vehicles";
+      var range = "all";
+      var rankMetric = "tonKm";
+      var liveByPlate = {};
+
+      function plateKey(p) { return String(p || "").replace(/[^A-Za-z0-9]/g, "").toUpperCase(); }
+
+      function latestPlateForDriver(id) {
+        var trips = getTrips().filter(function (t) { return t.driverId === id; });
+        if (!trips.length) return "";
+        trips.sort(function (a, b) { return (b.datetime || b.date) < (a.datetime || a.date) ? 1 : -1; });
+        return trips[0].vehiclePlate;
+      }
+
+      function locCell(r) {
+        var cfg = getGpsConfig();
+        if (!cfg.enabled || !cfg.username || !cfg.password) return '<span class="muted">GPS off</span>';
+        var plate = view === "vehicles" ? r.key : latestPlateForDriver(r.key);
+        var v = plate ? liveByPlate[plateKey(plate)] : null;
+        if (!v) return '<span class="muted">No GPS fix</span>';
+        var txt = v.location || (v.lat.toFixed(4) + ", " + v.lng.toFixed(4));
+        return '<span title="' + esc(txt) + '">' + esc(txt) + "</span> <small class=\"muted\">" + Math.round(v.speed) + " km/h</small>";
+      }
+
+      function updateLocCells() {
+        var list = currentList();
+        var cells = document.querySelectorAll("#perfBody .trip-loc");
+        for (var i = 0; i < cells.length; i++) {
+          cells[i].innerHTML = locCell(list[i]);
+        }
+      }
+
+      function loadLiveLocations() {
+        var cfg = getGpsConfig();
+        if (!cfg.enabled || !cfg.username || !cfg.password) return;
+        ztsFetchLive(cfg).then(function (list) {
+          liveByPlate = {};
+          list.forEach(function (v) { liveByPlate[plateKey(v.plate)] = v; });
+          updateLocCells();
+        }, function () {
+          liveByPlate = {};
+          document.querySelectorAll("#perfBody .trip-loc").forEach(function (td) { td.innerHTML = '<span class="muted">GPS error</span>'; });
+        });
+      }
+
+      function rangeDates() {
+        var today = todayStr();
+        if (range === "today") return { from: today, to: today };
+        if (range === "yesterday") { var y = daysAgo(1); return { from: y, to: y }; }
+        if (range === "7d") return { from: daysAgo(6), to: today };
+        if (range === "30d") return { from: daysAgo(29), to: today };
+        if (range === "daily") return { from: today, to: today };
+        if (range === "weekly") return { from: daysAgo(6), to: today };
+        if (range === "monthly") return { from: daysAgo(29), to: today };
+        if (range === "annual") return { from: daysAgo(364), to: today };
+        if (range === "custom") return {
+          from: document.getElementById("perfFrom").value || null,
+          to: document.getElementById("perfTo").value || null,
+        };
+        return { from: null, to: null };
+      }
+
+      function rangeLabel() {
+        var d = rangeDates();
+        if (range === "all") return "All time";
+        if (range === "today") return "Today (" + d.from + ")";
+        if (range === "yesterday") return "Yesterday (" + d.from + ")";
+        if (range === "daily") return "Daily (" + d.from + ")";
+        if (range === "weekly") return "Weekly (last 7 days)";
+        if (range === "monthly") return "Monthly (last 30 days)";
+        if (range === "annual") return "Annual (last 12 months)";
+        if (range === "custom") {
+          if (!d.from && !d.to) return "Custom";
+          return (d.from || "start") + " → " + (d.to || "today");
+        }
+        return range === "7d" ? "Last 7 days" : "Last 30 days";
+      }
+
+      function fmt(t) { return fmtNum(Math.round(t)); }
+
+      function filterList(list, kind) {
+        var q = (document.getElementById("perfSearch").value || "").trim().toLowerCase();
+        var st = document.getElementById("perfStatus").value;
+        var ty = document.getElementById("perfType").value;
+        if (kind === "drivers") {
+          return list.filter(function (r) {
+            var d = getDrivers().find(function (x) { return x.id === r.key; });
+            if (q && (!d || d.name.toLowerCase().indexOf(q) === -1)) return false;
+            return true;
+          });
+        }
+        return list.filter(function (r) {
+          var v = getVehicles().find(function (x) { return x.plate === r.key; });
+          if (st && (!v || v.status !== st)) return false;
+          if (ty && (!v || v.type !== ty)) return false;
+          if (q && v) {
+            var hay = (v.plate + " " + (v.trailerNo || "") + " " + (v.model || "")).toLowerCase();
+            if (hay.indexOf(q) === -1) return false;
+          }
+          return true;
+        });
+      }
+
+      function rankMetricValue(r) {
+        switch (rankMetric) {
+          case "trips": return r.trips;
+          case "loadKm": return r.loadKm;
+          case "emptyKm": return r.emptyKm;
+          case "totalKm": return r.totalKm;
+          case "factor": return r.factor;
+          case "tons": return r.tons;
+          case "name": return 0;
+          default: return r.tonKm;
+        }
+      }
+
+      function rankCol() {
+        switch (rankMetric) {
+          case "name": return 1;
+          case "trips": return 3;
+          case "loadKm": return 4;
+          case "emptyKm": return 5;
+          case "totalKm": return 6;
+          case "factor": return 7;
+          case "tons": return 9;
+          default: return 8;
+        }
+      }
+
+      function currentList() {
+        var d = rangeDates();
+        var s = performanceStats(d.from, d.to);
+        var list = view === "vehicles" ? s.vehicles.slice() : s.drivers.slice();
+        if (rankMetric === "name") {
+          list.sort(function (a, b) { return String(a.key).localeCompare(String(b.key)); });
+        } else {
+          list.sort(function (a, b) { return rankMetricValue(b) - rankMetricValue(a); });
+        }
+        return filterList(list, view);
+      }
+
+      function rows() { return currentList(); }
+
+      function labelOf(r) {
+        if (view === "vehicles") {
+          var v = getVehicles().find(function (x) { return x.plate === r.key; });
+          if (!v) v = getVehicles().find(function (x) { return x.id === r.key; });
+          return v ? v.plate + " <span class='muted'>" + esc((v.trailerNo || "")) + "</span>" : esc(r.key);
+        }
+        var d = getDrivers().find(function (x) { return x.id === r.key; });
+        return d ? esc(d.name) + " <span class='muted'>" + esc(d.license || "") + "</span>" : esc(r.key);
+      }
+
+      function rankBadge(i) {
+        if (i === 0) return '<span class="rank rank-1">1</span>';
+        if (i === 1) return '<span class="rank rank-2">2</span>';
+        if (i === 2) return '<span class="rank rank-3">3</span>';
+        return '<span class="rank">' + (i + 1) + "</span>";
+      }
+
+      function render() {
+        var d = rangeDates();
+        var s = performanceStats(d.from, d.to);
+        document.getElementById("viewVehicles").classList.toggle("on", view === "vehicles");
+        document.getElementById("viewDrivers").classList.toggle("on", view === "drivers");
+        var showFleet = view === "vehicles";
+        document.getElementById("perfStatus").style.display = showFleet ? "" : "none";
+        document.getElementById("perfType").style.display = showFleet ? "" : "none";
+        document.getElementById("rangeLabel").textContent = "— " + rangeLabel();
+
+        var list = currentList();
+        var totTonKm = list.reduce(function (a, r) { return a + r.tonKm; }, 0);
+        var totLoad = list.reduce(function (a, r) { return a + r.loadKm; }, 0);
+        var totEmpty = list.reduce(function (a, r) { return a + r.emptyKm; }, 0);
+        var factor = (totLoad + totEmpty) ? (totLoad / (totLoad + totEmpty)) * 100 : 0;
+
+        document.getElementById("perfStats").innerHTML =
+          '<div class="card stat-card"><div class="stat-icon stat-icon-blue">&#128666;</div><div><div class="stat-value">' + fmtNum(list.length) + "</div><div class=\"stat-label\">" + (view === "vehicles" ? "Vehicles Ranked" : "Drivers Ranked") + "</div></div></div>" +
+          '<div class="card stat-card"><div class="stat-icon stat-icon-green">&#9881;</div><div><div class="stat-value">' + fmtNum(Math.round(totTonKm)) + '</div><div class="stat-label">Ton-km Loaded</div></div></div>' +
+          '<div class="card stat-card"><div class="stat-icon stat-icon-amber">&#128176;</div><div><div class="stat-value">' + fmtNum(Math.round(totLoad)) + '</div><div class="stat-label">Loaded (km)</div></div></div>' +
+          '<div class="card stat-card"><div class="stat-icon stat-icon-red">&#128185;</div><div><div class="stat-value">' + fmtNum(Math.round(totEmpty)) + '</div><div class="stat-label">Empty (km)</div></div></div>';
+
+        document.getElementById("perfBody").innerHTML = list.map(function (r, i) {
+          return "<tr>" +
+            "<td>" + rankBadge(i) + "</td>" +
+            "<td>" + labelOf(r) + "</td>" +
+            '<td class="trip-loc">' + locCell(r) + "</td>" +
+            "<td>" + fmtNum(r.trips) + "</td>" +
+            "<td>" + fmt(r.loadKm) + "</td>" +
+            "<td>" + fmt(r.emptyKm) + "</td>" +
+            "<td>" + fmt(r.totalKm) + "</td>" +
+            '<td><div class="progress" style="max-width:140px;margin:0"><div class="progress-bar" style="width:' + r.factor + '%"></div></div><span class="small">' + r.factor.toFixed(1) + "%</span></td>" +
+            "<td><b>" + fmt(r.tonKm) + "</b></td>" +
+            "<td>" + fmtNum(r.tons) + " t</td>" +
+            '<td title="Total cycle between finishing one trip and starting the next. Loaded = loaded km ÷ 25 km/h, Unloaded = empty km ÷ 45 km/h, Idle = load / unload / wait. Driving capped at 9 h per day.">' +
+            (r.avgTat == null ? "—" : fmtTat(r.avgTat)) +
+            (r.tatLoaded != null ? '<br><span class="small muted">Ld ' + fmtTat(r.tatLoaded) + " · Emp " + fmtTat(r.tatUnloaded) + " · Idle " + fmtTat(r.tatIdle) + (r.tatDays > 1 ? " · ~" + Math.round(r.tatDays) + " days" : "") + "</span>" : "") +
+            "</td>" +
+            "</tr>";
+        }).join("");
+        document.getElementById("noPerf").classList.toggle("hidden", list.length > 0);
+
+        var rc = rankCol();
+        document.querySelectorAll("#perfTable thead th").forEach(function (th, i) { th.classList.toggle("perf-rank", i === rc); });
+        document.querySelectorAll("#perfBody tr").forEach(function (tr) {
+          var cell = tr.children[rc];
+          if (cell) cell.classList.add("perf-rank");
+        });
+
+        var totTrips = list.reduce(function (a, r) { return a + r.trips; }, 0);
+        var totLoad = list.reduce(function (a, r) { return a + r.loadKm; }, 0);
+        var totEmpty = list.reduce(function (a, r) { return a + r.emptyKm; }, 0);
+        var totTotal = list.reduce(function (a, r) { return a + r.totalKm; }, 0);
+        var totFactor = (totLoad + totEmpty) ? (totLoad / (totLoad + totEmpty)) * 100 : 0;
+        var totTon = list.reduce(function (a, r) { return a + r.tonKm; }, 0);
+        var totTons = list.reduce(function (a, r) { return a + r.tons; }, 0);
+        var tats = list.map(function (r) { return r.avgTat; }).filter(function (v) { return v != null; });
+        var totTat = tats.length ? tats.reduce(function (a, b) { return a + b; }, 0) / tats.length : null;
+
+        document.getElementById("perfFoot").innerHTML = list.length
+          ? '<tr class="perf-foot">' +
+            "<td></td>" +
+            "<td>TOTAL</td>" +
+            "<td></td>" +
+            "<td>" + fmtNum(totTrips) + "</td>" +
+            "<td>" + fmt(totLoad) + "</td>" +
+            "<td>" + fmt(totEmpty) + "</td>" +
+            "<td>" + fmt(totTotal) + "</td>" +
+            "<td>" + totFactor.toFixed(1) + "%</td>" +
+            "<td><b>" + fmt(totTon) + "</b></td>" +
+            "<td>" + fmtNum(totTons) + " t</td>" +
+            "<td>" + (totTat == null ? "—" : fmtTat(totTat)) + "</td>" +
+            "</tr>"
+          : "";
+        var footRow = document.querySelector("#perfFoot tr");
+        if (footRow && footRow.children[rc]) footRow.children[rc].classList.add("perf-rank");
+
+        var vehChartList = filterList(s.vehicles.slice().sort(function (a, b) { return b.tonKm - a.tonKm; }), "vehicles");
+        var drvChartList = filterList(s.drivers.slice().sort(function (a, b) { return b.tonKm - a.tonKm; }), "drivers");
+        renderBars(document.getElementById("vehChart"), vehChartList.slice(0, 8).map(function (r) {
+          var vv = getVehicles().find(function (x) { return x.plate === r.key; }) || getVehicles().find(function (x) { return x.id === r.key; });
+          return { label: vv ? (vv.plate || "").replace(/^[0-9]+-/, "") : (r.key || "").replace(/^[0-9]+-/, ""), value: Math.round(r.tonKm) };
+        }));
+        renderBars(document.getElementById("drvChart"), drvChartList.slice(0, 8).map(function (r) {
+          var dd = getDrivers().find(function (x) { return x.id === r.key; });
+          return { label: (dd ? dd.name.split(" ")[0] : "—"), value: Math.round(r.tonKm) };
+        }));
+      }
+
+      document.getElementById("viewVehicles").addEventListener("click", function () { view = "vehicles"; render(); });
+      document.getElementById("viewDrivers").addEventListener("click", function () { view = "drivers"; render(); });
+      document.getElementById("rankBy").addEventListener("change", function () { rankMetric = this.value; render(); });
+
+      function populateFilters() {
+        var statuses = {}, types = {};
+        getVehicles().forEach(function (v) {
+          if (v.status) statuses[v.status] = true;
+          if (v.type) types[v.type] = true;
+        });
+        var stHtml = ['<option value="">All statuses</option>'];
+        Object.keys(statuses).sort().forEach(function (k) {
+          stHtml.push('<option value="' + k + '">' + (STATUS_META[k] ? STATUS_META[k].label : k) + "</option>");
+        });
+        document.getElementById("perfStatus").innerHTML = stHtml.join("");
+        var tyHtml = ['<option value="">All types</option>'];
+        Object.keys(types).sort().forEach(function (k) {
+          tyHtml.push('<option value="' + k + '">' + esc(k) + "</option>");
+        });
+        document.getElementById("perfType").innerHTML = tyHtml.join("");
+      }
+      populateFilters();
+
+      ["perfSearch", "perfStatus", "perfType"].forEach(function (id) {
+        document.getElementById(id).addEventListener("input", render);
+      });
+      document.getElementById("perfReset").addEventListener("click", function () {
+        document.getElementById("perfSearch").value = "";
+        document.getElementById("perfStatus").value = "";
+        document.getElementById("perfType").value = "";
+        render();
+      });
+
+      function setRange(r) {
+        range = r;
+        var chips = document.querySelectorAll("#rangeChips .chip");
+        for (var i = 0; i < chips.length; i++) chips[i].classList.toggle("on", chips[i].dataset.range === r);
+        document.getElementById("customRange").style.display = r === "custom" ? "flex" : "none";
+        if (r === "custom" && !document.getElementById("perfFrom").value && !document.getElementById("perfTo").value) {
+          document.getElementById("perfFrom").value = daysAgo(6);
+          document.getElementById("perfTo").value = todayStr();
+        }
+        render();
+      }
+      document.querySelectorAll("#rangeChips .chip").forEach(function (c) {
+        c.addEventListener("click", function () { setRange(c.dataset.range); });
+      });
+      document.getElementById("applyRange").addEventListener("click", function () { render(); });
+      function perfExportData() {
+        var list = rows();
+        var headers = ["Rank", view === "vehicles" ? "Vehicle Plate" : "Driver", "Trip Location", "Trips", "Loaded (km)", "Empty (km)", "Total (km)", "Load Factor (%)", "Ton-km Loaded", "Total Tons (t)", "Avg Turnaround (h)", "Turnaround Loaded (h)", "Turnaround Unloaded (h)"];
+        var data = list.map(function (r, i) {
+          var name = view === "vehicles"
+            ? ((getVehicles().find(function (x) { return x.plate === r.key; }) || {}).plate || r.key)
+            : ((getDrivers().find(function (x) { return x.id === r.key; }) || {}).name || r.key);
+          var plate = view === "vehicles" ? r.key : latestPlateForDriver(r.key);
+          var lv = plate ? liveByPlate[plateKey(plate)] : null;
+          var loc = lv ? (lv.location || (lv.lat.toFixed(4) + ", " + lv.lng.toFixed(4))) : "";
+          return [i + 1, name, loc, r.trips, Math.round(r.loadKm), Math.round(r.emptyKm), Math.round(r.totalKm), r.factor.toFixed(1), Math.round(r.tonKm), r.tons, r.avgTat == null ? "" : r.avgTat.toFixed(1), r.tatLoaded == null ? "" : r.tatLoaded.toFixed(1), r.tatUnloaded == null ? "" : r.tatUnloaded.toFixed(1)];
+        });
+        return { headers: headers, data: data };
+      }
+
+      document.getElementById("exportCSVBtn").addEventListener("click", function () {
+        var e = perfExportData();
+        if (!e.data.length) { toast("Nothing to export", "error"); return; }
+        exportCSV("national-transport-performance.csv", e.headers, e.data);
+        toast("Ranking exported to CSV", "success");
+      });
+      document.getElementById("exportXlsxBtn").addEventListener("click", function () {
+        var e = perfExportData();
+        if (!e.data.length) { toast("Nothing to export", "error"); return; }
+        exportXLSX("national-transport-performance.xlsx", "Performance", e.headers, e.data);
+        toast("Ranking exported to Excel", "success");
+      });
+      document.getElementById("exportPdfBtn").addEventListener("click", function () {
+        var e = perfExportData();
+        if (!e.data.length) { toast("Nothing to export", "error"); return; }
+        exportPDF("national-transport-performance.pdf", "National Transport PLC — Performance & Ranking",
+          "Date: " + todayStr() + " · View: " + view + " · Range: " + rangeLabel(), e.headers, e.data);
+        toast("Ranking exported to PDF", "success");
+      });
+
+      render();
+      loadLiveLocations();
+      setInterval(loadLiveLocations, 60000);
+      window.afterApiSync = function () { populateFilters(); render(); loadLiveLocations(); };
+    })();
+  </script>
+</body>
+</html>

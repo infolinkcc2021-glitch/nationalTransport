@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>National Transport PLC — Transport &amp; Logistics</title>
+  <meta name="description" content="National Transport PLC provides reliable freight, haulage and logistics services with a modern fleet, live tracking and per-vehicle reporting.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="home">
+  <div id="siteHeader"></div>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow" style="background:rgba(156,195,255,.15);color:#9cc3ff">Trusted since 1998</span>
+          <h1>Moving Your Materials.<br><span class="accent">Delivering Trust.</span></h1>
+          <p>National Transport PLC is your full-service transport and logistics partner. From heavy machinery to construction materials, our fleet is ready to load, carry and deliver — safely and on schedule.</p>
+          <div class="hero-badges">
+            <span class="hero-badge"><span class="dot">&#9881;</span> 8+ Modern Trucks</span>
+            <span class="hero-badge"><span class="dot">&#9203;</span> Live Trip Tracking</span>
+            <span class="hero-badge"><span class="dot">&#128196;</span> Per-Vehicle Reports</span>
+            <span class="hero-badge"><span class="dot">&#9989;</span> Insured Cargo</span>
+          </div>
+          <div class="hero-actions">
+            <a class="btn btn-light" href="portal.html">Request Transport &rarr;</a>
+            <a class="btn btn-ghost-light" href="fleet.html">View Fleet</a>
+          </div>
+        </div>
+        <div class="truck-card">
+          <div class="truck-visual">
+            <div class="road"></div>
+            <div class="truck-icon">&#128666;</div>
+          </div>
+          <div class="truck-metrics">
+            <div class="truck-metric"><b id="heroTrips">0</b><span>Trips This Year</span></div>
+            <div class="truck-metric"><b id="heroKm">0</b><span>Km Covered</span></div>
+            <div class="truck-metric"><b id="heroTons">0</b><span>Tons Moved</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats band -->
+    <section class="stats-band">
+      <div class="container">
+        <div class="grid grid-4">
+          <div><b id="stFleet">0</b><span>Vehicles in Fleet</span></div>
+          <div><b id="stDrivers">0</b><span>Professional Drivers</span></div>
+          <div><b id="stDelivered">0</b><span>Deliveries Completed</span></div>
+          <div><b id="stOnTime">0</b><span>On-Time Delivery Rate</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section class="section">
+      <div class="container">
+        <span class="eyebrow">What we do</span>
+        <h2 class="section-title">Transport &amp; Logistics Services</h2>
+        <p class="section-sub">Whatever material your business needs moved, we have the right vehicle, route and expertise to carry it.</p>
+        <div class="grid grid-3">
+          <div class="card card-hover service-card">
+            <div class="service-icon">&#128666;</div>
+            <h3>Heavy Haulage</h3>
+            <p>Trailer and flatbed trucks for steel, timber, machinery and oversized loads up to 45 tons.</p>
+          </div>
+          <div class="card card-hover service-card">
+            <div class="service-icon">&#128230;</div>
+            <h3>Container Transport</h3>
+            <p>Reliable container carriers connecting ports, dry ports and warehouses across the region.</p>
+          </div>
+          <div class="card card-hover service-card">
+            <div class="service-icon">&#10052;</div>
+            <h3>Refrigerated Cargo</h3>
+            <p>Temperature-controlled trucks for fruits, vegetables, frozen goods and pharmaceuticals.</p>
+          </div>
+          <div class="card card-hover service-card">
+            <div class="service-icon">&#9874;</div>
+            <h3>Construction Materials</h3>
+            <p>Dump trucks and tippers moving aggregate, sand, cement and asphalt for your projects.</p>
+          </div>
+          <div class="card card-hover service-card">
+            <div class="service-icon">&#128736;</div>
+            <h3>Dry Van Freight</h3>
+            <p>Secure box trucks for general cargo, consumer goods and sensitive deliveries.</p>
+          </div>
+          <div class="card card-hover service-card">
+            <div class="service-icon">&#128200;</div>
+            <h3>Fleet &amp; Reports</h3>
+            <p>Detailed reports per vehicle: plate, start point, load, destination, weight, km and fuel.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="section" style="background:var(--silver)">
+      <div class="container">
+        <span class="eyebrow">Simple process</span>
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-sub">Getting your materials moved is as easy as 1-2-3-4.</p>
+        <div class="steps mt-3">
+          <div class="step"><h4>Request Transport</h4><p>Tell us your pickup point, destination, load type and weight via our Customer Portal.</p></div>
+          <div class="step"><h4>Get a Quote</h4><p>We confirm a vehicle and price within hours based on load, distance and schedule.</p></div>
+          <div class="step"><h4>Track Live</h4><p>Follow your shipment status — loading, in transit or delivered — in real time.</p></div>
+          <div class="step"><h4>Receive Receipt</h4><p>Download a detailed trip receipt with weight, km, driver and delivery confirmation.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fleet preview -->
+    <section class="section">
+      <div class="container">
+        <div class="spread mb-2">
+          <div>
+            <span class="eyebrow">Our fleet</span>
+            <h2 class="section-title mb-0">Fleet at a Glance</h2>
+          </div>
+          <a class="btn btn-outline" href="fleet.html">Open Fleet Dashboard &rarr;</a>
+        </div>
+        <div class="grid grid-4" id="homeVehicles"></div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section" style="background:linear-gradient(135deg,var(--navy-3),var(--navy));padding:64px 0">
+      <div class="container" style="text-align:center">
+        <h2 style="color:#fff;font-size:1.7rem" class="mb-1">Ready to move your materials?</h2>
+        <p style="color:#c6d5ea;max-width:560px;margin:0 auto 24px">Request a vehicle today or talk to our operations team. Fast quotes, transparent pricing, reliable delivery.</p>
+        <div class="flex" style="justify-content:center">
+          <a class="btn btn-light" href="portal.html">Request Transport</a>
+          <a class="btn btn-ghost-light" href="contact.html">Contact Us</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="siteFooter"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/api.js?v=63"></script>
+  <script>
+    (function () {
+      function renderHome() {
+        var ft = fleetTotals();
+        document.getElementById("heroTrips").textContent = fmtNum(ft.completedTrips);
+        document.getElementById("heroKm").textContent = fmtNum(ft.totalKm);
+        document.getElementById("heroTons").textContent = fmtNum(ft.totalWeight);
+        document.getElementById("stFleet").textContent = fmtNum(ft.vehicles);
+        document.getElementById("stDrivers").textContent = fmtNum(getDrivers().length);
+        document.getElementById("stDelivered").textContent = fmtNum(ft.completedTrips);
+        document.getElementById("stOnTime").textContent = "97%";
+
+        var box = document.getElementById("homeVehicles");
+        var STATUS_COLOR = { idle: "var(--green)", transit: "var(--amber)", loaded: "var(--purple)", stop: "var(--muted)", maintenance: "var(--red)" };
+        box.innerHTML = getVehicles().slice(0, 4).map(function (v) {
+          var s = vehicleStats(v.plate);
+          var cap = Math.min(100, Math.round((v.currentKm % 20000) / 20000 * 100));
+          return (
+            '<div class="card card-hover vehicle-card">' +
+            '<div class="vehicle-top"><span class="vehicle-plate">' + esc(v.plate) + '</span>' + statusBadge(v.status) + "</div>" +
+            '<div class="vehicle-model">' + esc(v.model) + "</div>" +
+            '<div class="progress"><div class="progress-bar" style="width:' + cap + '%"></div></div>' +
+            '<div class="small" style="margin-top:2px">Km: ' + fmtNum(v.currentKm) + "</div>" +
+            '<div class="vehicle-meta">' +
+            '<div class="vmeta"><span>Capacity</span><b>' + v.capacity + " t</b></div>" +
+            '<div class="vmeta"><span>Trips</span><b>' + fmtNum(s.trips) + "</b></div>" +
+            '<div class="vmeta"><span>Load</span><b>' + fmtNum(s.totalWeight) + " t</b></div>" +
+            '<div class="vmeta"><span>Km Done</span><b>' + fmtNum(s.totalKm) + "</b></div>" +
+            "</div></div>"
+          );
+        }).join("");
+      }
+
+      renderHome();
+      window.afterApiSync = renderHome;
+    })();
+  </script>
+</body>
+</html>

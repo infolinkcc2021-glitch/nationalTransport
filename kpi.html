@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Key Performance Indicators — National Transport PLC</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="kpi">
+  <div id="siteHeader"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <h1>Key Performance Indicators</h1>
+        <p>Fleet utilisation, load performance, turnaround and financial KPIs for the selected period.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="fleet-toolbar mb-3">
+          <div class="flex" id="kpiChips">
+            <button class="chip on" data-range="all">All time</button>
+            <button class="chip" data-range="today">Today</button>
+            <button class="chip" data-range="7d">7 days</button>
+            <button class="chip" data-range="30d">30 days</button>
+            <button class="chip" data-range="month">Monthly</button>
+          </div>
+          <span class="small muted" id="kpiPeriodLabel"></span>
+          <div class="flex" style="gap:6px">
+            <button class="btn btn-outline btn-sm" id="exportCsvBtn" title="Export CSV">&#128228; CSV</button>
+            <button class="btn btn-outline btn-sm" id="exportXlsxBtn" title="Export Excel">&#128220; XLSX</button>
+            <button class="btn btn-outline btn-sm" id="exportPdfBtn" title="Export PDF">&#128196; PDF</button>
+          </div>
+        </div>
+
+        <div id="monthPicker" class="fleet-toolbar mb-3" style="display:none">
+          <span class="small" style="color:var(--navy);font-weight:600">Select Month:</span>
+          <select id="monthSelect" class="input" style="min-width:180px"></select>
+          <button class="btn btn-primary btn-sm" id="editPlanBtn">&#9998; Edit Plan</button>
+        </div>
+
+        <div id="planCard" class="card card-pad mb-3" style="display:none">
+          <div class="spread mb-2">
+            <h3 class="kpi-title" style="margin:0">Plan vs Actual <span class="small muted" id="planSummary"></span></h3>
+            <span class="small muted">Planned targets vs measured results for the selected month.</span>
+          </div>
+          <div class="table-wrap"><table id="planTable">
+            <thead><tr><th>KPI</th><th>Planned</th><th>Actual</th><th>Variance</th><th>Status</th></tr></thead>
+            <tbody></tbody>
+          </table></div>
+        </div>
+
+        <div class="card card-pad mb-3">
+          <h3 class="kpi-title">Fleet Basics</h3>
+          <div class="grid kpi-grid" id="kpiFleet"></div>
+        </div>
+
+        <div class="card card-pad mb-3">
+          <h3 class="kpi-title">Utilization &amp; Load</h3>
+          <div class="grid kpi-grid" id="kpiUtil"></div>
+        </div>
+
+        <div class="card card-pad mb-3">
+          <h3 class="kpi-title">Turnaround &amp; Timing</h3>
+          <div class="grid kpi-grid" id="kpiTiming"></div>
+        </div>
+
+        <div class="card card-pad mb-3">
+          <h3 class="kpi-title">Financial</h3>
+          <div class="grid kpi-grid" id="kpiFin"></div>
+        </div>
+
+        <div class="card card-pad">
+          <h3 class="kpi-title">KPI Assumptions</h3>
+          <div class="grid grid-2" style="gap:12px">
+            <div class="kpi-assume">&#128176; Freight rate: <b>ETB 11 / ton-km</b> (loaded tonnage × total distance)</div>
+            <div class="kpi-assume">&#9889; Surcharge: <b>15%</b> of gross rate on all loads</div>
+            <div class="kpi-assume">&#128652; Loaded driving speed: <b>25 km/h</b> average</div>
+            <div class="kpi-assume">&#128652; Empty return speed: <b>45 km/h</b> average</div>
+            <div class="kpi-assume">&#128337; Driving time cap: <b>9 hours</b> per day</div>
+            <div class="kpi-assume">&#128204; Delivery estimate: distance &divide; 50 km/h + random traffic buffer</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Plan editor modal -->
+  <div class="modal-backdrop" id="planModal">
+    <div class="modal" style="max-width:520px">
+      <div class="modal-header"><h3>&#9998; Monthly Plan — <span id="planMonthTitle"></span></h3><button class="modal-close" onclick="closeModal('planModal')">&times;</button></div>
+      <div class="modal-body">
+        <p class="small mb-2">Set the target values for this month. KPIs below target show red (behind plan), at/above show green (on track).</p>
+        <div class="form-row">
+          <label>Ton-km target</label>
+          <input type="number" id="planTonKm" class="input" min="0">
+        </div>
+        <div class="form-row">
+          <label>Total tons target (t)</label>
+          <input type="number" id="planTons" class="input" min="0">
+        </div>
+        <div class="form-row">
+          <label>Load factor target (%)</label>
+          <input type="number" id="planFactor" class="input" min="0" max="100">
+        </div>
+        <div class="form-row">
+          <label>Trips target</label>
+          <input type="number" id="planTrips" class="input" min="0">
+        </div>
+        <div class="form-row">
+          <label>On-time target (%)</label>
+          <input type="number" id="planOnTime" class="input" min="0" max="100">
+        </div>
+        <div class="form-row">
+          <label>Revenue target (ETB)</label>
+          <input type="number" id="planRevenue" class="input" min="0">
+        </div>
+        <div class="form-row">
+          <label>Avg turnaround target (h)</label>
+          <input type="number" id="planTurnover" class="input" min="0">
+        </div>
+        <div class="flex flex-wrap gap-2 mt-2">
+          <button class="btn btn-primary" onclick="saveKpiPlanAction()">&#128190; Save Plan</button>
+          <button class="btn btn-outline" onclick="resetPlanToDefaults()">&#8635; Reset to Defaults</button>
+          <button class="btn btn-light" onclick="closeModal('planModal')">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="siteFooter"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/api.js?v=63"></script>
+  <script>
+    (function () {
+      var range = "all";
+      var selMonth = null;
+      var M = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+      function monthKey(y, m) { return y + "-" + String(m).padStart(2, "0"); }
+      function monthOptions() {
+        var map = {};
+        getTrips().forEach(function (t) {
+          if (!t.date || t.date.length < 7) return;
+          var y = t.date.slice(0, 4);
+          var m = t.date.slice(5, 7);
+          var k = y + "-" + m;
+          if (!map[k]) {
+            var d = new Date(Number(y), Number(m) - 1, 1);
+            map[k] = { key: k, label: M[d.getMonth()] + " " + y, from: k + "-01", to: k + "-" + new Date(Number(y), Number(m), 0).getDate() };
+          }
+        });
+        var now = new Date();
+        var cur = monthKey(now.getFullYear(), now.getMonth() + 1);
+        if (!map[cur]) {
+          map[cur] = {
+            key: cur,
+            label: M[now.getMonth()] + " " + now.getFullYear(),
+            from: cur + "-01",
+            to: cur + "-" + new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate(),
+          };
+        }
+        var list = Object.keys(map).map(function (k) { return map[k]; });
+        list.sort(function (a, b) { return a.key < b.key ? -1 : 1; });
+        return list;
+      }
+      function selectedMonth() {
+        var opts = monthOptions();
+        var match = opts.filter(function (m) { return m.key === selMonth; })[0];
+        return match || opts[opts.length - 1];
+      }
+
+      function periodRange() {
+        if (range === "month") { var m = selectedMonth(); return { from: m.from, to: m.to }; }
+        if (range === "all") return { from: null, to: null };
+        if (range === "today") { var t = todayStr(); return { from: t, to: t }; }
+        if (range === "7d") return { from: daysAgo(6), to: todayStr() };
+        return { from: daysAgo(29), to: todayStr() };
+      }
+      function periodLabel() {
+        if (range === "all") return "All time";
+        if (range === "month") return "Monthly (" + selectedMonth().label + ")";
+        var d = periodRange();
+        if (range === "today") return "Today (" + d.from + ")";
+        if (range === "7d") return "Last 7 days (" + d.from + " → " + d.to + ")";
+        return "Last 30 days (" + d.from + " → " + d.to + ")";
+      }
+
+      function dh(s) {
+        var h = 0;
+        for (var i = 0; i < s.length; i++) h = (h * 131 + s.charCodeAt(i)) >>> 0;
+        return (h % 1000) / 1000;
+      }
+      function dispatchStatus(t) {
+        if (t.status === "pending") return "At Pickup";
+        if (t.status === "in_transit") return "In Transit";
+        var r = dh(t.id + "|s");
+        if (r < 0.08) return "At Pickup";
+        if (r < 0.2) return "Delayed";
+        if (r < 0.32) return "At Delivery";
+        return "Delivered";
+      }
+      function grossRate(t) {
+        var ton = Number(t.weight) || 20;
+        var km = Number(t.km) || 100;
+        var gross = Math.round(ton * (km + (Number(t.emptyKm) || 0)) * 11);
+        return { gross: gross, surcharge: Math.round(gross * 0.15) };
+      }
+      function inRange(t, d) {
+        if (!t.date) return false;
+        return (!d.from || t.date >= d.from) && (!d.to || t.date <= d.to);
+      }
+
+      function fmt(t) { return fmtNum(Math.round(t)); }
+
+      function stat(icon, value, label, sub) {
+        return '<div class="card stat-card"><div class="stat-icon ' + icon + '">' +
+          (icon === "stat-icon-blue" ? "&#128666;" : icon === "stat-icon-green" ? "&#9881;" : icon === "stat-icon-amber" ? "&#128176;" : icon === "stat-icon-red" ? "&#128202;" : "&#128176;") +
+          '</div><div><div class="stat-value">' + value + '</div><div class="stat-label">' + label + (sub ? '<br><span class="small muted">' + sub + "</span>" : "") + "</div></div></div>";
+      }
+
+      function compute() {
+        var d = periodRange();
+        var trips = getTrips().filter(function (t) { return inRange(t, d); });
+        var completed = trips.filter(function (t) { return t.status === "completed"; });
+        var s = performanceStats(d.from, d.to);
+        var vehicles = getVehicles();
+        var overrides = getDispatchStatus();
+
+        var delayCount = 0;
+        trips.forEach(function (t) {
+          var st = overrides[t.id] || dispatchStatus(t);
+          if (st === "Delayed") delayCount++;
+        });
+
+        var totLoad = 0, totEmpty = 0, totTonKm = 0, totTons = 0;
+        s.vehicles.forEach(function (v) {
+          totLoad += v.loadKm; totEmpty += v.emptyKm; totTonKm += v.tonKm; totTons += v.tons;
+        });
+        var loadFactor = (totLoad + totEmpty) ? (totLoad / (totLoad + totEmpty)) * 100 : 0;
+
+        var tats = s.vehicles.map(function (v) { return v.avgTat; }).filter(function (x) { return x != null; });
+        var avgTat = tats.length ? tats.reduce(function (a, b) { return a + b; }, 0) / tats.length : null;
+
+        var revenue = 0, surcharge = 0;
+        trips.forEach(function (t) {
+          var r = grossRate(t);
+          revenue += r.gross; surcharge += r.surcharge;
+        });
+        var onTime = trips.length ? Math.max(0, Math.round(((trips.length - delayCount) / trips.length) * 100)) : 100;
+
+        return {
+          fleetSize: vehicles.length,
+          drivers: getDrivers().length,
+          active: vehicles.filter(function (v) { return v.status === "transit" || v.status === "loaded"; }).length,
+          trips: trips.length,
+          completed: completed.length,
+          loadFactor: loadFactor,
+          totLoad: totLoad, totEmpty: totEmpty, totTonKm: totTonKm, totTons: totTons,
+          avgTat: avgTat,
+          delayCount: delayCount, onTime: onTime,
+          revenue: revenue, surcharge: surcharge,
+          revPerTrip: trips.length ? revenue / trips.length : 0,
+        };
+      }
+
+      function planRows() {
+        var m = selectedMonth();
+        var plan = kpiPlanForMonth(m.key);
+        var k = compute();
+        var rows = [
+          { label: "Ton-km Loaded", plan: plan.tonKm, actual: Math.round(k.totTonKm), fmtP: fmtNum, fmtA: fmt, higher: true },
+          { label: "Total Tons (t)", plan: plan.tons, actual: Math.round(k.totTons), fmtP: fmtNum, fmtA: fmtNum, higher: true },
+          { label: "Load Factor (%)", plan: plan.loadFactor, actual: k.loadFactor, fmtP: function (x) { return x.toFixed(1); }, fmtA: function (x) { return x.toFixed(1); }, higher: true },
+          { label: "Trips", plan: plan.trips, actual: k.trips, fmtP: fmtNum, fmtA: fmtNum, higher: true },
+          { label: "On-time Rate (%)", plan: plan.onTime, actual: k.onTime, fmtP: function (x) { return x + "%"; }, fmtA: function (x) { return x + "%"; }, higher: true },
+          { label: "Projected Revenue (ETB)", plan: plan.revenue, actual: Math.round(k.revenue), fmtP: fmt, fmtA: fmt, higher: true },
+          { label: "Avg Turnaround (h)", plan: plan.turnover, actual: k.avgTat == null ? null : k.avgTat, fmtP: function (x) { return x.toFixed(1); }, fmtA: function (x) { return x == null ? "—" : x.toFixed(1); }, higher: false },
+        ];
+        rows.forEach(function (r) {
+          if (!r.plan) { r.pct = null; r.ok = true; return; }
+          if (r.actual == null) { r.pct = null; r.ok = true; return; }
+          var diff = r.higher ? (r.actual - r.plan) / r.plan * 100 : (r.plan - r.actual) / r.plan * 100;
+          r.pct = diff;
+          r.ok = diff >= 0;
+        });
+        return rows;
+      }
+
+      function renderPlan() {
+        var card = document.getElementById("planCard");
+        var isMonth = range === "month";
+        card.style.display = isMonth ? "block" : "none";
+        document.getElementById("monthPicker").style.display = isMonth ? "flex" : "none";
+        if (!isMonth) return;
+        var rows = planRows();
+        var onTrack = rows.filter(function (r) { return r.ok; }).length;
+        document.getElementById("planSummary").textContent = onTrack + " of " + rows.length + " KPIs on track";
+        document.getElementById("planTable").querySelector("tbody").innerHTML = rows.map(function (r) {
+          var badge = r.pct == null
+            ? '<span class="badge badge-stop">No target</span>'
+            : r.ok
+              ? '<span class="badge badge-completed">&#9989; On Track</span>'
+              : '<span class="badge badge-maintenance">&#9888; Behind Plan</span>';
+          var pct = r.pct == null ? "—" : (r.pct >= 0 ? "+" : "") + r.pct.toFixed(1) + "%";
+          return "<tr>" +
+            "<td><b>" + r.label + "</b></td>" +
+            "<td>" + r.fmtP(r.plan) + "</td>" +
+            "<td>" + r.fmtA(r.actual) + "</td>" +
+            "<td class=\"" + (r.ok ? "plan-ok" : "plan-bad") + "\">" + pct + "</td>" +
+            "<td>" + badge + "</td>" +
+            "</tr>";
+        }).join("");
+      }
+
+      function renderMonthPicker() {
+        var pk = document.getElementById("monthPicker");
+        pk.style.display = range === "month" ? "flex" : "none";
+        if (range !== "month") return;
+        var sel = document.getElementById("monthSelect");
+        var opts = monthOptions();
+        var cur = selectedMonth();
+        sel.innerHTML = opts.map(function (m) {
+          return '<option value="' + m.key + '"' + (m.key === cur.key ? " selected" : "") + ">" + m.label + "</option>";
+        }).join("");
+      }
+
+      function render() {
+        var k = compute();
+        document.getElementById("kpiPeriodLabel").textContent = periodLabel();
+        document.getElementById("kpiFleet").innerHTML =
+          stat("stat-icon-blue", fmtNum(k.fleetSize), "Fleet Size", "registered trucks") +
+          stat("stat-icon-blue", fmtNum(k.drivers), "Drivers", "licensed crew") +
+          stat("stat-icon-green", fmtNum(k.active), "Active Fleet", "in transit / loading") +
+          stat("stat-icon-amber", fmtNum(k.trips), "Total Trips", "in period") +
+          stat("stat-icon-red", fmtNum(k.completed), "Completed", "of " + fmtNum(k.trips) + " trips");
+        document.getElementById("kpiUtil").innerHTML =
+          stat("stat-icon-green", k.loadFactor.toFixed(1) + "%", "Load Factor", "loaded ÷ total km") +
+          stat("stat-icon-blue", fmt(k.totTonKm), "Ton-km Loaded", "weight × loaded km") +
+          stat("stat-icon-red", fmtNum(k.totTons) + " t", "Total Tons", "hauled weight") +
+          stat("stat-icon-amber", fmt(k.totLoad) + " km", "Loaded (km)", "with cargo") +
+          stat("stat-icon-red", fmt(k.totEmpty) + " km", "Empty (km)", "return legs");
+        document.getElementById("kpiTiming").innerHTML =
+          stat("stat-icon-blue", k.avgTat == null ? "—" : fmtTat(k.avgTat), "Avg Turnaround", "per completed trip") +
+          stat("stat-icon-amber", fmtNum(k.delayCount), "Delayed Loads", "dispatch alerts") +
+          stat("stat-icon-green", k.onTime + "%", "On-time Rate", "loads not delayed") +
+          stat("stat-icon-red", fmtNum(tripsToday()), "Trips Today", "started today");
+        document.getElementById("kpiFin").innerHTML =
+          stat("stat-icon-green", "ETB " + fmt(k.revenue), "Projected Revenue", "ton-km × ETB 11") +
+          stat("stat-icon-amber", "ETB " + fmt(k.surcharge), "Surcharge", "15% of gross") +
+          stat("stat-icon-blue", "ETB " + fmt(k.revPerTrip), "Revenue / Trip", "average per load");
+        renderMonthPicker();
+        renderPlan();
+      }
+
+      function tripsToday() {
+        var t = todayStr();
+        return getTrips().filter(function (x) { return x.date === t; }).length;
+      }
+
+      function exportData() {
+        var k = compute();
+        var data = [
+          ["Period", periodLabel()],
+          ["Fleet Size", k.fleetSize],
+          ["Drivers", k.drivers],
+          ["Active Fleet", k.active],
+          ["Total Trips", k.trips],
+          ["Completed Trips", k.completed],
+          ["Load Factor (%)", k.loadFactor.toFixed(1)],
+          ["Ton-km Loaded", Math.round(k.totTonKm)],
+          ["Total Tons (t)", Math.round(k.totTons)],
+          ["Loaded (km)", Math.round(k.totLoad)],
+          ["Empty (km)", Math.round(k.totEmpty)],
+          ["Avg Turnaround (h)", k.avgTat == null ? "" : k.avgTat.toFixed(1)],
+          ["Delayed Loads", k.delayCount],
+          ["On-time Rate (%)", k.onTime],
+          ["Projected Revenue (ETB)", Math.round(k.revenue)],
+          ["Surcharge (ETB)", Math.round(k.surcharge)],
+          ["Revenue / Trip (ETB)", Math.round(k.revPerTrip)],
+        ];
+        if (range === "month") {
+          data.push([]);
+          data.push(["PLAN vs ACTUAL — " + selectedMonth().label, ""]);
+          planRows().forEach(function (r) {
+            data.push([r.label + " (plan)", r.fmtP(r.plan)]);
+            data.push([r.label + " (actual)", r.fmtA(r.actual)]);
+            data.push([r.label + " (variance %)", r.pct == null ? "" : (r.pct >= 0 ? "+" : "") + r.pct.toFixed(1) + "%"]);
+            data.push([r.label + " (status)", r.pct == null ? "No target" : r.ok ? "On Track" : "Behind Plan"]);
+          });
+        }
+        return { headers: ["Key Performance Indicator", "Value"], data: data };
+      }
+
+      window.openPlanEditor = function () {
+        var m = selectedMonth();
+        document.getElementById("planMonthTitle").textContent = m.label;
+        var plan = kpiPlanForMonth(m.key);
+        document.getElementById("planTonKm").value = plan.tonKm;
+        document.getElementById("planTons").value = plan.tons;
+        document.getElementById("planFactor").value = plan.loadFactor;
+        document.getElementById("planTrips").value = plan.trips;
+        document.getElementById("planOnTime").value = plan.onTime;
+        document.getElementById("planRevenue").value = plan.revenue;
+        document.getElementById("planTurnover").value = plan.turnover;
+        openModal("planModal");
+      };
+      window.saveKpiPlanAction = function () {
+        var m = selectedMonth();
+        var num = function (id) { return parseFloat(document.getElementById(id).value) || 0; };
+        var plans = getKpiPlan();
+        plans[m.key] = {
+          tonKm: num("planTonKm"),
+          tons: num("planTons"),
+          loadFactor: num("planFactor"),
+          trips: num("planTrips"),
+          onTime: num("planOnTime"),
+          revenue: num("planRevenue"),
+          turnover: num("planTurnover"),
+        };
+        saveKpiPlan(plans);
+        closeModal("planModal");
+        render();
+        toast("Monthly plan saved for " + m.label, "success");
+      };
+      window.resetPlanToDefaults = function () {
+        var m = selectedMonth();
+        var plans = getKpiPlan();
+        delete plans[m.key];
+        saveKpiPlan(plans);
+        closeModal("planModal");
+        render();
+        toast("Monthly plan reset to defaults for " + m.label, "info");
+      };
+
+      document.querySelectorAll("#kpiChips .chip").forEach(function (c) {
+        c.addEventListener("click", function () {
+          range = c.dataset.range;
+          document.querySelectorAll("#kpiChips .chip").forEach(function (x) { x.classList.toggle("on", x === c); });
+          if (range === "month") selMonth = null;
+          render();
+        });
+      });
+      document.getElementById("monthSelect").addEventListener("change", function () {
+        selMonth = this.value;
+        render();
+      });
+      document.getElementById("editPlanBtn").addEventListener("click", function () { openPlanEditor(); });
+      document.getElementById("exportCsvBtn").addEventListener("click", function () {
+        var e = exportData();
+        exportCSV("kpi-dashboard.csv", e.headers, e.data);
+        toast("KPI dashboard exported to CSV", "success");
+      });
+      document.getElementById("exportXlsxBtn").addEventListener("click", function () {
+        var e = exportData();
+        exportXLSX("kpi-dashboard.xlsx", "KPI Dashboard", e.headers, e.data);
+        toast("KPI dashboard exported to Excel", "success");
+      });
+      document.getElementById("exportPdfBtn").addEventListener("click", function () {
+        var e = exportData();
+        exportPDF("kpi-dashboard.pdf", "National Transport PLC — KPI Dashboard",
+          "Date: " + todayStr() + " · Period: " + periodLabel(), e.headers, e.data);
+        toast("KPI dashboard exported to PDF", "success");
+      });
+
+      render();
+      window.afterApiSync = render;
+    })();
+  </script>
+</body>
+</html>
