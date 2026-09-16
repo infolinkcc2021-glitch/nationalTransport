@@ -1,0 +1,1990 @@
+INFO:     Started server process [14736]
+INFO:     Waiting for application startup.
+INFO:     Started server process [14776]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+ERROR:    [Errno 10048] error while attempting to bind on address ('127.0.0.1', 8000): [winerror 10048] only one usage of each socket address (protocol/network address/port) is normally permitted
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     127.0.0.1:53963 - "GET /tracking.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64489 - "GET /tracking.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64489 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59308 - "GET /tracking.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52719 - "GET /tracking.html HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52719 - "GET /js/data.js?v=60 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52028 - "GET /js/tracking.js?v=60 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:50935 - "GET /js/api.js?v=60 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:50935 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     Started server process [13800]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started server process [5868]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:53500 - "GET /tracking.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62887 - "GET /tracking.html HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:62887 - "GET /css/style.css?v=60 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52048 - "GET /js/data.js?v=60 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52048 - "GET /js/layout.js?v=60 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:64008 - "GET /js/api.js?v=60 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:62887 - "GET /js/app.js?v=60 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:64008 - "GET /js/tracking.js?v=60 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:64008 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64008 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:62916 - "GET /tracking.html HTTP/1.1" 200 OK
+INFO:     Started server process [4880]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Started server process [11272]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+ERROR:    [Errno 10048] error while attempting to bind on address ('127.0.0.1', 8000): [winerror 10048] only one usage of each socket address (protocol/network address/port) is normally permitted
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Started server process [10640]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:54686 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52769 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64903 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64903 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60206 - "GET /tracking.html HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60206 - "GET /js/data.js?v=60 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60206 - "GET /css/style.css?v=60 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60206 - "GET /js/layout.js?v=60 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:58956 - "GET /js/api.js?v=60 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54966 - "GET /js/tracking.js?v=60 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55298 - "GET /js/app.js?v=60 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55298 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55298 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     Started server process [3344]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started server process [9640]
+
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+ERROR:    [Errno 10048] error while attempting to bind on address ('127.0.0.1', 8000): [winerror 10048] only one usage of each socket address (protocol/network address/port) is normally permitted
+INFO:     Waiting for application shutdown.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Application shutdown complete.
+INFO:     127.0.0.1:59111 - "GET /tracking.html HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59111 - "GET /js/data.js?v=60 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59371 - "GET /js/tracking.js?v=60 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49632 - "GET /js/api.js?v=60 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49632 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49632 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49896 - "GET /fleet.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49896 - "GET /css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49318 - "GET /js/data.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54191 - "GET /js/api.js?v=16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64779 - "GET /js/layout.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53461 - "GET /js/app.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54191 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:65062 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61425 - "GET /daily.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60839 - "GET /daily.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60839 - "GET /css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59954 - "GET /js/data.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58993 - "GET /js/layout.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58831 - "GET /js/app.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65388 - "GET /js/api.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58831 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52679 - "GET /admin.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52679 - "GET /js/data.js?v=15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50048 - "GET /js/app.js?v=15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57206 - "GET /js/api.js?v=15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62436 - "GET /js/layout.js?v=15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57206 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49175 - "GET /admin.html HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49175 - "GET /js/layout.js?v=15 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:63665 - "GET /js/api.js?v=15 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55934 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56557 - "GET /daily.html HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56557 - "GET /js/layout.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61838 - "GET /js/api.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61838 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61838 - "GET /daily.html HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61838 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53405 - "GET /daily.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53405 - "GET /js/data.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65022 - "GET /daily.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61556 - "GET /js/data.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65022 - "GET /css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53798 - "GET /js/app.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58124 - "GET /js/layout.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58249 - "GET /js/api.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65022 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:65022 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60955 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61457 - "GET /index.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61457 - "GET /js/api.js?v=16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61457 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61435 - "GET /js/layout.js?v=15 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52191 - "GET /js/api.js?v=15 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52191 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54372 - "GET /daily.html HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54372 - "GET /js/data.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54013 - "GET /js/api.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55505 - "GET /js/layout.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55505 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     Started server process [3644]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started server process [9552]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:61611 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57903 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54836 - "GET /tracking.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54836 - "GET /js/api.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54838 - "GET /daily.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54838 - "GET /tracking.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54838 - "GET /admin.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54838 - "GET /kpi.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54838 - "GET /fleet.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54838 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63745 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63745 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63745 - "GET /api/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63745 - "GET /api/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57019 - "GET /api/trips HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63745 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57019 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64585 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64585 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64585 - "GET /api/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64585 - "GET /api/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58730 - "GET /api/trips HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58730 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58730 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63471 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63471 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54418 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54418 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50543 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57895 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59453 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59453 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60307 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60307 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57094 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57094 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57729 - "GET /api/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62220 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53238 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50262 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50262 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61498 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61498 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54370 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54370 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61721 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60298 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60299 - "GET /js/api.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54445 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54445 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51602 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51602 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58073 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58073 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58075 - "GET /js/api.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58075 - "GET /js/data.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50616 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50442 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51533 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57445 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56827 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55159 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63267 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57626 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51550 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51550 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59697 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51326 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64780 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64780 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50016 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57821 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65429 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65429 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65429 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65429 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63213 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63213 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63216 - "GET /api/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53681 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53489 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54971 - "GET /api/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63447 - "GET /api/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55663 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55663 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63973 - "GET /js/api.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49801 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49801 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64695 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52652 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59726 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59726 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52787 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57971 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62949 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62949 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52190 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60259 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59209 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59209 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60624 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60624 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60624 - "GET /api/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60624 - "GET /api/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63147 - "GET /api/trips HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63147 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63147 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58897 - "GET /tracking.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58897 - "GET /css/style.css?v=60 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59226 - "GET /js/tracking.js?v=63 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52666 - "GET /js/layout.js?v=63 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52422 - "GET /js/app.js?v=63 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62379 - "GET /js/data.js?v=63 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59854 - "GET /js/api.js?v=63 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62379 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62379 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62379 - "GET /api/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62379 - "GET /api/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52422 - "GET /api/trips HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52422 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52422 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52422 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49566 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65157 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49403 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49403 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49403 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49403 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51008 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55005 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58799 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58799 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50550 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55998 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55998 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55998 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49191 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49191 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50536 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50536 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61535 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50730 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50730 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50730 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51690 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51690 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59958 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52735 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62441 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49845 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49845 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49845 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64197 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64197 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56094 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56094 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56094 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56094 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     Started server process [15708]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:60389 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58931 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56640 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56640 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56640 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56640 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50021 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57305 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57305 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59211 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59211 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59211 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59211 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53410 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53410 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53133 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53133 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60388 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60388 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60388 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60388 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63587 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50707 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50241 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50241 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50241 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50241 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60288 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60288 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     Started server process [15252]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:53223 - "GET /tracking.html HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53223 - "GET /js/data.js?v=63 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:57637 - "GET /js/layout.js?v=63 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61956 - "GET /js/api.js?v=63 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61956 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57637 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57637 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57637 - "GET /api/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57637 - "GET /api/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61956 - "GET /api/trips HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61956 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64678 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49333 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62839 - "GET /js/layout.js?v=15 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56618 - "GET /js/api.js?v=15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56618 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56618 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56618 - "GET /api/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56618 - "GET /api/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53085 - "GET /api/trips HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53026 - "GET /js/api.js?v=16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65376 - "GET /js/data.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61627 - "GET /js/layout.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53026 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53026 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53026 - "GET /api/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53026 - "GET /api/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61627 - "GET /api/trips HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61589 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61589 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61589 - "GET /api/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61589 - "GET /api/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60043 - "GET /api/trips HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64790 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64790 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64790 - "GET /api/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64790 - "GET /api/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63045 - "GET /api/trips HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60645 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57949 - "GET /fleet.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57949 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57949 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57949 - "GET /api/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57949 - "GET /api/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61528 - "GET /api/trips HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61528 - "GET /daily.html HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61528 - "GET /js/api.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61528 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61528 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61528 - "GET /api/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61528 - "GET /api/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57397 - "GET /api/trips HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50427 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51585 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51629 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51629 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51629 - "GET /api/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51629 - "GET /api/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56776 - "GET /api/trips HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52391 - "POST /api/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65343 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65343 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65343 - "GET /api/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65343 - "GET /api/orders HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:50852 - "GET /api/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65022 - "GET /api/trips HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55562 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55562 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55562 - "GET /api/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55562 - "GET /api/orders HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:63352 - "GET /api/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64157 - "GET /api/trips HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61300 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61300 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61300 - "GET /api/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61300 - "GET /api/orders HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:53014 - "GET /api/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51743 - "GET /api/trips HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52382 - "GET /admin.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62434 - "GET /admin.html HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59740 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59740 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59740 - "GET /api/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59740 - "GET /api/orders HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:54818 - "GET /api/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52545 - "GET /api/trips HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51724 - "GET /admin.html HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51724 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51724 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51724 - "GET /api/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51724 - "GET /api/orders HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:58025 - "GET /api/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60171 - "GET /api/trips HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64522 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64522 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64522 - "GET /api/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64522 - "GET /api/orders HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:62605 - "GET /api/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61927 - "GET /api/trips HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62697 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62730 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51840 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51178 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54651 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62037 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58425 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58047 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62912 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59056 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64862 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54896 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50690 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65413 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65491 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55112 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52553 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52657 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51830 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50431 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59952 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51284 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60392 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60345 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61926 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56324 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51128 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59425 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61187 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49344 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52516 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54535 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64868 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56563 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61919 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52355 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51201 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64936 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51916 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53124 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59871 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49816 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49816 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65230 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65230 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62171 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62171 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63261 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63261 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51461 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58478 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64644 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64644 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57682 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57682 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61935 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61935 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51243 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51243 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56227 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56227 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60526 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60526 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58102 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58102 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64534 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64534 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54148 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64031 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64765 - "GET /api/speed-violations/summary HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 416, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\applications.py", line 90, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 88, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 354, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\_backends\_asyncio.py", line 2518, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\_backends\_asyncio.py", line 1002, in run
+    result = context.run(func, *args)
+  File "C:\Users\md\Desktop\ntWebV1\backend\app\routers\speed.py", line 49, in get_summary
+    rows = conn.execute(
+           ~~~~~~~~~~~~^
+        """SELECT plate, fleet, driver,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+           ORDER BY max_speed DESC"""
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ).fetchall()
+    ^
+sqlite3.OperationalError: database is locked
+INFO:     127.0.0.1:63148 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58158 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58158 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54956 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54956 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63836 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55988 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55124 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55124 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65303 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65303 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57388 - "GET /api/speed-violations/summary HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 416, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\applications.py", line 90, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 88, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 354, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\_backends\_asyncio.py", line 2518, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\_backends\_asyncio.py", line 1002, in run
+    result = context.run(func, *args)
+  File "C:\Users\md\Desktop\ntWebV1\backend\app\routers\speed.py", line 49, in get_summary
+    rows = conn.execute(
+           ~~~~~~~~~~~~^
+        """SELECT plate, fleet, driver,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+           ORDER BY max_speed DESC"""
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ).fetchall()
+    ^
+sqlite3.OperationalError: database is locked
+INFO:     127.0.0.1:58036 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65052 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65052 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57820 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53535 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51895 - "GET /api/speed-violations/summary HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 416, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\applications.py", line 90, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 88, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 354, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\_backends\_asyncio.py", line 2518, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\_backends\_asyncio.py", line 1002, in run
+    result = context.run(func, *args)
+  File "C:\Users\md\Desktop\ntWebV1\backend\app\routers\speed.py", line 49, in get_summary
+    rows = conn.execute(
+           ~~~~~~~~~~~~^
+        """SELECT plate, fleet, driver,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+           ORDER BY max_speed DESC"""
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ).fetchall()
+    ^
+sqlite3.OperationalError: database is locked
+INFO:     127.0.0.1:52222 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55274 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52222 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50894 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58365 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64249 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55831 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60321 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60321 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52728 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55352 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51400 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54558 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58438 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58438 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53018 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53018 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50017 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58188 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49480 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49480 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60439 - "GET /api/speed-violations/summary HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 416, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\applications.py", line 90, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 88, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 354, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\_backends\_asyncio.py", line 2518, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\_backends\_asyncio.py", line 1002, in run
+    result = context.run(func, *args)
+  File "C:\Users\md\Desktop\ntWebV1\backend\app\routers\speed.py", line 49, in get_summary
+    rows = conn.execute(
+           ~~~~~~~~~~~~^
+        """SELECT plate, fleet, driver,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+           ORDER BY max_speed DESC"""
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ).fetchall()
+    ^
+sqlite3.OperationalError: database is locked
+INFO:     127.0.0.1:51156 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55818 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55818 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49721 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49721 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57145 - "GET /api/speed-violations/summary HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 416, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\applications.py", line 90, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 88, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 354, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\_backends\_asyncio.py", line 2518, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\_backends\_asyncio.py", line 1002, in run
+    result = context.run(func, *args)
+  File "C:\Users\md\Desktop\ntWebV1\backend\app\routers\speed.py", line 49, in get_summary
+    rows = conn.execute(
+           ~~~~~~~~~~~~^
+        """SELECT plate, fleet, driver,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+           ORDER BY max_speed DESC"""
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ).fetchall()
+    ^
+sqlite3.OperationalError: database is locked
+INFO:     127.0.0.1:57328 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63538 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53906 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61411 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55371 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60091 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60091 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53904 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56910 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65204 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65204 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63368 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63368 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59851 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59851 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58041 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58041 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53204 - "GET /api/speed-violations/summary HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 416, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\applications.py", line 90, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 88, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 354, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\_backends\_asyncio.py", line 2518, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\_backends\_asyncio.py", line 1002, in run
+    result = context.run(func, *args)
+  File "C:\Users\md\Desktop\ntWebV1\backend\app\routers\speed.py", line 49, in get_summary
+    rows = conn.execute(
+           ~~~~~~~~~~~~^
+        """SELECT plate, fleet, driver,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+           ORDER BY max_speed DESC"""
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ).fetchall()
+    ^
+sqlite3.OperationalError: database is locked
+INFO:     127.0.0.1:59559 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53530 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53530 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58980 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58980 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60245 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60245 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61830 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61830 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50531 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50531 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53335 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53335 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53272 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53272 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64665 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64665 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53089 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53089 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51878 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51878 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63800 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63800 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57878 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57878 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53805 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53805 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54576 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54576 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51953 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51953 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59346 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59346 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51072 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51072 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62502 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63105 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61626 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61626 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54563 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54563 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61115 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61115 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62388 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62388 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63590 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63590 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57637 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57637 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59128 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59128 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64712 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64712 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59256 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59256 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51077 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51077 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63711 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63711 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61780 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61780 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59883 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59883 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53325 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53325 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53069 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53069 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52802 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52802 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54314 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54314 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56307 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56307 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60622 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60622 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64742 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64742 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51252 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51252 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64908 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64908 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50791 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50791 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56884 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56884 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64934 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64934 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63471 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63471 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54172 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54172 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62851 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62851 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63716 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63716 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59296 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59296 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65146 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65146 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65237 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65237 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57160 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57160 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54480 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54480 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51459 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51459 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50929 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50929 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58667 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58667 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54831 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54831 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53128 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53128 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62762 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62762 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62838 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62838 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63230 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63230 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56857 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56857 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53552 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53552 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58583 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58583 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58810 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58810 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61526 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61526 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61926 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61926 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65041 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65041 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61064 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61064 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64211 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64211 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60480 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60480 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53204 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53204 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63644 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63644 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49610 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49610 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52730 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52730 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54882 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54882 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59942 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59942 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60762 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60762 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50920 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50920 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56383 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56383 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49165 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49165 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56856 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53378 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60361 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60361 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61922 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61922 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53704 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53704 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54774 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54774 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63911 - "GET /api/speed-violations/summary HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 416, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\applications.py", line 90, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 88, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 354, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\_backends\_asyncio.py", line 2518, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\_backends\_asyncio.py", line 1002, in run
+    result = context.run(func, *args)
+  File "C:\Users\md\Desktop\ntWebV1\backend\app\routers\speed.py", line 49, in get_summary
+    rows = conn.execute(
+           ~~~~~~~~~~~~^
+        """SELECT plate, fleet, driver,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+           ORDER BY max_speed DESC"""
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ).fetchall()
+    ^
+sqlite3.OperationalError: database is locked
+INFO:     127.0.0.1:56185 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65197 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65197 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54454 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54454 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63325 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63325 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59126 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59126 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63073 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63073 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63451 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63451 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54771 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54771 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49159 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49643 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63040 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63040 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56775 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56775 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50556 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50556 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62912 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62912 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59205 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59205 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60911 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60911 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58575 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58575 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49199 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49199 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55593 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55593 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51019 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51019 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58615 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58615 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59731 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59731 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57853 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57853 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50660 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50660 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52475 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52475 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55128 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55128 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60739 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60739 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63975 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62845 - "POST /api/speed-violations HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 416, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\applications.py", line 90, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 96, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 154, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 354, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\_backends\_asyncio.py", line 2518, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\_backends\_asyncio.py", line 1002, in run
+    result = context.run(func, *args)
+  File "C:\Users\md\Desktop\ntWebV1\backend\app\routers\speed.py", line 89, in push_violations
+    conn.execute(
+    ~~~~~~~~~~~~^
+        "INSERT INTO speed_violations (plate, fleet, driver, speed, event_date, event_time) VALUES (?,?,?,?,?,?)",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        (plate, v.fleet, v.driver, speed, date, ts),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+sqlite3.OperationalError: database is locked
+INFO:     127.0.0.1:55435 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58254 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49471 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56560 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57512 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57512 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57666 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57666 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62639 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62639 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57569 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61151 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55878 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49225 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65110 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65110 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49778 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49778 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61577 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61577 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52370 - "GET /api/speed-violations/summary HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 416, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\applications.py", line 90, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 88, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 354, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\_backends\_asyncio.py", line 2518, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\_backends\_asyncio.py", line 1002, in run
+    result = context.run(func, *args)
+  File "C:\Users\md\Desktop\ntWebV1\backend\app\routers\speed.py", line 49, in get_summary
+    rows = conn.execute(
+           ~~~~~~~~~~~~^
+        """SELECT plate, fleet, driver,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+           ORDER BY max_speed DESC"""
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ).fetchall()
+    ^
+sqlite3.OperationalError: database is locked
+INFO:     127.0.0.1:64497 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50987 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50987 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63954 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63954 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52954 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52954 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55290 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55290 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58942 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58942 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58199 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58199 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59174 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59174 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64526 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64526 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54865 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60427 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55861 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55861 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63788 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63788 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51677 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51677 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49319 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49319 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50853 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51488 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56439 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56439 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50660 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50660 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55893 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54083 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58441 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58441 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59647 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59647 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58528 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58528 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52711 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52711 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63343 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63343 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60507 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60507 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58271 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62656 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65212 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65212 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60680 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60680 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63046 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63046 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60315 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60315 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62727 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62727 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57357 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57357 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59533 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59533 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51606 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51606 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62322 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65119 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53905 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53905 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53774 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53774 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55803 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55803 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49190 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49190 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57321 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57321 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49328 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49328 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49795 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49795 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58188 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58188 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49387 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49387 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55597 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55597 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53717 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53717 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65521 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65521 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50719 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50719 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50557 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50557 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57797 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57797 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53230 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53230 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61768 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61768 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54221 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54221 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57284 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57284 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58726 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58726 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51867 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51867 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59768 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59768 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55498 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55498 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61560 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61560 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51280 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53676 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51205 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51205 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62171 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65416 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51947 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51947 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56844 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63946 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56894 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56894 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64468 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50174 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59034 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59034 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63297 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63297 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54571 - "GET /api/speed-violations/summary HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 416, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\applications.py", line 90, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 88, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 354, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\_backends\_asyncio.py", line 2518, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\_backends\_asyncio.py", line 1002, in run
+    result = context.run(func, *args)
+  File "C:\Users\md\Desktop\ntWebV1\backend\app\routers\speed.py", line 49, in get_summary
+    rows = conn.execute(
+           ~~~~~~~~~~~~^
+        """SELECT plate, fleet, driver,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+           ORDER BY max_speed DESC"""
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ).fetchall()
+    ^
+sqlite3.OperationalError: database is locked
+INFO:     127.0.0.1:49283 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59330 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59330 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60215 - "GET /api/speed-violations/summary HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 416, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\applications.py", line 90, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 88, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 354, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\_backends\_asyncio.py", line 2518, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\md\AppData\Roaming\Python\Python314\site-packages\anyio\_backends\_asyncio.py", line 1002, in run
+    result = context.run(func, *args)
+  File "C:\Users\md\Desktop\ntWebV1\backend\app\routers\speed.py", line 49, in get_summary
+    rows = conn.execute(
+           ~~~~~~~~~~~~^
+        """SELECT plate, fleet, driver,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+           ORDER BY max_speed DESC"""
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ).fetchall()
+    ^
+sqlite3.OperationalError: database is locked
+INFO:     127.0.0.1:50265 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62335 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62335 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63464 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59721 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50466 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50466 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65227 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59902 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63784 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63784 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59892 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59892 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51870 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51870 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52677 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52677 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60461 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60461 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56448 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56448 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52728 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52728 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63606 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51034 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51034 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65030 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65030 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58021 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58021 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65467 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65467 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55854 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55854 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51309 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51309 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55480 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55480 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52286 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52286 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58151 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58151 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63409 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63409 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54693 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54693 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59904 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59904 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52585 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52585 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57810 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57810 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59057 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59057 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59228 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59228 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54463 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54463 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51017 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51017 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52905 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50840 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58307 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58307 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55045 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55045 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63176 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63156 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58183 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58183 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51631 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62381 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63618 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63618 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62425 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62425 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60563 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62693 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55299 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55299 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64718 - "POST /api/speed-violations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64718 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49179 - "GET /api/speed-violations/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57339 - "POST /api/speed-violations HTTP/1.1" 200 OK
